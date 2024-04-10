@@ -1,0 +1,34 @@
+
+
+
+.coin-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.coin-card-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.coin-card-title img{
+    padding-right: 1rem;
+}
+
+.coin-card-title div {
+    font-weight: 600;
+}
+
+.coin-card-title div .coin-card-title-amount{
+    color: var(--color-text-secondary);
+    font-weight: 400;
+}
+
+.coin-card-amount{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}

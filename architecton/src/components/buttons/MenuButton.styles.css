@@ -1,0 +1,36 @@
+
+.menubutton{
+    display: block;
+    width: auto;
+    margin: 0 0;
+    text-align: center;
+}
+
+.menubutton button {
+    background-color: transparent;
+    border: none;
+    border-radius: none;
+    padding: 0 0;
+    color: var(--color-bg);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: auto 0;
+}
+
+.menubutton button img{
+    max-height: 50px;
+}
+
+
+.menubutton button:hover img{
+    color: blue;
+
+}
+
+.menubutton div{
+    color: var(--color-bg-primary);
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0 0;
+    line-height: 1rem;
+}

@@ -1,0 +1,41 @@
+
+
+.balance{
+    min-height: 9rem;
+    padding: 2.2rem 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-repeat: no-repeat;
+    background-position: center;
+
+
+}
+
+.balance-amount{
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 1.875rem;
+}
+
+.balance-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.balance-header h2{
+    color: var(--color-text-secondary);
+    font-size: 1.25rem;
+}
+.balance-header h2 span {
+    color: var(--color-bg-primary);
+}
+
+.balance-footer{
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+

@@ -1,0 +1,16 @@
+
+.header{
+  border: 0px dashed #0ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 3rem;
+}
+
+
+.header h1 {
+  max-width: 90%;
+  font-size: calc(var(--text-size-primary)*1.1);
+}
