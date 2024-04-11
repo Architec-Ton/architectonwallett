@@ -2,9 +2,9 @@ import assets from '../../assets';
 import ProjectCard from './ProjectCard';
 
 function ProjectList() {
-  const onMenuChange = (menuName) => {
-    console.log(`Menu changed: ${menuName}`);
-  };
+  //   const onMenuChange = (menuName) => {
+  //     console.log(`Menu changed: ${menuName}`);
+  //   };
 
   return (
     <div
@@ -21,17 +21,17 @@ function ProjectList() {
       <ProjectCard
         title="Toncoin"
         icon={assets.coinToncoin}
-        description={3424324}
+        description={'3424324'}
       />
       <ProjectCard
         title="Toncoin"
         icon={assets.coinToncoin}
-        description={3424324}
+        description={'3424324'}
       />
       <ProjectCard
         title="Toncoin"
         icon={assets.coinToncoin}
-        description={3424324}
+        description={'3424324'}
       />
     </div>
   );
