@@ -13,14 +13,14 @@ function CoinList() {
       />
       <CoinCard
         title="USDT"
-        icon={assets.coinToncoin}
+        icon={assets.coinUSDT}
         amount={32}
         amountUsd={232}
         changes={12.3}
       />
       <CoinCard
-        title="Toncoin"
-        icon={assets.coinToncoin}
+        title="My Assets"
+        icon={assets.coinAssets}
         amount={332}
         amountUsd={232}
         changes={12.3}

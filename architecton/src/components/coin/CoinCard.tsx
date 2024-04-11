@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import './CoinCard.styles.css';
 
 type Props = {
@@ -9,8 +10,9 @@ type Props = {
 };
 
 function CoinCard({ title, icon, amount }: Props) {
+  const navigate = useNavigate();
   return (
-    <div className="coin-card">
+    <div className="coin-card" onClick={() => navigate(`/coin/${title}`)}>
       <div className="coin-card-title">
         <img src={icon} alt={title} />
         <div>

@@ -1,0 +1,10 @@
+.block-header-title {
+    font-size: var(--text-size-primary);
+    font-weight: var(--text-weight-medium);
+    color: var(--color-text-primary);
+
+}
+
+.block-header-title span {
+    color: var(--color-bg-primary);
+}

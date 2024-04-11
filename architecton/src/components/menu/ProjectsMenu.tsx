@@ -11,6 +11,7 @@ function ProjectsMenu() {
     <div className="projectmenu">
       {menuList.map((menuName) => (
         <a
+          key={menuName}
           href={`#${menuName}`}
           onClick={() => setCurrentMenu(menuName)}
           className={cn(currentMenu == menuName ? 'active' : '')}>

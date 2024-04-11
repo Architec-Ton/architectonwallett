@@ -8,9 +8,14 @@ import iconSend from './icon-send.svg';
 import iconReceive from './icon-receive.svg';
 import iconBuy from './icon-buy.svg';
 
+import iconBack from './icon-back.svg';
+
 import coinToncoin from './coins/toncoin.svg';
+import coinUSDT from './coins/usdt.svg';
+import coinAssets from './coins/assets.svg';
 
 import imagePunk from './images/punk.png';
+import imagePunkGallery from './images/punk-gallery.png';
 
 import imageLogo from './images/logo.jpg';
 
@@ -21,10 +26,14 @@ export default {
   svgbalance,
   iconBank,
   iconBuy,
+  iconBack,
   iconReceive,
   iconSend,
   iconSwap,
   coinToncoin,
+  coinUSDT,
+  coinAssets,
   imagePunk,
+  imagePunkGallery,
   imageLogo,
 };

@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import './ProjectCard.styles.css';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   title: string;
@@ -8,6 +9,8 @@ type Props = {
 };
 
 function ProjectCard({ title, icon, description }: Props) {
+  const navigate = useNavigate();
+
   return (
     <div className="project-card">
       <div className="project-card-title">
@@ -18,7 +21,11 @@ function ProjectCard({ title, icon, description }: Props) {
         </div>
       </div>
       <div className="project-card-open">
-        <button className={cn('btn', 'btn-primary')}>Open</button>
+        <button
+          className={cn('btn', 'btn-primary')}
+          onClick={() => navigate(`/project/${title}`)}>
+          Open
+        </button>
       </div>
     </div>
   );

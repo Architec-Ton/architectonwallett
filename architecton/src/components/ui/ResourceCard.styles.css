@@ -1,0 +1,40 @@
+.resources {
+    background-color: var(--color-bg-selected);
+    padding: var(--layout-padding);
+}
+
+.resource-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.resource-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.resource-card-title img {
+
+    max-width: 3.75rem;
+    width: 3.75rem;
+    border-radius: 3.75rem;
+}
+
+.resource-card-title>div {
+    padding-left: 1rem;
+    font-weight: var(--text-weight-medium);
+}
+
+.resource-card-title div .resource-card-title-amount {
+    color: var(--color-text-secondary);
+    font-weight: var(--text-weight-normal);
+}
+
+.resource-card-open {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
