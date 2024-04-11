@@ -11,6 +11,11 @@
   --text-size-secondary: 1rem;
   --text-size-small: 1rem;
 
+  --text-weight-medium: 600;
+  --text-weight-normal: 400;
+
+  --layout-padding: 22px;
+
 
 
   background-color: var(--color-bg);
@@ -33,19 +38,19 @@
 .text-primary {
   font-size: var(--text-size-primary);
   color: var(--color-text-primary);
-  font-weight: 600;
+  font-weight: var(--text-weight-medium);
 }
 
 .text-secondary{
   font-size: var(--text-size-secondary);
   color: var(--color-text-secondary);
-  font-weight: 400;
+  font-weight: var(--text-weight-normal);
 }
 
 .text-small {
   font-size: var(--text-size-small);
   color: var(--color-text-secondary);
-  font-weight: 400;
+  font-weight: var(--text-weight-normal);
   
 }
 
@@ -57,7 +62,7 @@ button{
   padding: 0.6rem 1.5rem;
   color: var(--color-bg);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: var(--text-weight-medium);
 }
 
 button:hover{
@@ -68,3 +73,12 @@ button:hover{
   -webkit-appearance: button;
 }
 
+a{
+  text-decoration: none;
+  color: var(--color-text-primary);
+  font-weight: var(--text-weight-medium);
+}
+
+a:hover, a:active, a.active{
+  color: var(--color-bg-primary);
+}

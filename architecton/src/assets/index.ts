@@ -10,6 +10,10 @@ import iconBuy from './icon-buy.svg';
 
 import coinToncoin from './coins/toncoin.svg';
 
+import imagePunk from './images/punk.png';
+
+import imageLogo from './images/logo.jpg';
+
 export default {
   svgdots,
   svghdots,
@@ -21,4 +25,6 @@ export default {
   iconSend,
   iconSwap,
   coinToncoin,
+  imagePunk,
+  imageLogo,
 };

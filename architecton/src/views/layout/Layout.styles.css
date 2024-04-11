@@ -1,0 +1,17 @@
+
+
+.layout {
+    /* border: 1px dashed #00f; */
+    min-width: 409px;
+    max-width: 409px;
+    min-height: 100vh;
+    padding: 0 0;
+}
+
+
+@media screen and (max-width: 390px) {
+    .layout{
+        padding: 0 0.1rem;
+        min-width: 365px;
+    }
+}

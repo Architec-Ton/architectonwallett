@@ -1,12 +1,22 @@
-import './MainMenu.styles.css';
+import { useState } from 'react';
+import './ProjectsMenu.styles.css';
+import cn from 'classnames';
 
 function ProjectsMenu() {
+  const menuList = ['Tokens', 'Mini Games', 'Websites', 'Channels'];
+
+  const [currentMenu, setCurrentMenu] = useState<string>(menuList[0]);
+
   return (
-    <div className="mainmenu">
-      <a href="#">Tokens</a>
-      <a href="#">Mini Games</a>
-      <a href="#">Websites</a>
-      <a href="#">Channels</a>
+    <div className="projectmenu">
+      {menuList.map((menuName) => (
+        <a
+          href={`#${menuName}`}
+          onClick={() => setCurrentMenu(menuName)}
+          className={cn(currentMenu == menuName ? 'active' : '')}>
+          {menuName}
+        </a>
+      ))}
     </div>
   );
 }

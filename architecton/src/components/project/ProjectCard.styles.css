@@ -1,0 +1,39 @@
+.projects{
+    background-color: var(--color-bg-selected);
+    padding: var(--layout-padding);
+}
+
+.project-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.project-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.project-card-title img {
+   
+    max-width: 4.75rem;
+    width: 4.75rem;
+}
+
+.project-card-title > div {
+    padding-left: 1rem;
+    font-weight: var(--text-weight-medium);
+}
+
+.project-card-title div .project-card-title-amount {
+    color: var(--color-text-secondary);
+    font-weight: var(--text-weight-normal);
+}
+
+.project-card-open {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}

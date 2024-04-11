@@ -1,0 +1,17 @@
+
+
+.projectmenu{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    column-gap: 1rem;
+    justify-content: space-between;
+    padding-bottom: var(--layout-padding);
+}
+
+.projectmenu a{
+    flex: 0 0 auto;
+}
+

@@ -1,4 +1,11 @@
 
+.coins {
+    padding: var(--layout-padding);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+}
 
 
 .coin-card{
@@ -15,6 +22,9 @@
 
 .coin-card-title img{
     padding-right: 1rem;
+    max-width: 3.25rem;
+    width: 3.25rem;
+    border-radius: 3rem;
 }
 
 .coin-card-title div {

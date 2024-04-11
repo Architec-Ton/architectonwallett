@@ -3,6 +3,8 @@ import Balance from '../../components/balance/Balance';
 import MainMenu from '../../components/menu/MainMenu';
 import CoinList from '../../components/coin/CoinList';
 import ProjectsMenu from '../../components/menu/ProjectsMenu';
+import ProjectList from '../../components/project/ProjectList';
+import Projects from '../../components/project/Projects';
 
 function Main() {
   return (
@@ -10,7 +12,7 @@ function Main() {
       <Balance title="$152 234,17"></Balance>
       <MainMenu />
       <CoinList />
-      <ProjectsMenu />
+      <Projects />
     </Layout>
   );
 }

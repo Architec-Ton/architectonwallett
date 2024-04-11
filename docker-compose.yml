@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+
+  # pgdb:
+  #   image: postgres/postgres:16
+  #   ports:
+  #     - "5438:5432"
+  #   volumes:
+  #     - ./db:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=${POSTGRES_DB}
+  #     - POSTGRES_USER=${POSTGRES_USER}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  architecton:
+    build:
+      context: ./architecton
+      dockerfile: Dockerfile
+    command: npm run build
+    # environment:
+    #   - VITE_BE_API_URL=${VITE_BE_API_URL}
+    volumes:
+      - ./public:/architecton/dist
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   command: python -m uvicorn architecton.main:app --host 0.0.0.0 --port 8000 --workers 1 --forwarded-allow-ips '*'
+  #   env_file:
+  #     - .env.common
+  #   environment:
+  #     - DB_HOST=pgdb
+  #     - DB_NAME=${POSTGRES_DB}
+  #     - DB_USER=${POSTGRES_USER}
+  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
+  #   depends_on:
+  #     - pgdb
+
+
+  # bot:
+  #   build:
+  #     context: ./bot
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   command: python -m bot.py
+  #   env_file:
+  #     - .env.common
+  #   environment:
+  #     - DB_HOST=pgdb
+  #     - DB_NAME=${POSTGRES_DB}
+  #     - DB_USER=${POSTGRES_USER}
+  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
+  #   depends_on:
+  #     - pgdb

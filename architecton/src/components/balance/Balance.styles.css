@@ -2,7 +2,8 @@
 
 .balance{
     min-height: 9rem;
-    padding: 2.2rem 0rem;
+    padding: var(--layout-padding);
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
