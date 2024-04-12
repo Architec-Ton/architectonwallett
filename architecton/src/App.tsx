@@ -13,7 +13,7 @@ function App() {
   };
   return (
     <TonConnectUIProvider
-      manifestUrl="/tonconnect-manifest.json"
+      manifestUrl="https://architecton.site/tonconnect-manifest.json"
       uiPreferences={{ theme: THEME.LIGHT }}
       walletsListConfiguration={{
         includeWallets: [
