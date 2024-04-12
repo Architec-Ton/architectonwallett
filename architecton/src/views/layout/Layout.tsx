@@ -13,7 +13,7 @@ function Layout({ children }: Props) {
   return (
     <>
       <div className={classNames('layout')}>
-        <Header title="Architec.TON" />
+        <Header />
         <main>{children}</main>
       </div>
     </>

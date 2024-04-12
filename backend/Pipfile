@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+pydantic = "*"
+tortoise-orm = {extras = ["asyncpg"], version = "*"}
+orjson = "*"
+aiohttp = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+
+[dev-packages]
+pytest = "*"
+isort = "*"
+black = "*"
+flake8 = "*"
+mypy = "*"
+
+[requires]
+python_version = "3.11"

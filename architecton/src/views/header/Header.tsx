@@ -1,33 +1,41 @@
-import classNames from 'classnames';
-import './Header.styles.css';
-import Dropdown from '../../components/menu/Dropdown';
-import assets from '../../assets';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useBackButton } from '@tma.js/sdk-react';
+import { useEffect } from 'react';
 
-type Props = {
-  title: string;
-};
-
-function Header({ title }: Props) {
+function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  return (
-    <header className={classNames('header')}>
-      <div style={{ display: 'flex' }}>
-        {location.pathname != '/' ? (
-          <img
-            src={assets.iconBack}
-            onClick={() => navigate(-1)}
-            style={{ marginRight: '1rem' }}
-          />
-        ) : (
-          ''
-        )}
-        <h1>{title}</h1>
-      </div>
-      <Dropdown />
-    </header>
-  );
+  const backButton = useBackButton();
+  useEffect(() => {
+    if (location.pathname == '/') {
+      backButton.hide();
+    } else {
+      backButton.on('click', () => {
+        console.log('cliiiiiiik');
+        navigate(-1);
+      });
+      backButton.show();
+    }
+  });
+
+  return <></>;
+  // return (
+  //   <header className={classNames('header')}>
+  //     <div style={{ display: 'flex' }}>
+  //       {location.pathname != '/' ? (
+  //         <img
+  //           src={assets.iconBack}
+  //           onClick={() => navigate(-1)}
+  //           style={{ marginRight: '1rem' }}
+  //         />
+  //       ) : (
+  //         ''
+  //       )}
+  //       <h1>{title}</h1>
+  //     </div>
+  //     <Dropdown />
+  //   </header>
+  // );
 }
 
 export default Header;

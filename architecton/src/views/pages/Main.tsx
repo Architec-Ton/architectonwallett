@@ -3,6 +3,7 @@ import Balance from '../../components/balance/Balance';
 import MainMenu from '../../components/menu/MainMenu';
 import CoinList from '../../components/coin/CoinList';
 import Projects from '../../components/project/Projects';
+import { TonConnectButton } from '@tonconnect/ui-react';
 
 function Main() {
   return (
@@ -11,6 +12,7 @@ function Main() {
       <MainMenu />
       <CoinList />
       <Projects />
+      <TonConnectButton />
     </Layout>
   );
 }

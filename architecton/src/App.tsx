@@ -1,9 +1,43 @@
 import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import router from './Routes';
+import { SDKProvider, type SDKInitOptions } from '@tma.js/sdk-react';
+import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react';
+//import assets from './assets';
 
 function App() {
-  return <RouterProvider router={router} />;
+  const options: SDKInitOptions = {
+    acceptCustomStyles: true,
+    cssVars: true,
+    //async: true,
+  };
+  return (
+    <TonConnectUIProvider
+      manifestUrl="/tonconnect-manifest.json"
+      uiPreferences={{ theme: THEME.LIGHT }}
+      walletsListConfiguration={{
+        includeWallets: [
+          {
+            appName: 'tonwallet',
+            name: 'TON Wallet',
+            imageUrl: 'https://wallet.ton.org/assets/ui/qr-logo.png',
+            aboutUrl:
+              'https://chrome.google.com/webstore/detail/ton-wallet/nphplpgoakhhjchkkhmiggakijnkhfnd',
+            universalLink: 'https://wallet.ton.org/ton-connect',
+            jsBridgeKey: 'tonwallet',
+            bridgeUrl: 'https://bridge.tonapi.io/bridge',
+            platforms: ['chrome', 'android'],
+          },
+        ],
+      }}
+      actionsConfiguration={{
+        twaReturnUrl: 'https://t.me/SmartHomeBell15354_bot/app',
+      }}>
+      <SDKProvider options={options}>
+        <RouterProvider router={router} />{' '}
+      </SDKProvider>
+    </TonConnectUIProvider>
+  );
 }
 
 export default App;
