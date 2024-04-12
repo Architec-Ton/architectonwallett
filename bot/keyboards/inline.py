@@ -9,7 +9,7 @@ menu = InlineKeyboardMarkup(
                 text="Кошелек", web_app=WebAppInfo(url="https://www.architecton.site")
             ),
             InlineKeyboardButton(
-                text="Кошелек (local)", web_app=WebAppInfo(url="http://localhost:5173")
+                text="Кошелек (local)", web_app=WebAppInfo(url="https://architecton.local")
             ),
         ]
     ]

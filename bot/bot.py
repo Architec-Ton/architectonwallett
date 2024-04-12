@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher
 from config_reader import config
 from aiogram import Bot, Dispatcher
 import logging
-import handlers
+import handlers.user_commands
 
 
 bot = Bot(config.bot_token.get_secret_value(), parse_mode='HTML')
