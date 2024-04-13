@@ -1,6 +1,5 @@
 from pydantic import AliasGenerator, ConfigDict
 from pydantic.alias_generators import to_camel
-
 from tortoise.contrib.pydantic import PydanticModel
 
 

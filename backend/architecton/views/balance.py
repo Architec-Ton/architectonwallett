@@ -1,9 +1,10 @@
-from architecton.views.base import BaseViewModel
 from pydantic import Field
-from .token import TokenOut
+
+from architecton.views.base import BaseViewModel
+from architecton.views.token import TokenOut
+
 
 class BalanceOut(BaseViewModel):
-    token: str = TokenOut()
+    token: TokenOut
     amount: float = Field(description="Token amount")
     amount_usd: str = Field(description="Token amount in usd")
-

@@ -71,6 +71,7 @@ function Balance({ title }: Props) {
           <div className="balance-footer">
             Wallet {wallet.account.address} <img src={assets.svgcopy} />
           </div>
+          <TonConnectButton />
         </div>
       )
     );

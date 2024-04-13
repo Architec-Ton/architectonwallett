@@ -1,8 +1,9 @@
 import logging  # noqa
 import os  # noqa
 import platform  # noqa
-import uvicorn
 import sys  # noqa
+
+import uvicorn
 
 log_config = uvicorn.config.LOGGING_CONFIG
 log_config["formatters"]["access"]["fmt"] = "%(asctime)s - %(levelname)s - %(message)s"

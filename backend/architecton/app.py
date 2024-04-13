@@ -1,10 +1,13 @@
-from fastapi import FastAPI
-from tortoise.contrib.fastapi import register_tortoise
-from fastapi.middleware.cors import CORSMiddleware
+import os
 
-from config import description, TORTOISE_ORM, origins
+from config import TORTOISE_ORM, description, origins
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from tortoise.contrib.fastapi import register_tortoise
 
 from architecton.routes import router
+
+ARCHITECTON_API_PREFIX = os.getenv("ARCHITECTON_API_PREFIX", "/api/v1")
 
 
 app = FastAPI(
@@ -12,12 +15,13 @@ app = FastAPI(
     description=description,
     debug=True,
     version="0.0.1",
-    # docs_url=f"{app_base}/docs",
+    # root_path=ARCHITECTON_API_PREFIX,
+    docs_url=f"{ARCHITECTON_API_PREFIX}/docs",
     redoc_url=None,
-    # openapi_url=f"{app_base}/apidoc.json",
+    openapi_url=f"{ARCHITECTON_API_PREFIX}/apidoc.json",
 )
 
-register_tortoise(app, generate_schemas=True, add_exception_handlers=True, config=TORTOISE_ORM)
+# register_tortoise(app, generate_schemas=True, add_exception_handlers=True, config=TORTOISE_ORM)
 
 
 app.add_middleware(
