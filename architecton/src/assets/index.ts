@@ -7,6 +7,7 @@ import iconBank from './icon-bank.svg';
 import iconSend from './icon-send.svg';
 import iconReceive from './icon-receive.svg';
 import iconBuy from './icon-buy.svg';
+import iconFees from './icon-fees.svg';
 
 import iconBack from './icon-back.svg';
 
@@ -30,6 +31,7 @@ export default {
   iconReceive,
   iconSend,
   iconSwap,
+  iconFees,
   coinToncoin,
   coinUSDT,
   coinAssets,

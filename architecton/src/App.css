@@ -29,6 +29,10 @@
   color: var(--color-text-primary);
 }
 
+.color-bg-primary {
+  color: var(--color-bg-primary);
+}
+
 .color-secondary {
   color: var(--color-text-secondary);
 }
@@ -76,6 +80,7 @@ a{
   color: var(--color-text-primary);
   font-weight: var(--text-weight-medium);
 }
+
 
 a:hover, a:active, a.active{
   color: var(--color-bg-primary);

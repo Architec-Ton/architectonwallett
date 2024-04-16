@@ -17,17 +17,18 @@ function Main() {
 
   console.log(data);
 
-  if (error) return <div className="failed">failed to load</div>;
-  if (isLoading) return <div className="Loading">Loading...</div>;
+  // if (error) return <div className="failed">failed to load</div>;
+  // if (isLoading) return <div className="Loading">Loading...</div>;
 
   return (
     <Layout>
       <Balance title="$152 234,17"></Balance>
       <MainMenu />
       <CoinList />
-      {!isLoading && <Projects tokens={data.tokens} />}
     </Layout>
   );
+
+  // //{!isLoading && <Projects tokens={data.tokens} />}
 }
 
 export default Main;

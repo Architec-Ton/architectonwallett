@@ -9,71 +9,73 @@ type Props = {
   title: string;
 };
 
-import { useTonClient } from '../../hooks/useTonClient';
+// import { useTonClient } from '../../hooks/useTonClient';
 import { WalletContractV4 } from 'ton';
 import { useState } from 'react';
 
 function Balance({ title }: Props) {
-  const wallet = useTonWallet();
-  const client = useTonClient();
+  // const wallet = useTonWallet();
+  // const client = useTonClient();
+  const wallet = false;
 
   const [amount, setAmount] = useState<string>('');
 
-  const initF = async () => {
-    console.log(wallet?.account.publicKey);
+  // const initF = async () => {
+  //   console.log(wallet?.account.publicKey);
 
-    ArrayBuffer;
+  //   ArrayBuffer;
 
-    const walletContract = WalletContractV4.create({
-      workchain: 0,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      publicKey: Buffer.from(
-        `${wallet?.account?.publicKey}`,
-        'base64'
-      ) as ArrayBuffer,
-    });
+  //   const walletContract = WalletContractV4.create({
+  //     workchain: 0,
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //     // @ts-ignore
+  //     publicKey: Buffer.from(
+  //       `${wallet?.account?.publicKey}`,
+  //       'base64'
+  //     ) as ArrayBuffer,
+  //   });
 
-    console.log(walletContract);
+  // console.log(walletContract);
 
-    const contract = client?.open(walletContract);
+  // const contract = client?.open(walletContract);
 
-    console.log(contract);
+  // console.log(contract);
 
-    console.log(title);
+  // console.log(title);
 
-    const balance = await contract?.getBalance();
+  // const balance = await contract?.getBalance();
 
-    console.log(balance);
+  // console.log(balance);
 
-    setAmount(`${balance?.toString()}`);
-  };
+  // setAmount(`${balance?.toString()}`);
+  // };
 
-  if (wallet) {
-    initF();
-  }
+  // if (wallet) {
+  //   initF();
+  // }
 
   //console.log(walletInit);
 
-  if (wallet) {
+  if (false) {
     return (
-      wallet && (
-        <div
-          className={classNames('balance')}
-          style={{ backgroundImage: `url(${assets.svgbalance})` }}>
-          <div className="balance-body">
-            <BalanceHeader
-              title={wallet.device.appName}
-              chain={wallet.account.chain}
-            />
-            <div className="balance-amount">{amount} TON</div>
-          </div>
-          <div className="balance-footer">
-            Wallet {wallet.account.address} <img src={assets.svgcopy} />
-          </div>
-          <TonConnectButton />
-        </div>
-      )
+      <></>
+      // wallet && (
+      //   <div
+      //     className={classNames('balance')}
+      //     style={{ backgroundImage: `url(${assets.svgbalance})` }}>
+      //     <div className="balance-body">
+      //       <BalanceHeader
+      //         title={wallet.device.appName}
+      //         chain={wallet.account.chain}
+      //       />
+      //       <div className="balance-amount">{amount} TON</div>
+      //     </div>
+      //     <div className="balance-footer">
+      //       Wallet {wallet.account.address} <img src={assets.svgcopy} />
+      //     </div>
+      //     <TonConnectButton />
+      //   </div>
+      // )
     );
   } else {
     return (
@@ -86,9 +88,7 @@ function Balance({ title }: Props) {
             flexDirection: 'row',
             justifyContent: 'center',
             padding: '1rem',
-          }}>
-          <TonConnectButton />
-        </div>
+          }}></div>
       </div>
     );
   }
