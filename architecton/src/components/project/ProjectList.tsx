@@ -1,7 +1,12 @@
 import assets from '../../assets';
+import { IToken } from '../../types/token';
 import ProjectCard from './ProjectCard';
 
-function ProjectList() {
+interface Props {
+  tokens: IToken[];
+}
+
+function ProjectList({ tokens }: Props) {
   //   const onMenuChange = (menuName) => {
   //     console.log(`Menu changed: ${menuName}`);
   //   };
@@ -13,6 +18,14 @@ function ProjectList() {
         flexDirection: 'column',
         rowGap: '1.5rem',
       }}>
+      {tokens.map((i) => (
+        <ProjectCard
+          title={i.name}
+          icon={i.image}
+          description={i.description}
+        />
+      ))}
+
       <ProjectCard
         title="Punk City"
         icon={assets.imagePunk}

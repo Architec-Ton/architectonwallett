@@ -32,5 +32,6 @@ origins = [
     "http://localhost:8000",
     "http://localhost:5173",
     "http://architecton.site",
+    "https://architecton.local",
     "https://architecton.site",
 ]

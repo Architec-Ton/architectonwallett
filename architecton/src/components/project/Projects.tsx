@@ -1,7 +1,12 @@
+import { IToken } from '../../types/token';
 import ProjectsMenu from '../menu/ProjectsMenu';
 import ProjectList from './ProjectList';
 
-function Projects() {
+interface Props {
+  tokens: IToken[];
+}
+
+function Projects({ tokens }: Props) {
   //   const onMenuChange = (menuName: string) => {
   //     console.log(`Menu changed: ${menuName}`);
   //   };
@@ -9,7 +14,7 @@ function Projects() {
   return (
     <div className="projects">
       <ProjectsMenu />
-      <ProjectList />
+      <ProjectList tokens={tokens} />
     </div>
   );
 }
