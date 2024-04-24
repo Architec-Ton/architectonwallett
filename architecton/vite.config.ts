@@ -31,6 +31,7 @@ export default defineConfig({
       cert: fs.readFileSync('./.cert/cert.crt'),
     },
   },
+
   optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis

@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import './Balance.styles.css';
 
-import { CHAIN } from '@tonconnect/ui-react';
+//import { CHAIN } from '@tonconnect/ui-react';
 
 type Props = {
   name: string;
   title: string;
-  chain: CHAIN;
+  chain: string;
 };
 
 function BalanceHeader({ name, title, chain }: Props) {
@@ -14,7 +14,7 @@ function BalanceHeader({ name, title, chain }: Props) {
     <div className={classNames('balance-header')}>
       <h2>
         <span>{name}</span> {title}
-        {chain == CHAIN.TESTNET ? (
+        {chain == 'CHAIN.TESTNET' ? (
           <small style={{ color: 'red', fontSize: '8px' }}> TESTNET </small>
         ) : (
           ''

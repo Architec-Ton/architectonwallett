@@ -5,6 +5,9 @@ import { SDKProvider, type SDKInitOptions } from '@tma.js/sdk-react';
 //import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react';
 //import assets from './assets';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+//import { Buffer } from 'buffer/';
+
 function App() {
   const options: SDKInitOptions = {
     acceptCustomStyles: true,

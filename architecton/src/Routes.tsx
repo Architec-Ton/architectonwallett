@@ -6,8 +6,13 @@ import Welcome from './views/pages/Welcome';
 import AddWallet from './views/pages/AddWallet';
 import NewWallet from './views/pages/NewWallet';
 import Bank from './views/pages/Bank';
+import Main from './views/pages/Main';
 
 const router = createBrowserRouter([
+  {
+    path: '/welcome',
+    element: <Main />,
+  },
   {
     path: '/',
     element: <Welcome />,

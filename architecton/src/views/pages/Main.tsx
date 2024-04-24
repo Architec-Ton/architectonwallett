@@ -4,14 +4,12 @@ import MainMenu from '../../components/menu/MainMenu';
 import CoinList from '../../components/coin/CoinList';
 //import Projects from '../../components/project/Projects';
 import useSWR from 'swr';
-import { useNavigate } from 'react-router-dom';
-//import { useEffect } from 'react';
 
 function Main() {
   // created function to handle API request
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, error, isLoading } = useSWR(
@@ -19,7 +17,7 @@ function Main() {
     fetcher
   );
 
-  navigate('/welcome');
+  //navigate('/welcome');
 
   console.log(data, isLoading, error);
 
