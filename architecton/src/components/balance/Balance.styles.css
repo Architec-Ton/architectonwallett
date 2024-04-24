@@ -3,14 +3,11 @@
 .balance{
     min-height: 9rem;
     padding: var(--layout-padding);
-    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-repeat: no-repeat;
     background-position: center;
-
-
 }
 
 .balance-amount{
@@ -23,6 +20,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .balance-header h2{

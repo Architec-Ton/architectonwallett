@@ -10,6 +10,9 @@ import iconBuy from './icon-buy.svg';
 import iconFees from './icon-fees.svg';
 
 import iconBack from './icon-back.svg';
+import iconArray from './icon-array.svg';
+import iconAdd from './icon-add.svg';
+import iconExist from './icon-exist.svg';
 
 import coinToncoin from './coins/toncoin.svg';
 import coinUSDT from './coins/usdt.svg';
@@ -20,22 +23,31 @@ import imagePunkGallery from './images/punk-gallery.png';
 
 import imageLogo from './images/logo.jpg';
 
+import iconBankWhite from './icon-bank-white.svg';
+
+import iconHistEmpty from './icon-empty.svg';
+
 export default {
   svgdots,
   svghdots,
   svgcopy,
   svgbalance,
+  iconAdd,
+  iconExist,
   iconBank,
   iconBuy,
   iconBack,
+  iconArray,
   iconReceive,
   iconSend,
   iconSwap,
   iconFees,
+  iconBankWhite,
   coinToncoin,
   coinUSDT,
   coinAssets,
   imagePunk,
   imagePunkGallery,
   imageLogo,
+  iconHistEmpty,
 };

@@ -1,0 +1,56 @@
+.bank-mint-history{
+    padding: 1rem;
+
+}
+
+.bank-mint-history-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.bank-mint-history-title a{
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--color-bg-primary);
+}
+
+.bank-mint-history-title h3{
+    margin: 0;
+    font-size: 1rem;
+}
+
+.bank-mint-history-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bank-mint-history-main{
+    display: flex;
+    flex-direction: row;
+    font-size: 0.75rem;
+    align-items: center;
+
+}
+.bank-mint-history-main div{
+    padding-left: 1rem;
+}
+
+.bank-mint-history-item h3{
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.bank-mint-history-item p{
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+.bank-mint-history-desc{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: end;
+}

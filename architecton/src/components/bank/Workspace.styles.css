@@ -1,0 +1,50 @@
+
+.workspace{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 1rem;
+}
+
+
+.workspace h3{
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.workspace h4 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary)
+}
+
+
+.workspace-banks{
+    border: 1px solid var(--color-bg-primary);
+    border-radius: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    color: var(--color-bg-primary);
+    font-size: 1.25rem;
+}
+
+.workspace-bank-income{
+    font-size: 0.825rem;
+    color: var(--color-bg-primary);
+}
+
+.workspace-bank-income span{
+    color: var(--color-text-secondary);
+}
+
+.workspace-banks-icon{
+    background-color: var(--color-bg-primary);
+    width: 100%;
+    text-align: center;
+    border-radius: 0.5rem;
+        ;
+}

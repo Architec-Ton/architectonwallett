@@ -5,7 +5,27 @@
     "welcome_info_cgp_title" : "Combining Game Projects",
     "welcome_info_cgp_desc" : "Massive support for tokens of a large number of game projects created on the basis of the TON blockchain. Tokenization of everyday products.",
     "welcome_info_dsl_title" : "Data Security Level",
-    "welcome_info_dsl_desc" : "High level of personal data security. Full responsibility for the decentralization of all information."
+    "welcome_info_dsl_desc" : "High level of personal data security. Full responsibility for the decentralization of all information.",
+    "add_wallet_header": "Add Wallet",
+    "add_wallet_btn_new_title": "New Wallet",
+    "add_wallet_btn_new_desc": "Create a new custom wallet in two clicks",
+    "add_wallet_btn_existing_title": "An Existing Wallet",
+    "add_wallet_btn_existing_desc": "Add an existing wallet using a 24-word secret key.",
+    "new_wallet_header_0": "You Secret Key",
+    "new_wallet_header_1": "Confirm the Key",
+    "new_wallet_header_2": "Setup password",
+
+    "btn_next" : "Futher",
+    "btn_create" : "Create",
+    "btn_check" : "Check",
+
+
+    "footer_our": "Our",
+    "footer_support_team": "Support Team",
+    "footer_in_telegram": "in telegram",
+
+
+    "bank_mint_header": "Bank mint"
 
 
 }

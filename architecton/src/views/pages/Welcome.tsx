@@ -4,9 +4,11 @@ import BlockInfo from '../../components/ui/BlockInfo';
 import { useTranslation } from 'react-i18next';
 import FooterButton from '../../components/buttons/FooterButton';
 import Layout2Row from '../layout/Layout2Row';
+import { useNavigate } from 'react-router-dom';
 
 function Welcome() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Layout2Row>
       <Container>
@@ -39,11 +41,11 @@ function Welcome() {
       <div className="footer">
         <div>
           <p>
-            Our <a href="#">Support Team</a>
+            {t('footer_our')} <a href="#">{t('footer_support_team')}</a>
           </p>
-          <p>in Telegram</p>
+          <p>{t('footer_in_telegram')}</p>
         </div>
-        <FooterButton title="Further" />
+        <FooterButton title="Further" onClick={() => navigate('/bank')} />
       </div>
     </Layout2Row>
   );
