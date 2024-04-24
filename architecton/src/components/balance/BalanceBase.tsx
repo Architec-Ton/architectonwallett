@@ -4,7 +4,7 @@ import assets from '../../assets';
 import BalanceHeader from './BalanceHeader';
 import { CHAIN } from '@tonconnect/ui-react';
 
-import { Buffer } from 'buffer/';
+//import { Buffer } from 'buffer/';
 import { ReactNode } from 'react';
 type Props = {
   title: string;

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useBackButton } from '@tma.js/sdk-react';
-import { useEffect } from 'react';
+//import { useBackButton } from '@tma.js/sdk-react';
+//import { useEffect } from 'react';
 import assets from '../../assets';
 import classNames from 'classnames';
 import Dropdown from '../../components/menu/Dropdown';

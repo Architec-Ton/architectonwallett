@@ -1,11 +1,3 @@
-import Layout from '../layout/Layout';
-import assets from '../../assets';
-import CoinCard from '../../components/coin/CoinCard';
-import MainMenu from '../../components/menu/MainMenu';
-import BlockHeader from '../../components/ui/BlockHeader';
-import { useParams } from 'react-router-dom';
-import ResourceList from '../../components/ui/ResourceList';
-import FooterButton from '../../components/buttons/FooterButton';
 import Layout2Row from '../layout/Layout2Row';
 import Container from '../../components/ui/Container';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +5,6 @@ import BalanceBase from '../../components/balance/BalanceBase';
 import Workspace from '../../components/bank/Workspace';
 import Minting from '../../components/bank/MInting';
 import { useEffect, useState } from 'react';
-import { l } from 'vite/dist/node/types.d-aGj9QkWt';
 import BankingHistory from '../../components/bank/BankingHistory';
 
 function Bank() {
@@ -21,7 +12,9 @@ function Bank() {
 
   const [mintingPercent, setMintingPercent] = useState<number>(0);
   const [tokenMint, setTokenMint] = useState<number>(0);
+  // eslint-disable-next-line no-var
   var mintingPercentValue = mintingPercent;
+  // eslint-disable-next-line no-var
   var tokenMintValue = tokenMint;
 
   useEffect(() => {

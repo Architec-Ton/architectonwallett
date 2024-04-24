@@ -1,24 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import classNames from 'classnames';
 import './Balance.styles.css';
 import assets from '../../assets';
-import BalanceHeader from './BalanceHeader';
-import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
+// import BalanceHeader from './BalanceHeader';
+// import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 
-import { Buffer } from 'buffer/';
+// import { Buffer } from 'buffer/';
 type Props = {
   title: string;
 };
 
 // import { useTonClient } from '../../hooks/useTonClient';
-import { WalletContractV4 } from 'ton';
-import { useState } from 'react';
+// import { WalletContractV4 } from 'ton';
+// import { useState } from 'react';
 
 function Balance({ title }: Props) {
   // const wallet = useTonWallet();
   // const client = useTonClient();
-  const wallet = false;
-
-  const [amount, setAmount] = useState<string>('');
+  //const wallet = false;
 
   // const initF = async () => {
   //   console.log(wallet?.account.publicKey);
@@ -41,7 +40,7 @@ function Balance({ title }: Props) {
 
   // console.log(contract);
 
-  // console.log(title);
+  console.log(title);
 
   // const balance = await contract?.getBalance();
 

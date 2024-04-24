@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import FooterButton from '../../components/buttons/FooterButton';
 import Layout2Row from '../layout/Layout2Row';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import { mnemonicNew, mnemonicToPrivateKey } from '@ton/crypto';
 import { WalletContractV4 } from '@ton/ton';
-import { TonClient } from 'ton';
-import Input from '../../components/inputs/Input';
+//import { TonClient } from 'ton';
+//import Input from '../../components/inputs/Input';
 import Mnemonics from '../../components/wallet/Mnemonics';
 import CheckMnemonic from '../../components/wallet/CheckMnemonic';
 
@@ -31,9 +31,9 @@ function NewWallet() {
         workchain,
         publicKey: keyPair.publicKey,
       });
-      const client = new TonClient({
-        endpoint: 'https://toncenter.com/api/v2/jsonRPC',
-      });
+      //   const client = new TonClient({
+      //     endpoint: 'https://toncenter.com/api/v2/jsonRPC',
+      //   });
       //const contract = client.open(wallet);
 
       console.log(wallet.address.toString());

@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import './Balance.styles.css';
 
-import assets from '../../assets';
 import { CHAIN } from '@tonconnect/ui-react';
 
 type Props = {
