@@ -17,8 +17,8 @@ services:
       context: ./architecton
       dockerfile: Dockerfile
     command: npm run build
-    # environment:
-    #   - VITE_BE_API_URL=${VITE_BE_API_URL}
+    environment:
+      - VITE_ENABLE_MINIAPP=1
     volumes:
       - ./public:/architecton/dist
   # backend:
