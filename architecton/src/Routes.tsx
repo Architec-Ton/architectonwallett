@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Main from './views/pages/Main';
+//import Main from './views/pages/Main';
 import Project from './views/pages/Project';
 import Coin from './views/pages/Coin';
 import Welcome from './views/pages/Welcome';
@@ -10,7 +10,7 @@ import Bank from './views/pages/Bank';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Main />,
+    element: <Welcome />,
   },
   {
     path: '/project/:projectId',
