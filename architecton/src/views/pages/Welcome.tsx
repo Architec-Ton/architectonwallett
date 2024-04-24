@@ -45,7 +45,7 @@ function Welcome() {
           </p>
           <p>{t('footer_in_telegram')}</p>
         </div>
-        <FooterButton title="Further" onClick={() => navigate('/bank')} />
+        <FooterButton title="Further" onClick={() => navigate('/wallet/add')} />
       </div>
     </Layout2Row>
   );

@@ -52,7 +52,15 @@ function Bank() {
               { minimumFractionDigits: 5 }
             )}
             symbol="FAN">
-            <button>Connect Wallet</button>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <button>Mint</button>
+              <button>Referal</button>
+            </div>
           </BalanceBase>
         </div>
         <div className="two-column">
@@ -61,7 +69,7 @@ function Bank() {
         </div>
         <BankingHistory bankingHistory={[]} />
       </Container>
-      <div className="footer">
+      <div className="footer" style={{ paddingBottom: '1rem' }}>
         <div>
           <p>
             Our <a href="#">Support Team</a>

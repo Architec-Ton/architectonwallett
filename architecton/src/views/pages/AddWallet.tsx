@@ -13,8 +13,9 @@ function AddWallet() {
   const navigate = useNavigate();
 
   const nextAction = () => {
-    if (menuIndex == 0) navigate('/wallet/new');
-    if (menuIndex == 1) navigate('/wallet/exist');
+    if (menuIndex == 0) navigate('/bank');
+    if (menuIndex == 1) navigate('/wallet/new');
+    if (menuIndex == 2) navigate('/wallet/exist');
   };
 
   return (
@@ -34,20 +35,29 @@ function AddWallet() {
             }}>
             <SelectButton
               icon={assets.iconAdd}
-              title={t('add_wallet_btn_new_title')}
-              description={t('add_wallet_btn_new_desc')}
+              title={'Connect external wallet'}
+              description={'Connect wallet and joy to crowd sale'}
               selected={menuIndex == 0}
               onClick={(selected: boolean) =>
                 selected ? setMenuIndex(0) : setMenuIndex(-1)
               }
             />
             <SelectButton
+              icon={assets.iconAdd}
+              title={t('add_wallet_btn_new_title')}
+              description={t('add_wallet_btn_new_desc')}
+              selected={menuIndex == 1}
+              onClick={(selected: boolean) =>
+                selected ? setMenuIndex(1) : setMenuIndex(-1)
+              }
+            />
+            <SelectButton
               icon={assets.iconExist}
               title={t('add_wallet_btn_existing_title')}
               description={t('add_wallet_btn_existing_desc')}
-              selected={menuIndex == 1}
+              selected={menuIndex == 2}
               onClick={(selected: boolean) => {
-                selected ? setMenuIndex(1) : setMenuIndex(-1);
+                selected ? setMenuIndex(2) : setMenuIndex(-1);
                 console.log(menuIndex);
               }}
             />
@@ -62,7 +72,7 @@ function AddWallet() {
           <p>in Telegram</p>
         </div>
         <FooterButton
-          title={menuIndex == 0 ? 'Create' : 'Futher'}
+          title={menuIndex == 0 ? 'Go to bank' : 'Futher'}
           disabled={menuIndex == -1}
           onClick={() => nextAction()}
         />
