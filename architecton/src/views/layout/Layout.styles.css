@@ -2,8 +2,8 @@
 
 .layout {
     /* border: 1px dashed #00f; */
-    min-width: 375px;
-    max-width: 375px;
+    min-width: 384px;
+    max-width: 384px;
     padding: 0 0;
     /* display: flex;
     flex-direction: column;
@@ -83,8 +83,8 @@ h2{
 
 @media screen and (max-width: 390px) {
     .layout{
-        padding: 0 0.1rem;
-        min-width: 375px;
+        padding: 0 0rem;
+        min-width: 384px;
     }
 }
 

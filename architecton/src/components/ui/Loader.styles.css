@@ -1,0 +1,38 @@
+
+
+.loader{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.loader div{
+    text-align: center;
+    margin: 3rem;
+}
+
+.loader div h3{
+    margin: 0;
+}
+
+.loader div p{
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin: 0.2rem;
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+
+}
+
+
+.loader img{
+    animation: spin 1s ease infinite;
+    width: 150px;
+    margin: 3rem;
+}
+

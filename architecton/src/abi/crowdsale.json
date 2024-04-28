@@ -1,0 +1,25 @@
+{
+  "ABI version": 2,
+  "functions": [
+    {
+      "name": "constructor",
+      "inputs": [
+        {"name":"unlockDate","type":"uint32"}
+      ],
+      "outputs": []
+    },
+    {
+      "name": "buyBank",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "myBanksBalance",
+      "inputs": [],
+      "outputs": [
+        {"name":"balance","type":"uint"}
+      ]
+    }
+  ],
+  "events": []
+}

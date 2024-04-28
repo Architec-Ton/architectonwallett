@@ -2,6 +2,7 @@ import svgdots from './vdots.svg';
 import svghdots from './hdots.svg';
 import svgbalance from './balance-bg.svg';
 import svgcopy from './copy.svg';
+import svgloader from './loader.svg';
 import iconSwap from './icon-swap.svg';
 import iconBank from './icon-bank.svg';
 import iconSend from './icon-send.svg';
@@ -32,6 +33,7 @@ export default {
   svghdots,
   svgcopy,
   svgbalance,
+  svgloader,
   iconAdd,
   iconExist,
   iconBank,

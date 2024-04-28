@@ -25,7 +25,7 @@ function Workspace({ bank_count, bank_income }: Props) {
       <div className="workspace-bank-income">
         <h4>Bank Income</h4>
         <div>
-          {bank_income} FAN <span>/ h</span>
+          {bank_income} $BNK <span>/ h</span>
         </div>
       </div>
     </div>

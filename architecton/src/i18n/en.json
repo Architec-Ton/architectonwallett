@@ -25,7 +25,15 @@
     "footer_in_telegram": "in telegram",
 
 
-    "bank_mint_header": "Bank mint"
+    "bank_mint_header": "Bank mint",
+
+    "mint_title": "Mint",
+    "mint_buy": "Buy",
+
+    "mint_input_recv" : "Receive",
+    "mint_input_send" : "Send",
+    "mint_input_balance" : "Balance"
+
 
 
 }

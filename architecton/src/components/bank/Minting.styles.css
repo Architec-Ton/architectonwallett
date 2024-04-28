@@ -15,7 +15,7 @@
 
 .minting-banks-info{
     padding-left: 0.55rem;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -35,7 +35,7 @@
     border-radius: 0.5rem;
     background-color: var(--color-bg-primary);
     color: var(--color-text-inverse);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     text-align: center;
     display: flex;
     align-items: center;

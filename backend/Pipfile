@@ -10,6 +10,7 @@ tortoise-orm = {extras = ["asyncpg"], version = "*"}
 orjson = "*"
 aiohttp = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+tontools = "*"
 
 [dev-packages]
 pytest = "*"
