@@ -6,7 +6,7 @@ WORKDIR /architecton
 
 COPY ./Pipfile ./Pipfile.lock
 
-RUN pipenv install
+RUN pipenv install --system
 
 COPY ./architecton /architecton
 
