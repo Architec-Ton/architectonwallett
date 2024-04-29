@@ -4,7 +4,7 @@ RUN pip install pipenv
 
 WORKDIR /architecton
 
-COPY ./Pipfile ./Pipfile.lock
+COPY ./Pipfile ./Pipfile.lock ./
 
 RUN pipenv requirements > requirements.txt
 RUN pip install --user -r requirements.txt
