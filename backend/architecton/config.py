@@ -34,4 +34,9 @@ origins = [
     "http://architecton.site",
     "https://architecton.local",
     "https://architecton.site",
+    "https://192.168.10.162",
+    "https://192.168.56.1",
 ]
+
+
+crowd_sale_address = os.getenv("CROWDSALE_ADDRESS", "EQDqDWdMUxmbd6EW4iCfUTCLYt5sy185eZnVop7rFXd2RzzA")

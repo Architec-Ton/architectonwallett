@@ -14,3 +14,4 @@ class AccountOut(BaseViewModel):
 class AccountBalanceOut(BaseViewModel):
     tons: int
     banks: int
+    address: str
