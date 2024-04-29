@@ -19,6 +19,7 @@ services:
     command: npm run build
     environment:
       - VITE_ENABLE_MINIAPP=1
+      - VITE_BE_URL=${VITE_BE_URL}
     volumes:
       - ./public:/architecton/dist
   backend:

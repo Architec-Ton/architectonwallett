@@ -9,6 +9,6 @@ COPY ./Pipfile ./Pipfile.lock ./
 RUN pipenv requirements > requirements.txt
 RUN pip install --user -r requirements.txt
 
-COPY ./ /architecton
+COPY ./ ./architecton
 
 CMD python -m uvicorn architecton.main:app --host 0.0.0.0 --port 8000
