@@ -21,16 +21,16 @@ class AccountController:
     @staticmethod
     async def get_wallet(address: str):
         client = get_ton_client()
-        contract = CrowdSale(address, client)
+        contract = CrowdSale(client)
 
         tons = await contract.get_balance()
 
-        print(tons)
+        print("TON on contract:", tons)
 
         banks = 0
 
         try:
-            banks = await contract.get_banks()
+            banks = await contract.get_banks(address)
         except BaseException as e:
             print("Get banks fail", e)
 
