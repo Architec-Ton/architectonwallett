@@ -23,7 +23,10 @@ router = APIRouter(tags=["General route"])
 async def account(address: str = None):
 
     tons = await AccountController.get_balance(address)
-    banks = 10
+    banks = 0
 
-    # test = await AccountController.get_wallet(address)
+    try:
+        banks = await AccountController.get_wallet(address)
+    except BaseException as e:
+        logging.error(f"Errors get banks: {e}")
     return AccountBalanceOut(tons=tons, banks=banks, address=crowd_sale_address)

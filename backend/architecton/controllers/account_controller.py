@@ -21,24 +21,24 @@ class AccountController:
     @staticmethod
     async def get_wallet(address: str):
         client = get_ton_client()
-        address = "EQByVJjaA9EM8SzoApOuF0eE2USMNB2kT8ZlMV1TmWLfhgLe"
-        address = "EQDqDWdMUxmbd6EW4iCfUTCLYt5sy185eZnVop7rFXd2RzzA"
-        # address = "EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA"
-        # address = "EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA"
-
         contract = CrowdSale(address, client)
 
         tons = await contract.get_balance()
 
         print(tons)
 
-        banks = await contract.get_banks()
+        banks = 0
+
+        try:
+            banks = await contract.get_banks()
+        except BaseException as e:
+            print("Get banks fail", e)
 
         print((banks))
 
+        return banks
+
         # jetton = Jetton("EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA", provider=client)
-        print("get_wallet")
-        print(data)
 
         # await jetton.update()
         # print(
