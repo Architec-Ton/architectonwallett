@@ -1,6 +1,6 @@
 import os
 
-from config import TORTOISE_ORM, description, origins
+from architecton.config import TORTOISE_ORM, description, origins
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
