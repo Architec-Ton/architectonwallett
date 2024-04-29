@@ -11,4 +11,4 @@ RUN pip install --user -r requirements.txt
 
 COPY ./ ./architecton
 
-CMD python -m uvicorn architecton.main:app --host 0.0.0.0 --port 8000
+CMD python -m uvicorn architecton.app:app --host 0.0.0.0 --port 8000
