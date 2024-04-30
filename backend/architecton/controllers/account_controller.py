@@ -19,6 +19,18 @@ class AccountController:
         return await get_ton_client().get_balance(address)
 
     @staticmethod
+    async def get_banks(address: str):
+        client = get_ton_client()
+        contract = CrowdSale(client)
+        return await contract.get_banks(address)
+
+    @staticmethod
+    async def get_coins(address: str):
+        client = get_ton_client()
+        contract = CrowdSale(client)
+        return await contract.get_coins(address)
+
+    @staticmethod
     async def get_wallet(address: str):
         client = get_ton_client()
         contract = CrowdSale(client)
@@ -36,7 +48,7 @@ class AccountController:
 
         print((banks))
 
-        return banks
+        return 0
 
         # jetton = Jetton("EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA", provider=client)
 

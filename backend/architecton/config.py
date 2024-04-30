@@ -42,5 +42,10 @@ origins = [
 # address = "EQDqDWdMUxmbd6EW4iCfUTCLYt5sy185eZnVop7rFXd2RzzA"
 # address = "EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA"
 # address = "EQBynBO23ywHy_CgarY9NK9FTz0yDsG82PtcbSTQgGoXwiuA"
-
-crowd_sale_address = os.getenv("CROWDSALE_ADDRESS", "0QCtwujhh-vTomKvurFgHifJOb4mK-vHnBjELhkhfLVvJ0Tz")
+# "0QCtwujhh-vTomKvurFgHifJOb4mK-vHnBjELhkhfLVvJ0Tz"
+aa = "kQBhx3nW5tVt4nIIx_zDfsw_LA5YWu79Gbyi6eFbfrUGnMfQ"
+bbb = "0QCtwujhh-vTomKvurFgHifJOb4mK-vHnBjELhkhfLVvJ0Tz"
+ccc = "EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6"
+lll = "EQDIfqmP71phy7GlkRrx86eQrtufpj9HDjNAt5uhTFr-JUVH"
+testnet_crowd_sale_v2 = "EQC64tH5_uPMRcfy2KOXm0h-udsL6FA5U3cfm60tCK4shNux"
+crowd_sale_address = os.getenv("CROWDSALE_ADDRESS", testnet_crowd_sale_v2)
