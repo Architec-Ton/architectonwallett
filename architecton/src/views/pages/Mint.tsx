@@ -1,9 +1,3 @@
-// import Layout from '../layout/Layout';
-// import Balance from '../../components/balance/Balance';
-// import MainMenu from '../../components/menu/MainMenu';
-// import CoinList from '../../components/coin/CoinList';
-//import Projects from '../../components/project/Projects';
-// import useSWR from 'swr';
 import FooterButton from '../../components/buttons/FooterButton';
 import { useTranslation } from 'react-i18next';
 import Layout2Row from '../layout/Layout2Row';
@@ -16,116 +10,86 @@ import React, { useEffect, useState } from 'react';
 import {
   useTonAddress,
   //   useTonClientUI,
-  useTonWallet,
+  // useTonWallet,
 } from '@tonconnect/ui-react';
 // import { TonClientData } from '@tonclient/core';
-import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from '@ton/ton';
-import { useTonClient } from '../../hooks/useTonClient';
+import { BE_URL } from '../../constants';
+import useSWR from 'swr';
+import { useNavigate } from 'react-router-dom';
+import { useTonConnect } from '../../hooks/useTonConnect';
+import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
 
 function Mint() {
   // if (error) return <div className="failed">failed to load</div>;
   // if (isLoading) return <div className="Loading">Loading...</div>;
   const tadddress = useTonAddress(false);
-  const [tonConnectUI] = useTonConnectUI();
+
   const [tonBalance, setTonBalance] = useState<number | null>(null);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [bankBalance, setBankBalance] = useState<number | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const [ContractAddress, setContractAddress] = useState<string | null>(null);
 
-  console.log(walletAddress);
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const tonClient = useTonClient();
+  const { connected, wallet } = useTonConnect();
+
+  //const navigate = useNavigate();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data, isLoading } = useSWR(
+    `${BE_URL}/account/${tadddress}`,
+    connected ? fetcher : null
+  );
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
-
-  const tonWallet = useTonWallet();
 
   //const walletAddress = '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK';
 
   const [recvBank, setRecvBank] = useState<number>(1);
-  const [sendTon, setSendTon] = useState<number>(2);
+  const [sendTon, setSendTon] = useState<number>(0.01);
 
   const onChangeBank = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
     setRecvBank(value);
-    setSendTon(value / 50);
+    setSendTon(value / 100);
   };
-  const ContractAddress = 'EQDqDWdMUxmbd6EW4iCfUTCLYt5sy185eZnVop7rFXd2RzzA';
-
+  //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
+  const { crowdSale, buyBank } = useCrowdSaleContract();
   const handleBuyBanks = async () => {
-    try {
-      const transaction = {
-        validUntil: Math.floor(Date.now() / 1000) + 600,
-        messages: [
-          {
-            address: ContractAddress, // destination address
-            amount: '20000000', //Toncoin in nanotons
-          },
-        ],
-      };
+    const tx = await buyBank(sendTon + 0.005);
+    console.log(tx);
 
-      // Отправляем транзакцию для покупки банков
-      const result = await tonConnectUI.sendTransaction(transaction);
+    navigate('/');
+  };
 
-      // Обрабатываем успешную транзакцию
-      //setTransactionStatus('Banks purchased successfully!');
-      console.log('Transaction result:', result);
-    } catch (error) {
-      // Обрабатываем ошибки
-      console.error('Error buying banks:', error);
-      //setTransactionStatus('Error buying banks');
+  const fetchData = async () => {
+    console.log('call balance', crowdSale);
+    if (connected && crowdSale && wallet) {
+      console.log('get balance');
+      const amount = await crowdSale?.getBanks(Address.parse(wallet));
+      console.log('getBanks:', amount);
+      setBankBalance(Number(amount));
     }
   };
 
-  tonConnectUI.getWallets().then((value) => console.log(value));
-
   useEffect(() => {
-    async function fetchBalance() {
-      if (!tonConnectUI && !tadddress) return;
-
-      try {
-        //await tonClient.setup(tonConnectUI.config);
-        const wallet = await tonClient.getBalance(
-          Address.parseFriendly(tadddress).address
-        );
-        console.log('wallet balance', wallet);
-        //const account = await tonClient.;
-        //console.log(account);
-        setTonBalance(Number(wallet) / 1e9);
-      } catch (error) {
-        console.error('Error fetching balance:', error);
+    if (!isLoading) {
+      console.log('DATA:', data);
+      if (data) {
+        fetchData();
+        setTonBalance(Number(data.tons) / 1e9);
+        // setContractAddress(data.address);
+        setBankBalance(data.banks);
       }
     }
-
-    fetchBalance();
-  }, [tonConnectUI]);
-
-  //   useEffect(() => {
-  //     async function fetchBalance() {
-  //       if (!tonClient || !walletAddress) return;
-
-  //       try {
-  //         const accountData: TonClientData = await tonClient.net.query_account({
-  //           account: walletAddress,
-  //         });
-  //         setTonBalance(accountData.balance);
-  //       } catch (error) {
-  //         console.error('Error fetching balance:', error);
-  //       }
-  //     }
-
-  //     fetchBalance();
-  //   }, [tonClient, walletAddress]);
-
-  useEffect(() => {
-    // Set wallet address here or pass it as a prop
-    setWalletAddress('0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK');
-  }, []);
-
-  console.log(tonWallet);
+  }, [isLoading]);
 
   return (
     <Layout2Row>
-      <Container>
+      <Container isLoading={isLoading}>
         <div>
           <h2
             style={{
@@ -140,6 +104,7 @@ function Mint() {
             onChange={onChangeBank}
             selected={false}
             value={recvBank}
+            balance={bankBalance ? bankBalance : 0}
           />
           <div>X</div>
           <MintInput
@@ -150,9 +115,6 @@ function Mint() {
             value={sendTon}
             selected={false}
           />
-        </div>
-        <div>
-          <button onClick={handleBuyBanks}>Buy</button>
         </div>
       </Container>
       <div className="footer">

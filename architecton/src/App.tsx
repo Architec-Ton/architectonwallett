@@ -20,23 +20,8 @@ function App() {
       <TonConnectUIProvider
         manifestUrl="https://architecton.site/tonconnect-manifest.json"
         uiPreferences={{ theme: THEME.LIGHT }}
-        walletsListConfiguration={{
-          includeWallets: [
-            {
-              appName: 'tonwallet',
-              name: 'TON Wallet',
-              imageUrl: 'https://wallet.ton.org/assets/ui/qr-logo.png',
-              aboutUrl:
-                'https://chrome.google.com/webstore/detail/ton-wallet/nphplpgoakhhjchkkhmiggakijnkhfnd',
-              universalLink: 'https://wallet.ton.org/ton-connect',
-              jsBridgeKey: 'tonwallet',
-              bridgeUrl: 'https://bridge.tonapi.io/bridge',
-              platforms: ['chrome', 'android'],
-            },
-          ],
-        }}
         actionsConfiguration={{
-          twaReturnUrl: 'https://t.me/SmartHomeBell15354_bot/app',
+          twaReturnUrl: import.meta.env.VITE_BE_TWA_RETURN,
         }}>
         <SDKProvider options={options}>
           <AuthProvider>

@@ -6,109 +6,91 @@ import Workspace from '../../components/bank/Workspace';
 import Minting from '../../components/bank/MInting';
 import { useEffect, useState } from 'react';
 import BankingHistory from '../../components/bank/BankingHistory';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth';
 import useSWR from 'swr';
 import { BE_URL } from '../../constants';
 import { IBankOut } from '../../types/api/bank';
-import { TonConnectButton, useTonConnectUI } from '@tonconnect/ui-react';
+import { TonConnectButton, useTonAddress } from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
+import { useTonConnect } from '../../hooks/useTonConnect';
+//import { useTonClient } from '../../hooks/useTonClient';
+//import { Address } from '@ton/core';
+//import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
 
 function Bank() {
   const { t } = useTranslation();
 
-  const [isGLoading, setIsGLoading] = useState<boolean>(true);
-
-  const { auth, setAuth } = useAuth();
+  //const { auth, setAuth } = useAuth();
 
   //const wallet = useTonWallet();
 
   const [mintingPercent, setMintingPercent] = useState<number>(0);
   const [tokenMint, setTokenMint] = useState<number>(0);
 
+  const [bankCount, setBankCount] = useState<number>(0);
+  const [bankersCount, setBankersCount] = useState<number>(0);
+  const [bankIncome, setBankIncome] = useState<number>(0);
+
   // eslint-disable-next-line no-var
   //var mintingPercentValue = mintingPercent;
   // eslint-disable-next-line no-var
   //var tokenMintValue = tokenMint;
 
+  const { connected } = useTonConnect();
+
+  const userFriendlyAddress = useTonAddress();
+
+  //const { client } = useTonClient();
+
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-  const address = auth && auth.address ? auth.address : 'none';
-
-  const [tonConnectUI] = useTonConnectUI();
 
   const navigate = useNavigate();
 
+  //const { crowdSale, sendInc } = useCrowdSaleContract();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data, error, isLoading } = useSWR(
-    `${BE_URL}/bank/${address}`,
+  const { data, isLoading } = useSWR(
+    `${BE_URL}/bank/${userFriendlyAddress ? userFriendlyAddress : 'none'}`,
     fetcher
   );
 
-  useEffect(
-    () =>
-      tonConnectUI.onStatusChange((wallet) => {
-        console.log('Wallet info2:', wallet);
-        if (wallet) {
-          if (!auth || !auth.address) {
-            if (!auth) {
-              setAuth({
-                address: wallet.account?.address,
-                tgid: '',
-              });
-              console.log('Auth:', auth);
-            } else {
-              auth.address = wallet.account?.address;
-              setAuth(auth);
-              console.log('Auth2:', auth);
-            }
-          }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (connected && crowdSale && wallet) {
+  //       crowdSale
+  //         ?.getBanks(Address.parse(wallet))
+  //         .then((amount: bigint) => setBankCount(Number(amount)));
+  //       crowdSale
+  //         ?.getCoins(Address.parse(wallet))
+  //         .then((amount: bigint) => setTokenMint(Number(amount) / 100_000));
+  //     }
+  //   };
 
-          console.log('Wallet info:', wallet);
-          console.log('send info to backend');
-          console.log(auth);
-          // checkProofInYourBackend(
-          //   wallet.connectItems.tonProof.proof,
-          //   wallet.account
-          // );
-        }
-      }),
-    []
-  );
-
-  const bank = data as IBankOut;
+  //   fetchData();
+  // }, [connected, crowdSale, isLoading]);
 
   useEffect(() => {
-    setIsGLoading(isLoading);
-    console.log(data, error, isLoading);
     if (!isLoading) {
-      setMintingPercent(
-        (100 * (data.bank.bankTotal - data.bank.bankFree)) / data.bank.bankTotal
-      );
-      if (bank && bank.balance) setTokenMint(bank?.balance?.bnkAmount);
-      // if (bank?.balance?.bankAmount > 0) {
-      //   setInterval(() => {
-      //     //setMintingPercent(mintingPercentValue);
-      //     //mintingPercentValue += 0.1;
-      //     const increase = 0.00001 * bank?.balance?.bankAmount;
-      //     setTokenMint(tokenMintValue + increase);
-      //   }, 1000);
-      // }
+      const bank = data as IBankOut;
+      if (connected) {
+        if (bank?.balance) {
+          setBankCount(bank?.balance?.bankAmount);
+          setTokenMint(bank?.balance?.bnkAmount);
+          setBankIncome(bank?.balance?.bnkPerHour);
+        }
+        setBankersCount(bank.bank.bankBankers);
+
+        setMintingPercent(
+          (100 * (data.bank.bankTotal - data.bank.bankFree)) /
+            data.bank.bankTotal
+        );
+      }
     }
   }, [isLoading]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setMintingPercent(mintingPercentValue);
-  //     setTokenMint(tokenMintValue);
-  //     mintingPercentValue += 0.1;
-  //     tokenMintValue += 0.00001;
-  //   }, 100);
-  //   return () => clearInterval(interval);
-  // }, []);
-
   return (
     <Layout2Row>
-      <Container isLoading={isGLoading} loadingTitle="Bank Mint">
+      <Container isLoading={isLoading} loadingTitle="Bank Mint">
         <div
           style={{
             display: 'flex',
@@ -124,7 +106,7 @@ function Bank() {
 
           <BalanceBase
             title="Architec.TON"
-            bankCount={bank?.balance?.bankAmount}
+            bankCount={bankCount}
             amount={tokenMint.toLocaleString(undefined, {
               minimumFractionDigits: 5,
             })}
@@ -140,19 +122,16 @@ function Bank() {
                   width: '100%',
                 }}
               />
-              {!!auth && (
+              {connected && (
                 <button onClick={() => navigate('/bank/mint')}>Mint</button>
               )}
             </div>
           </BalanceBase>
         </div>
         <div className="two-column">
-          <Workspace
-            bank_count={bank?.balance?.bankAmount}
-            bank_income={bank?.balance?.bnkPerHour}
-          />
+          <Workspace bank_count={bankCount} bank_income={bankIncome} />
           <Minting
-            bankers_count={bank?.bank.bankBankers}
+            bankers_count={bankersCount}
             mintingPercent={mintingPercent}
           />
         </div>

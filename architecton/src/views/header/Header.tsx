@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-//import { useBackButton } from '@tma.js/sdk-react';
-//import { useEffect } from 'react';
+import { useBackButton } from '@tma.js/sdk-react';
+import { useEffect } from 'react';
 import assets from '../../assets';
 import classNames from 'classnames';
 import Dropdown from '../../components/menu/Dropdown';
@@ -8,19 +8,20 @@ import Dropdown from '../../components/menu/Dropdown';
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
+  const backButton = useBackButton();
+  useEffect(() => {
+    if (location.pathname == '/') {
+      backButton.hide();
+    } else {
+      backButton.on('click', () => {
+        console.log('cliiiiiiik');
+        navigate(-1);
+      });
+      backButton.show();
+    }
+  });
+
   if (import.meta.env.VITE_ENABLE_MINIAPP) {
-    // const backButton = useBackButton();
-    // useEffect(() => {
-    //   if (location.pathname == '/') {
-    //     backButton.hide();
-    //   } else {
-    //     backButton.on('click', () => {
-    //       console.log('cliiiiiiik');
-    //       navigate(-1);
-    //     });
-    //     backButton.show();
-    //   }
-    // });
     return <></>;
   } else {
     return (
