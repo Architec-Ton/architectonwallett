@@ -12,12 +12,13 @@ const useApi = () => {
     try {
       const options = {
         method: method,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-          'Content-Type': 'application/json',
-        },
-        mode: 'no-cors',
+        // headers: {
+        //   //'Access-Control-Allow-Origin': '*',
+        //   //'Access-Control-Allow-Headers': '*',
+        //   //'Content-Type': 'application/json',
+        //   //referrerPolicy: 'unsafe-url',
+        // },
+        mode: 'cors',
       } as RequestInit;
       if (body) {
         options.body = body;
