@@ -25,10 +25,16 @@ class AccountController:
         return await contract.get_banks(address)
 
     @staticmethod
-    async def get_coins(address: str):
+    async def get_total():
         client = get_ton_client()
         contract = CrowdSale(client)
-        return await contract.get_coins(address)
+        return await contract.get_total()
+
+    @staticmethod
+    async def get_total_bankers():
+        client = get_ton_client()
+        contract = CrowdSale(client)
+        return await contract.get_total_banker()
 
     @staticmethod
     async def get_wallet(address: str):

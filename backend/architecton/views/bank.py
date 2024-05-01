@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import Field
 
 from architecton.views.base import BaseViewModel
@@ -20,6 +22,15 @@ class BankInfoOut(BaseViewModel):
 class BankOut(BaseViewModel):
     balance: BankBalanceOut | None = Field(default=None)
     bank: BankInfoOut = Field(default=BankInfoOut())
+
+
+class BankHistoryOut(BaseViewModel):
+    title: str = Field(default="mint")
+    type: str = Field(default="mint")
+    date: datetime.datetime = Field()
+    symbol: str | None = Field(default=None)
+    changes: str | None = Field(default=None)
+
 
 
 
