@@ -11,11 +11,11 @@ const useApi = () => {
     setError(null);
     try {
       const options = {
-        method,
+        method: method,
         headers: {
           'Content-Type': 'application/json',
         },
-        mode: 'cors',
+        //mode: 'cors',
       } as RequestInit;
       if (body) {
         options.body = JSON.stringify(body);
