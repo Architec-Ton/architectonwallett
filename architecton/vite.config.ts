@@ -19,6 +19,7 @@ export default defineConfig({
     react(),
     svgr(),
   ],
+
   server: {
     port: 443,
     host: '0.0.0.0',
