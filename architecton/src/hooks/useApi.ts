@@ -17,6 +17,7 @@ const useApi = () => {
           'Access-Control-Allow-Headers': '*',
           'Content-Type': 'application/json',
         },
+        mode: 'no-cors',
       } as RequestInit;
       if (body) {
         options.body = body;
