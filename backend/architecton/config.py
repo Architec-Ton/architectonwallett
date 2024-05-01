@@ -34,6 +34,7 @@ origins = [
     "http://architecton.site",
     "https://architecton.local",
     "https://architecton.site",
+    "https://www.architecton.site",
     "https://192.168.10.162",
     "https://192.168.56.1",
 ]
