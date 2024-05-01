@@ -19,6 +19,7 @@ import useSWR from 'swr';
 import { useNavigate } from 'react-router-dom';
 import { useTonConnect } from '../../hooks/useTonConnect';
 import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
+import Footer from '../../components/ui/Footer';
 
 function Mint() {
   // if (error) return <div className="failed">failed to load</div>;
@@ -49,18 +50,24 @@ function Mint() {
   //const walletAddress = '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK';
 
   const [recvBank, setRecvBank] = useState<number>(1);
-  const [sendTon, setSendTon] = useState<number>(0.01);
+  const [sendTon, setSendTon] = useState<number>(0.1);
+  const [buyDisabled, setbuyDisabled] = useState<boolean>(false);
 
   const onChangeBank = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
     setRecvBank(value);
-    setSendTon(value / 100);
+    setSendTon(value / 10);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onChangeTon = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //const value = parseInt(e.currentTarget.value);
   };
   //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
   const { crowdSale, buyBank } = useCrowdSaleContract();
   const handleBuyBanks = async () => {
-    const tx = await buyBank(sendTon + 0.005);
-    console.log(tx);
+    console.log('Try buy: ', sendTon);
+    const tx = await buyBank(sendTon);
+    console.log('Transaction responce:', tx);
 
     navigate('/');
   };
@@ -87,9 +94,17 @@ function Mint() {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (sendTon > tonBalance) {
+      setbuyDisabled(true);
+    } else {
+      setbuyDisabled(false);
+    }
+  }, [sendTon, tonBalance]);
+
   return (
     <Layout2Row>
-      <Container isLoading={isLoading}>
+      <Container isLoading={isLoading} loadingTitle={t(`mint_title`)}>
         <div>
           <h2
             style={{
@@ -98,39 +113,53 @@ function Mint() {
             {t(`mint_title`)}
           </h2>
         </div>
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            paddingTop: '2rem',
+          }}>
           <MintInput
-            icon={assets.iconBank}
+            icon={assets.iconBankColor}
             onChange={onChangeBank}
             selected={false}
             value={recvBank}
             balance={bankBalance ? bankBalance : 0}
           />
-          <div>X</div>
+          <div
+            style={{
+              margin: '-1rem 0',
+              zIndex: 100,
+            }}>
+            <img src={assets.iconExchange} />
+          </div>
           <MintInput
-            icon={assets.iconBank}
+            icon={assets.iconTon}
             receive={false}
             title="TON"
             balance={tonBalance ? tonBalance : 0}
             value={sendTon}
             selected={false}
+            onChange={onChangeTon}
           />
+          <p
+            className="text-small"
+            style={{
+              padding: '1rem 2rem',
+              fontSize: '0.75rem',
+            }}>
+            * {t('mint_comment')}
+          </p>
         </div>
       </Container>
-      <div className="footer">
-        <div>
-          <p>
-            Our <a href="#">Support Team</a>
-          </p>
-          <p>in Telegram</p>
-        </div>
+      <Footer>
         <FooterButton
+          disabled={buyDisabled}
           title={t('mint_buy')}
           onClick={handleBuyBanks}
-
-          //disabled={walletState == 1 && !approved}
         />
-      </div>
+      </Footer>
     </Layout2Row>
   );
 

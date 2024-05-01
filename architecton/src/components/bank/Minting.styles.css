@@ -32,7 +32,7 @@
 }
 
 .minting-progress-bar-completed{
-    border-radius: 0.5rem;
+    border-radius: 0.4rem;
     background-color: var(--color-bg-primary);
     color: var(--color-text-inverse);
     font-size: 0.85rem;
@@ -40,5 +40,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 
 }

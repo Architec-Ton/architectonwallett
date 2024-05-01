@@ -1,15 +1,41 @@
 // import useSWR, { Fetcher } from 'swr';
-// import { BE_URL } from '../constants';
+import { BE_URL } from '../constants';
 
-// const fetcher: Fetcher<> = (...args: any[]) => fetch(...args: any).then((res) => res.json());
-
-// //const navigate = useNavigate();
-
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const { data, error, isLoading } = useSWR(
-//   `http://127.0.0.1:8000/api/v1/info/test`,
-//   fetcher
-// );
-
-// const useApiFetch = (base_url: string, ...args: : any[]) =>
-//   useSWR(`${BE_URL}/${base_url}`, ...args : any[]);
+import { useState } from 'react';
+const useApi = () => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const fetchData = async (url, method = 'GET', body = null) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      } as RequestInit;
+      if (body) {
+        options.body = JSON.stringify(body);
+      }
+      const response = await fetch(`${BE_URL}${url}`, options);
+      if (!response.ok || response.status > 399) {
+        console.log('fetchError', response.status);
+        setError(response.status);
+        throw new Error('Network response was not ok');
+        setError(response.status);
+      }
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.log('error', error);
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return { data, isLoading, error, fetchData };
+};
+export default useApi;

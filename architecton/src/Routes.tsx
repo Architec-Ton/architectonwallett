@@ -8,6 +8,8 @@ import NewWallet from './views/pages/NewWallet';
 import Bank from './views/pages/Bank';
 import Main from './views/pages/Main';
 import Mint from './views/pages/Mint';
+import BankHistory from './views/pages/BankHistory';
+import Wallet from './views/pages/Wallet';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
   {
     path: '/bank/mint',
     element: <Mint />,
+  },
+  {
+    path: '/bank/history',
+    element: <BankHistory />,
+  },
+  {
+    path: '/wallet',
+    element: <Wallet />,
   },
 ]);
 

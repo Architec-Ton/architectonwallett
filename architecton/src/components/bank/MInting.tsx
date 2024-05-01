@@ -6,9 +6,16 @@ import './Minting.styles.css';
 type Props = {
   bankers_count: number;
   mintingPercent: number;
+  maxBanks: number;
+  freeBanks: number;
 };
 
-function Minting({ bankers_count, mintingPercent }: Props) {
+function Minting({
+  bankers_count,
+  mintingPercent,
+  maxBanks,
+  freeBanks,
+}: Props) {
   return (
     <div
       className={classNames({
@@ -34,7 +41,9 @@ function Minting({ bankers_count, mintingPercent }: Props) {
           </div>
           <div>
             <h4>Free banks</h4>
-            <div>{Math.round(80_000 - mintingPercent * 800)} / 80 000</div>
+            <div>
+              {freeBanks} / {maxBanks}
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,23 @@
+.mainbutton {
+    display: flex;
+    width: auto;
+    margin: 0 0;
+    flex-direction: row;
+    row-gap: 2rem;
+    align-items: center;
+   
+}
+
+.mainbutton:hover{
+    cursor: pointer;
+}
+
+.mainbutton img{
+    max-height: 24px;
+    padding-right: 0.5rem;
+}
+
+.mainbutton:disabled {
+    background-color: var(--color-text-secondary);
+    cursor: auto;
+}

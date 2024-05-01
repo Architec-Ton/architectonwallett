@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 
 import classNames from 'classnames';
-import Header from '../header/Header';
+//import Header from '../header/Header';
 
 import './Layout.styles.css';
 import { CSSProperties } from '@linaria/core';
-import { SWRConfig } from 'swr';
+
+// import { useMiniApp } from '@tma.js/sdk-react';
 
 type Props = {
   children: ReactNode;
@@ -13,21 +14,17 @@ type Props = {
 };
 
 function Layout({ children, style }: Props) {
+  // const miniapp = useMiniApp({
+  //   expand: true,
+  // });
+
   return (
     <>
-      <SWRConfig
-        value={{
-          refreshInterval: 3000,
-          fetcher: (resource, init) =>
-            fetch(resource, init).then((res) => res.json()),
-        }}>
-        <div className={classNames('layout')} style={style}>
-          <Header />
-          {children}
-        </div>
-      </SWRConfig>
+      <div className={classNames('layout')} style={style}>
+        {children}
+      </div>
     </>
-  );
+  ); /*<Header />*/
 }
 
 export default Layout;

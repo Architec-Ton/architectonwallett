@@ -1,5 +1,8 @@
 import classNames from 'classnames';
 import './Balance.styles.css';
+import assets from '../../assets';
+import { useNavigate } from 'react-router-dom';
+import { useTonConnect } from '../../hooks/useTonConnect';
 
 //import { CHAIN } from '@tonconnect/ui-react';
 
@@ -10,6 +13,8 @@ type Props = {
 };
 
 function BalanceHeader({ name, title, chain }: Props) {
+  const navigate = useNavigate();
+  const { connected } = useTonConnect();
   return (
     <div className={classNames('balance-header')}>
       <h2>
@@ -20,7 +25,9 @@ function BalanceHeader({ name, title, chain }: Props) {
           ''
         )}
       </h2>
-      <div></div>
+      <div className="balance-wallet" onClick={() => navigate('/wallet')}>
+        {connected && <img src={assets.iconWallet} />}
+      </div>
     </div>
   );
   /* <img src={assets.svghdots} /> */

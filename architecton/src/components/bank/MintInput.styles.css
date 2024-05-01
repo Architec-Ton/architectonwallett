@@ -8,6 +8,7 @@
     background-color: var(--color-bg-selected);
     justify-content: space-between;
     font-size: 13px;
+    min-width: 90%;
 }
 
 .mintinput-header{
@@ -27,7 +28,7 @@
 }
 
 .mintinput:hover {
-    border: 2px solid var(--color-text-secondary);
+    border: 2px solid var(--color-bg-primary);
 }
 
 .mintinput-body{

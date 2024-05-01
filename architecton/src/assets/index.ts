@@ -28,6 +28,16 @@ import iconBankWhite from './icon-bank-white.svg';
 
 import iconHistEmpty from './icon-empty.svg';
 
+import iconExchange from './icon-exchange.svg';
+
+import iconBankColor from './icon-bank-color.svg';
+
+import iconTon from './icon-ton.svg';
+
+import iconWallet from './icon-wallet.svg';
+
+import iconRef from './icon-ref.svg';
+
 export default {
   svgdots,
   svghdots,
@@ -44,6 +54,11 @@ export default {
   iconSend,
   iconSwap,
   iconFees,
+  iconExchange,
+  iconBankColor,
+  iconTon,
+  iconRef,
+  iconWallet,
   iconBankWhite,
   coinToncoin,
   coinUSDT,

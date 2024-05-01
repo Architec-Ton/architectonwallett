@@ -537,36 +537,32 @@ function dictValueParserReferralAddress(): DictionaryValue<ReferralAddress> {
   };
 }
 
-type CrowdSale_init_args = {
-  $$type: 'CrowdSale_init_args';
-  unlockDate: bigint;
+type BanksCrowdSale_init_args = {
+  $$type: 'BanksCrowdSale_init_args';
 };
 
-function initCrowdSale_init_args(src: CrowdSale_init_args) {
+function initBanksCrowdSale_init_args(src: BanksCrowdSale_init_args) {
   return (builder: Builder) => {
     let b_0 = builder;
-    b_0.storeInt(src.unlockDate, 257);
   };
 }
 
-async function CrowdSale_init(unlockDate: bigint) {
+async function BanksCrowdSale_init() {
   const __code = Cell.fromBase64(
-    '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'
+    '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'
   );
   const __system = Cell.fromBase64(
-    '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'
+    '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'
   );
   let builder = beginCell();
   builder.storeRef(__system);
   builder.storeUint(0, 1);
-  initCrowdSale_init_args({ $$type: 'CrowdSale_init_args', unlockDate })(
-    builder
-  );
+  initBanksCrowdSale_init_args({ $$type: 'BanksCrowdSale_init_args' })(builder);
   const __data = builder.endCell();
   return { code: __code, data: __data };
 }
 
-const CrowdSale_errors: { [key: number]: { message: string } } = {
+const BanksCrowdSale_errors: { [key: number]: { message: string } } = {
   2: { message: `Stack undeflow` },
   3: { message: `Stack overflow` },
   4: { message: `Integer overflow` },
@@ -591,10 +587,14 @@ const CrowdSale_errors: { [key: number]: { message: string } } = {
   135: { message: `Code of a contract was not found` },
   136: { message: `Invalid address` },
   137: { message: `Masterchain support is not enabled for this contract` },
-  21934: { message: `Referal don't has any  banks` },
+  12041: { message: `Referral doesn't have any banks` },
+  12123: { message: `Sale stopped` },
+  26611: { message: `Sale ended` },
+  49469: { message: `Access denied` },
+  50218: { message: `Bank's must be not zero` },
 };
 
-const CrowdSale_types: ABIType[] = [
+const BanksCrowdSale_types: ABIType[] = [
   {
     name: 'StateInit',
     header: null,
@@ -721,14 +721,9 @@ const CrowdSale_types: ABIType[] = [
   },
 ];
 
-const CrowdSale_getters: ABIGetter[] = [
+const BanksCrowdSale_getters: ABIGetter[] = [
   {
-    name: 'myBanksBalance',
-    arguments: [],
-    returnType: { kind: 'simple', type: 'int', optional: true, format: 257 },
-  },
-  {
-    name: 'someoneBanksBalance',
+    name: 'Banks',
     arguments: [
       {
         name: 'addr',
@@ -738,42 +733,64 @@ const CrowdSale_getters: ABIGetter[] = [
     returnType: { kind: 'simple', type: 'int', optional: true, format: 257 },
   },
   {
+    name: 'TotalBanks',
+    arguments: [],
+    returnType: { kind: 'simple', type: 'int', optional: false, format: 257 },
+  },
+  {
+    name: 'Bankers',
+    arguments: [],
+    returnType: {
+      kind: 'dict',
+      key: 'address',
+      value: 'uint',
+      valueFormat: 32,
+    },
+  },
+  {
+    name: 'TotalBankers',
+    arguments: [],
+    returnType: { kind: 'simple', type: 'int', optional: false, format: 257 },
+  },
+  {
     name: 'owner',
     arguments: [],
     returnType: { kind: 'simple', type: 'address', optional: false },
   },
 ];
 
-const CrowdSale_receivers: ABIReceiver[] = [
+const BanksCrowdSale_receivers: ABIReceiver[] = [
   { receiver: 'internal', message: { kind: 'empty' } },
   { receiver: 'internal', message: { kind: 'text', text: 'buyBank' } },
+  { receiver: 'internal', message: { kind: 'text', text: 'stopSale' } },
+  { receiver: 'internal', message: { kind: 'text', text: 'resumeSale' } },
   { receiver: 'internal', message: { kind: 'typed', type: 'ReferralAddress' } },
   { receiver: 'internal', message: { kind: 'typed', type: 'Deploy' } },
   { receiver: 'internal', message: { kind: 'typed', type: 'ChangeOwner' } },
 ];
 
-export class CrowdSale implements Contract {
-  static async init(unlockDate: bigint) {
-    return await CrowdSale_init(unlockDate);
+export class BanksCrowdSale implements Contract {
+  static async init() {
+    return await BanksCrowdSale_init();
   }
 
-  static async fromInit(unlockDate: bigint) {
-    const init = await CrowdSale_init(unlockDate);
+  static async fromInit() {
+    const init = await BanksCrowdSale_init();
     const address = contractAddress(0, init);
-    return new CrowdSale(address, init);
+    return new BanksCrowdSale(address, init);
   }
 
   static fromAddress(address: Address) {
-    return new CrowdSale(address);
+    return new BanksCrowdSale(address);
   }
 
   readonly address: Address;
   readonly init?: { code: Cell; data: Cell };
   readonly abi: ContractABI = {
-    types: CrowdSale_types,
-    getters: CrowdSale_getters,
-    receivers: CrowdSale_receivers,
-    errors: CrowdSale_errors,
+    types: BanksCrowdSale_types,
+    getters: BanksCrowdSale_getters,
+    receivers: BanksCrowdSale_receivers,
+    errors: BanksCrowdSale_errors,
   };
 
   private constructor(address: Address, init?: { code: Cell; data: Cell }) {
@@ -785,13 +802,26 @@ export class CrowdSale implements Contract {
     provider: ContractProvider,
     via: Sender,
     args: { value: bigint; bounce?: boolean | null | undefined },
-    message: null | 'buyBank' | ReferralAddress | Deploy | ChangeOwner
+    message:
+      | null
+      | 'buyBank'
+      | 'stopSale'
+      | 'resumeSale'
+      | ReferralAddress
+      | Deploy
+      | ChangeOwner
   ) {
     let body: Cell | null = null;
     if (message === null) {
       body = new Cell();
     }
     if (message === 'buyBank') {
+      body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
+    }
+    if (message === 'stopSale') {
+      body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
+    }
+    if (message === 'resumeSale') {
       body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
     }
     if (
@@ -825,19 +855,36 @@ export class CrowdSale implements Contract {
     await provider.internal(via, { ...args, body: body });
   }
 
-  async getMyBanksBalance(provider: ContractProvider) {
+  async getBanks(provider: ContractProvider, addr: Address) {
     let builder = new TupleBuilder();
-    let source = (await provider.get('myBanksBalance', builder.build())).stack;
+    builder.writeAddress(addr);
+    let source = (await provider.get('Banks', builder.build())).stack;
     let result = source.readBigNumberOpt();
     return result;
   }
 
-  async getSomeoneBanksBalance(provider: ContractProvider, addr: Address) {
+  async getTotalBanks(provider: ContractProvider) {
     let builder = new TupleBuilder();
-    builder.writeAddress(addr);
-    let source = (await provider.get('someoneBanksBalance', builder.build()))
-      .stack;
-    let result = source.readBigNumberOpt();
+    let source = (await provider.get('TotalBanks', builder.build())).stack;
+    let result = source.readBigNumber();
+    return result;
+  }
+
+  async getBankers(provider: ContractProvider) {
+    let builder = new TupleBuilder();
+    let source = (await provider.get('Bankers', builder.build())).stack;
+    let result = Dictionary.loadDirect(
+      Dictionary.Keys.Address(),
+      Dictionary.Values.Uint(32),
+      source.readCellOpt()
+    );
+    return result;
+  }
+
+  async getTotalBankers(provider: ContractProvider) {
+    let builder = new TupleBuilder();
+    let source = (await provider.get('TotalBankers', builder.build())).stack;
+    let result = source.readBigNumber();
     return result;
   }
 

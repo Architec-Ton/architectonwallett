@@ -1,26 +1,30 @@
 import './BankingHistory.styles.css';
 import BankingHistoryItem from './BankingHistoryItem';
-import assets from '../../assets';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   bankingHistory: string[];
 };
 
 function BankingHistory({ bankingHistory }: Props) {
+  const now = new Date();
+  const navigate = useNavigate();
   return (
     <div className="bank-mint-history">
       <div className="bank-mint-history-title">
         <h3>Banking history:</h3>
-        <a href="#">See all {'>'}</a>
+        {bankingHistory.length > 0 && (
+          <a href="#" onClick={() => navigate('/bank/history')}>
+            See all {'>'}
+          </a>
+        )}
       </div>
       <div className="bank-mint-history-list">
         {bankingHistory.length == 0 && (
           <BankingHistoryItem
-            icon={assets.iconHistEmpty}
+            type={'launch'}
             title="Empty history"
-            date="29 April 20:23"
-            symbol="TON"
-            changes="+1 Bank"
+            date={now.toISOString()}
           />
         )}
       </div>

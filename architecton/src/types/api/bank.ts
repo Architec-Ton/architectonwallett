@@ -4,7 +4,21 @@ interface IBankInfoOut {
   bankBankers: number;
 }
 
+interface IBalanceOut {
+  bankAmount: number;
+  bnkPerHour: number;
+  bnkAmount: number;
+}
+
 export interface IBankOut {
-  [x: string]: any;
+  balance?: IBalanceOut;
   bank: IBankInfoOut;
+}
+
+export interface IBankHistoryOut {
+  title: string;
+  type: string;
+  date: string;
+  symbol: string;
+  changes?: string;
 }

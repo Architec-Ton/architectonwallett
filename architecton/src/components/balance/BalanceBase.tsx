@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import './Balance.styles.css';
-import assets from '../../assets';
 import BalanceHeader from './BalanceHeader';
 import { CHAIN } from '@tonconnect/ui-react';
 
@@ -16,9 +15,7 @@ type Props = {
 
 function BalanceBase({ title, amount, symbol, children, bankCount }: Props) {
   return (
-    <div
-      className={classNames('balance', 'selected-block')}
-      style={{ backgroundImage: `url(${assets.svgbalance})` }}>
+    <div className={classNames('balance', 'selected-block')}>
       <div
         style={{
           display: 'flex',

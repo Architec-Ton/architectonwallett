@@ -25,14 +25,24 @@
     "footer_in_telegram": "in telegram",
 
 
-    "bank_mint_header": "Bank mint",
+    "bank_mint_header": "Bank Mint (presale)",
 
     "mint_title": "Mint",
     "mint_buy": "Buy",
 
     "mint_input_recv" : "Receive",
     "mint_input_send" : "Send",
-    "mint_input_balance" : "Balance"
+    "mint_input_balance" : "Balance",
+
+    "mint": "Mint",
+
+    "mint_ref": "Mint Ref",
+
+    "bank_history_title": "Bank History",
+
+    "wallet_disconnect": "Disconnect",
+
+    "mint_comment": "Transaction with automatic rounding. Unused Tons return to wallet Working conditions of banks."
 
 
 
