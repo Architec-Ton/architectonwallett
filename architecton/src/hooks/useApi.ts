@@ -14,11 +14,11 @@ const useApi = () => {
         method: method,
         headers: {
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Content-Type': 'application/json',
         },
-        mode: 'cors',
       } as RequestInit;
       if (body) {
-        options.headers['Content-Type'] = 'application/json';
         options.body = body;
       }
 
