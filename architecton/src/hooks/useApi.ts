@@ -10,17 +10,18 @@ const useApi = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const options = {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        mode: 'cors',
-      } as RequestInit;
-      if (body) {
-        options.body = JSON.stringify(body);
-      }
+      const options = body
+        ? ({
+            method: method,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+            mode: 'cors',
+            body: JSON.stringify(body),
+          } as RequestInit)
+        : null;
+
       const response = await fetch(`${BE_URL}${url}`, options);
       if (!response.ok || response.status > 399) {
         console.log('fetchError', response.status);
