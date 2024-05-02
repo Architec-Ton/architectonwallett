@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 from pydantic import Field
 
@@ -18,18 +19,19 @@ class BankInfoOut(BaseViewModel):
     bank_free: int = Field(default=72899)
     bank_bankers: int = Field(default=34)
 
+class BankHistoryOut(BaseViewModel):
+    type: str = Field(default="mint")
+    created_at: datetime.datetime = Field( serialization_alias='date')
+    title: str | None= Field(default="mint")
+    symbol: str | None = Field(default=None)
+    changes: str | None = Field(default=None)
 
 class BankOut(BaseViewModel):
     balance: BankBalanceOut | None = Field(default=None)
     bank: BankInfoOut = Field(default=BankInfoOut())
+    histories: List[BankHistoryOut] = Field(default=[])
 
 
-class BankHistoryOut(BaseViewModel):
-    title: str = Field(default="mint")
-    type: str = Field(default="mint")
-    date: datetime.datetime = Field()
-    symbol: str | None = Field(default=None)
-    changes: str | None = Field(default=None)
 
 
 

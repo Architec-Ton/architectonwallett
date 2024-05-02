@@ -21,7 +21,7 @@ app = FastAPI(
     openapi_url=f"{ARCHITECTON_API_PREFIX}/apidoc.json",
 )
 
-# register_tortoise(app, generate_schemas=True, add_exception_handlers=True, config=TORTOISE_ORM)
+register_tortoise(app, generate_schemas=True, add_exception_handlers=True, config=TORTOISE_ORM)
 
 
 app.add_middleware(

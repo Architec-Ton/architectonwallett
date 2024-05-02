@@ -1,9 +1,11 @@
 import asyncio
 import datetime
+from typing import List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from architecton.controllers.account_controller import AccountController
+from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.project_controller import ProjectController
 from architecton.views.bank import BankOut, BankBalanceOut, BankInfoOut, BankHistoryOut
 from architecton.views.info import InfoOut
@@ -13,7 +15,7 @@ router = APIRouter(tags=["General route"])
 
 # , response_model=InfoOut
 @router.get("/{address}", response_model=BankOut)
-async def bank(address: str = None):
+async def bank(address: str, tgid=Query(default=None)):
     if address == "none":
         bankers, total = await asyncio.gather(
             AccountController.get_total_bankers(),
@@ -33,19 +35,20 @@ async def bank(address: str = None):
     if total > round_finish:
         round_finish = 1000000
     bank_info = BankInfoOut(bank_total=round_finish, bank_free=round_finish - total, bank_bankers=bankers)
-    bank_out = BankOut(balance=balance, bank=bank_info)
+
+    # if tgid is not None:
+    # account = await AccountController.get_or_create(tgid)
+    notifications = await NotificationController.get_notifications(tgid, address if address != "none" else None)
+    # else:
+    #     notifications = []
+
+    # AccountController.
+    bank_out = BankOut(balance=balance, bank=bank_info, histories=notifications)
+
     return bank_out
 
 
-@router.get("/{address}/history")
-async def history(address: str = None):
-    a = BankHistoryOut(
-        title="mint_ref",
-        type="ref",
-        date=datetime.datetime.now(tz=datetime.timezone.utc),
-        symbol="ref",
-        changes="2+ Banks",
-    )
-    b = BankHistoryOut(date=datetime.datetime.now(tz=datetime.timezone.utc), symbol="TON", changes="2+ Banks")
-
-    return [b, a, b, a, b, b, b, b]
+@router.get("/{address}/history", response_model=List[BankHistoryOut])
+async def history(address: str, tgid=Query(default=None)):
+    notifications = await NotificationController.get_notifications(tgid, address if address != "none" else None)
+    return notifications

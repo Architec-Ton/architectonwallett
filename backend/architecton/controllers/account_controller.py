@@ -7,6 +7,8 @@ from TonTools.Providers.TonCenterClient import TonCenterClient
 
 from architecton.contracts.crowd_sale import CrowdSale
 from architecton.controllers.ton_client import get_ton_client
+
+from architecton.models import Account
 from architecton.views.project_list import ProjectListOut
 
 assets_dir = f"{os.path.dirname(os.path.dirname(__file__))}/assets"
@@ -66,3 +68,14 @@ class AccountController:
         # jetton_wallet = await jetton.get_jetton_wallet(address)  # for TonCenterClient and LsClient
         # print(jetton_wallet)  # JettonWallet({"address": "EQDgCBnCncRp4jOi3CMeLn-b71gymAX3W28YZT3Dn0a2dKj-"})
         # # return await get_ton_client().get_balance(address)
+
+    @staticmethod
+    async def get_total_bankers():
+        client = get_ton_client()
+        contract = CrowdSale(client)
+        return await contract.get_total_banker()
+
+    @staticmethod
+    async def get_or_create(tg_id: int) -> Account:
+        a, _ = await Account.get_or_create(id=tg_id)
+        return a
