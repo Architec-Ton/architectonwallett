@@ -1,17 +1,15 @@
-version: "3"
-
 services:
 
-  # pgdb:
-  #   image: postgres/postgres:16
-  #   ports:
-  #     - "5438:5432"
-  #   volumes:
-  #     - ./db:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_DB=${POSTGRES_DB}
-  #     - POSTGRES_USER=${POSTGRES_USER}
-  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  pgdb:
+    image: postgres:16
+    ports:
+      - "54381:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   architecton:
     build:
       context: ./architecton
@@ -29,26 +27,24 @@ services:
     ports:
       - "8000:8000"
     command: python -m uvicorn architecton.app:app --host 0.0.0.0 --port 8000 --workers 1 --forwarded-allow-ips '*'
-  #   environment:
-  #     - DB_HOST=pgdb
-  #     - DB_NAME=${POSTGRES_DB}
-  #     - DB_USER=${POSTGRES_USER}
-  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
-  #   depends_on:
-  #     - pgdb
+    environment:
+      - DB_HOST=pgdb
+      - DB_NAME=${POSTGRES_DB}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - pgdb
 
-
-  # bot:
-  #   build:
-  #     context: ./bot
-  #     dockerfile: ./Dockerfile
-  #   ports:
-  #     - "8000:8000"
-  #   command: python -m bot.py
-  #   environment:
-  #     - DB_HOST=pgdb
-  #     - DB_NAME=${POSTGRES_DB}
-  #     - DB_USER=${POSTGRES_USER}
-  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
-  #   depends_on:
-  #     - pgdb
+  bot:
+    build:
+      context: ./bot
+      dockerfile: ./Dockerfile
+    command: python -m bot.py
+    environment:
+      - DB_HOST=pgdb
+      - DB_NAME=${POSTGRES_DB}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - BOT_TOKEN=${BOT_TOKEN}
+    depends_on:
+      - pgdb
