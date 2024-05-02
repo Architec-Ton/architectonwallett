@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import classNames from 'classnames';
-//import Header from '../header/Header';
 
 import './Layout.styles.css';
 import { CSSProperties } from '@linaria/core';
 import Header from '../header/Header';
+import { useMiniApp } from '@tma.js/sdk-react';
 
 // import { useMiniApp } from '@tma.js/sdk-react';
 
@@ -15,9 +15,11 @@ type Props = {
 };
 
 function Layout({ children, style }: Props) {
-  // const miniapp = useMiniApp({
-  //   expand: true,
-  // });
+  const miniapp = useMiniApp();
+
+  useEffect(() => {
+    miniapp.ready();
+  }, []);
 
   return (
     <>

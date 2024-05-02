@@ -3,6 +3,12 @@
 
 }
 
+.bank-mint-history-list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
 .bank-mint-history-title{
     display: flex;
     flex-direction: row;

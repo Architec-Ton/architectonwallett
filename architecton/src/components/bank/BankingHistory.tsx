@@ -1,14 +1,16 @@
+import { IBankHistoryOut } from '../../types/api/bank';
 import './BankingHistory.styles.css';
 import BankingHistoryItem from './BankingHistoryItem';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
-  bankingHistory: string[];
+  bankingHistory: IBankHistoryOut[];
 };
 
 function BankingHistory({ bankingHistory }: Props) {
   const now = new Date();
   const navigate = useNavigate();
+  console.log('banking:', bankingHistory);
   return (
     <div className="bank-mint-history">
       <div className="bank-mint-history-title">
@@ -27,6 +29,9 @@ function BankingHistory({ bankingHistory }: Props) {
             date={now.toISOString()}
           />
         )}
+        {bankingHistory.map((h) => (
+          <BankingHistoryItem {...h} />
+        ))}
       </div>
     </div>
   );

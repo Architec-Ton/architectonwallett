@@ -128,7 +128,9 @@ function Bank() {
             }
           />
         </div>
-        <BankingHistory bankingHistory={[]} />
+        <BankingHistory
+          bankingHistory={bankInfo.histories ? bankInfo.histories : []}
+        />
       </Container>
       <Footer />
     </Layout2Row>

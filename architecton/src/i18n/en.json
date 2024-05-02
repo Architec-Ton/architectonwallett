@@ -34,16 +34,18 @@
     "mint_input_send" : "Send",
     "mint_input_balance" : "Balance",
 
-    "mint": "Mint",
 
-    "mint_ref": "Mint Ref",
 
     "bank_history_title": "Bank History",
 
     "wallet_disconnect": "Disconnect",
 
-    "mint_comment": "Transaction with automatic rounding. Unused Tons return to wallet Working conditions of banks."
+    "mint_comment": "Transaction with automatic rounding. Unused Tons return to wallet Working conditions of banks.",
 
-
+    "launch" : "Launching Banks",
+    "registration" : "Registration Completed",
+    "mint": "Mint",
+    "ref": "Mint Ref",
+    "linked" : "Wallet Is Linked"
 
 }

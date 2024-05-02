@@ -1,6 +1,7 @@
 import { MouseEventHandler } from 'react';
 import './BankingHistory.styles.css';
 import Icon from '../ui/Icon';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   title: string;
@@ -14,6 +15,7 @@ type Props = {
 
 function BankingHistoryItem({ title, type, date, symbol, changes }: Props) {
   const time = new Date(date);
+  const { t } = useTranslation();
 
   const formattedTime = Intl.DateTimeFormat(undefined, {
     day: '2-digit',
@@ -28,7 +30,7 @@ function BankingHistoryItem({ title, type, date, symbol, changes }: Props) {
       <div className="bank-mint-history-main">
         <Icon src={`/icons/${type}.svg`} />
         <div>
-          <h3>{title}</h3>
+          <h3>{t(type)}</h3>
           <p>{formattedTime}</p>
         </div>
       </div>
