@@ -29,6 +29,7 @@ services:
     command: python -m uvicorn architecton.app:app --host 0.0.0.0 --port 8000 --workers 1 --forwarded-allow-ips '*'
     environment:
       - DB_HOST=pgdb
+      - DB_PORT=5432
       - DB_NAME=${POSTGRES_DB}
       - DB_USER=${POSTGRES_USER}
       - DB_PASSWORD=${POSTGRES_PASSWORD}
@@ -42,6 +43,7 @@ services:
     command: python -m bot.py
     environment:
       - DB_HOST=pgdb
+      - DB_PORT=5432
       - DB_NAME=${POSTGRES_DB}
       - DB_USER=${POSTGRES_USER}
       - DB_PASSWORD=${POSTGRES_PASSWORD}
