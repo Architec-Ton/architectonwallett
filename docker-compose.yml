@@ -40,7 +40,7 @@ services:
     build:
       context: ./bot
       dockerfile: ./Dockerfile
-    command: python -m bot.py
+    command: python bot.py
     environment:
       - DB_HOST=pgdb
       - DB_PORT=5432

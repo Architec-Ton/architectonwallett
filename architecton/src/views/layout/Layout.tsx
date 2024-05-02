@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import './Layout.styles.css';
 import { CSSProperties } from '@linaria/core';
 import Header from '../header/Header';
-import { useMiniApp } from '@tma.js/sdk-react';
+// import { useMiniApp } from '@tma.js/sdk-react';
 
 // import { useMiniApp } from '@tma.js/sdk-react';
 
@@ -15,10 +15,10 @@ type Props = {
 };
 
 function Layout({ children, style }: Props) {
-  const miniapp = useMiniApp();
+  // const miniapp = useMiniApp();
 
   useEffect(() => {
-    miniapp.ready();
+    //miniapp.ready();
   }, []);
 
   return (
