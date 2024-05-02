@@ -19,7 +19,7 @@ class Notification(Model):
     class Meta:
         table = "notification"
 
-    id = fields.UUIDField(pk=True, default=uuid.uuid4())
+    id = fields.UUIDField(pk=True, index=True)
     address = fields.CharField(max_length=128, null=True, index=True, default=None)
     tg_id = fields.BigIntField(index=True, null=True)
     type = fields.CharEnumField(NotificationType, max_length=32, null=True, default=None)
