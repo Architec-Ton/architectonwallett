@@ -22,3 +22,6 @@ class AccountBalanceOut(BaseViewModel):
     tons: int
     banks: int
     address: str
+
+class WalletOut(BaseViewModel):
+    address: str

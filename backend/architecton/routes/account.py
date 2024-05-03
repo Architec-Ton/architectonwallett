@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from typing import List
 
 from fastapi import APIRouter
 
@@ -8,7 +9,7 @@ from architecton.contracts.crowd_sale import CrowdSale
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.ton_client import get_ton_client
 from architecton.models import Wallet, Notification, NotificationType
-from architecton.views.account import AccountBalanceOut, AccountIn
+from architecton.views.account import AccountBalanceOut, AccountIn, WalletOut
 
 router = APIRouter()
 
@@ -27,6 +28,16 @@ router = APIRouter(tags=["General route"])
 async def account(address: str = None):
     tons, banks = await asyncio.gather(AccountController.get_balance(address), AccountController.get_banks(address))
     return AccountBalanceOut(tons=tons, banks=banks, address=SMART_CONTRACT_CROWDSALE)
+
+
+@router.get("/tg/{tgid}", response_model=List[WalletOut])
+async def account(tgid: int):
+    wallets = await Wallet.filter(tg_id=tgid)
+
+    #
+    # tons, banks = await asyncio.gather(AccountController.get_balance(address), AccountController.get_banks(address))
+    # return AccountBalanceOut(tons=tons, banks=banks, address=SMART_CONTRACT_CROWDSALE)
+    return [WalletOut(address=w.address) for w in wallets]
 
 
 @router.post("/{address}")
