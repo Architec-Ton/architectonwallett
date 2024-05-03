@@ -50,8 +50,8 @@ function Wallet() {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <h3>{wallet.name}</h3>
-            <p>{Number(wallet2.account.chain) >= 0 ? 'mainnet' : 'testnet'}</p>
+            <h3>{wallet?.name}</h3>
+            <p>{Number(wallet2?.account.chain) >= 0 ? 'mainnet' : 'testnet'}</p>
             <p
               className="text-small"
               style={{
