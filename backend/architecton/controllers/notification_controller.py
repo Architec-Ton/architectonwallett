@@ -18,6 +18,20 @@ assets_dir = f"{os.path.dirname(os.path.dirname(__file__))}/assets"
 class NotificationController:
 
     @staticmethod
+    def get_query(tg_id: int, address: str | None):
+        if tg_id is not None:
+            query = Q(
+                Q(tg_id=tg_id, address=address)
+                | Q(address__isnull=True, tg_id__isnull=True)
+                | Q(address__isnull=True, tg_id=tg_id)
+            )
+        elif address is None:
+            query = Q(address__isnull=True, tg_id__isnull=True)
+        else:
+            query = Q(Q(address=address) | Q(address__isnull=True, tg_id__isnull=True))
+        return query
+
+    @staticmethod
     async def update_notification(tg_id: int | None, address: str | None) -> List[Notification]:
         if tg_id is not None or address is not None:
             await Notification.get_or_create(tg_id=tg_id, address=address, type=NotificationType.registration)
@@ -26,24 +40,13 @@ class NotificationController:
             if check is None:
                 await Notification.create(tg_id=tg_id, address=address, type=NotificationType.linked)
 
-        if tg_id is not None:
-            query = Q(Q(tg_id=tg_id) & Q(Q(address=address) | Q(address__isnull=True)) | Q(tg_id__isnull=True))
-        else:
-            query = Q(Q(Q(address=address) | Q(address__isnull=True)) | Q(tg_id__isnull=True))
+        query = NotificationController.get_query(tg_id, address)
         notifications = await Notification.filter(query).order_by("-created_at")
         return notifications
 
     @staticmethod
     async def get_notifications(tg_id: int, address: str | None, limit: int = 2) -> List[Notification]:
-        if tg_id is not None:
-            query = Q(
-                Q(tg_id=tg_id, address=address)
-                | Q(address__isnull=True, tg_id__isnull=True)
-                | Q(address__isnull=True, tg_id=tg_id)
-            )
-        else:
-            query = Q(Q(Q(address=address) | Q(address__isnull=True)) | Q(tg_id__isnull=True))
-
+        query = NotificationController.get_query(tg_id, address)
         notifications = await Notification.filter(query).limit(limit).order_by("-created_at")
         # count = len(notifications)
         # if count < limit:
