@@ -19,3 +19,43 @@ menu = InlineKeyboardMarkup(
         ]
     ]
 )
+
+not_register = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text="📱Wallet", web_app=WebAppInfo(url="https://architecton.site")
+            )
+        ]
+    ]
+)
+
+main = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text="📱Wallet", web_app=WebAppInfo(url="https://architecton.site")
+            ),
+            InlineKeyboardButton(
+                text="💰My Account", callback_data="my_account"
+            )
+        ]
+    ]
+)
+
+
+my_account = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text="🏦Balance", callback_data="balance"
+            ),
+            InlineKeyboardButton(
+                text="👥Friends", callback_data="friends"
+            ),
+            InlineKeyboardButton(
+                text="back", callback_data="back"
+            )
+        ]
+    ]
+)

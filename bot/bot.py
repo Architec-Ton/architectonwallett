@@ -3,6 +3,7 @@ from aiogram import Bot, Dispatcher
 from config_reader import config
 from aiogram import Bot, Dispatcher
 import logging
+import handlers.bot_messages
 import handlers.user_commands
 
 
@@ -17,7 +18,8 @@ logger.info("Бот запущен и работает...")
 async def main():  
     
     dp.include_routers(
-        handlers.user_commands.router
+        handlers.user_commands.router,
+        handlers.bot_messages.router
     )
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

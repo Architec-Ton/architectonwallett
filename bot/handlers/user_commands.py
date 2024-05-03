@@ -5,18 +5,12 @@ from keyboards import reply, inline
 
 router = Router()
 
+async def is_registered():
+    return True
+
 @router.message(CommandStart())
 async def start(msg: Message):
-    await msg.reply(
-        f"👋 Привет, {msg.from_user.full_name}! Я *Architecton* - Лучший криптокошелек в Telegram."
-        f" Покупайте, продавайте, храните и платите криптовалютой когда хотите."
-        f" Подписывайтесь на наш канал @architec_ton 💰"
-        f"\nВаш кошелек создан и вы можете начать пользование системой 🛠", reply_markup=inline.menu)
-
-@router.message(Command("app"))
-async def app(msg: Message):
-    await msg.reply(
-        f"👋 Привет, {msg.from_user.full_name}! Я *Architecton* - Лучший криптокошелек в Telegram."
-        f" Покупайте, продавайте, храните и платите криптовалютой когда хотите."
-        f" Подписывайтесь на наш канал @architec_ton 💰"
-        f"\nВаш кошелек создан и вы можете начать пользование системой 🛠", reply_markup=inline.menu)
+    if await is_registered() == False:
+        await msg.answer("Hi, you haven't registered yet. Connect your wallet here ⬇️⬇️⬇️", reply_markup=inline.not_register)
+    else:
+        await msg.answer("Hi, welcome back", reply_markup=inline.main)
