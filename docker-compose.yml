@@ -2,6 +2,7 @@ services:
 
   pgdb:
     image: postgres:16
+    restart: always
     ports:
       - "54381:5432"
     volumes:
@@ -22,6 +23,7 @@ services:
     volumes:
       - ./public:/architecton/dist
   backend:
+    restart: always
     build:
       context: ./backend
       dockerfile: ./Dockerfile
@@ -38,6 +40,7 @@ services:
       - pgdb
 
   bot:
+    restart: always
     build:
       context: ./bot
       dockerfile: ./Dockerfile
