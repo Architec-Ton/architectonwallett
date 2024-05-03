@@ -51,5 +51,5 @@ lll = "EQDIfqmP71phy7GlkRrx86eQrtufpj9HDjNAt5uhTFr-JUVH"
 testnet_crowd_sale_v2 = "EQC64tH5_uPMRcfy2KOXm0h-udsL6FA5U3cfm60tCK4shNux"
 bank_crowd_sale = "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g"
 
-
+bank_crowd_sale = "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g"
 SMART_CONTRACT_CROWDSALE = os.getenv("SMART_CONTRACT_CROWDSALE", bank_crowd_sale)
