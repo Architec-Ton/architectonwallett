@@ -11,7 +11,7 @@ function Layout2Row({ children }: Props) {
     <Layout
       style={{
         maxWidth: '475px',
-        justifyContent: 'space-between',
+        justifyContent: 'start',
         minHeight: '100%',
         display: 'flex',
         flexDirection: 'column',
