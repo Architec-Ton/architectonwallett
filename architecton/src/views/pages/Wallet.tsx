@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Layout2Row from '../layout/Layout2Row';
 import Container from '../../components/ui/Container';
 import {
+  CHAIN,
   WalletInfoWithOpenMethod,
   useTonAddress,
   useTonConnectUI,
@@ -11,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 //import { useTonConnect } from '../../hooks/useTonConnect';
 import Footer from '../../components/ui/Footer';
+import { useTonConnect } from '../../hooks/useTonConnect';
 
 function Wallet() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,6 +33,7 @@ function Wallet() {
     await tonConnectUI.disconnect();
     navigate('/');
   };
+  const { network } = useTonConnect();
   console.log(wallet);
   return (
     <Layout2Row>
@@ -51,7 +54,7 @@ function Wallet() {
               justifyContent: 'center',
             }}>
             <h3>{wallet?.name}</h3>
-            <p>{Number(wallet2?.account.chain) >= 0 ? 'mainnet' : 'testnet'}</p>
+            <p>{network === CHAIN.MAINNET ? 'mainnet' : 'testnet'}</p>
             <p
               className="text-small"
               style={{
