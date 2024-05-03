@@ -2,14 +2,24 @@ import FooterButton from '../../components/buttons/FooterButton';
 import { useTranslation } from 'react-i18next';
 import Layout2Row from '../layout/Layout2Row';
 import Container from '../../components/ui/Container';
-import { useTonConnectUI } from '@tonconnect/ui-react';
+import {
+  WalletInfoWithOpenMethod,
+  useTonAddress,
+  useTonConnectUI,
+  useTonWallet,
+} from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
-import { useTonConnect } from '../../hooks/useTonConnect';
+//import { useTonConnect } from '../../hooks/useTonConnect';
 import Footer from '../../components/ui/Footer';
 
 function Wallet() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { connected, wallet } = useTonConnect();
+  //const { connected } = useTonConnect();
+
+  const wallet = useTonWallet() as WalletInfoWithOpenMethod;
+  const wallet2 = useTonWallet();
+
+  const address = useTonAddress();
 
   const [tonConnectUI] = useTonConnectUI();
 
@@ -21,7 +31,7 @@ function Wallet() {
     await tonConnectUI.disconnect();
     navigate('/');
   };
-
+  console.log(wallet);
   return (
     <Layout2Row>
       <Container isLoading={false} loadingTitle={t(`mint_title`)}>
@@ -32,6 +42,24 @@ function Wallet() {
             }}>
             {t(`wallet_title`)}
           </h2>
+          <div
+            style={{
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <h3>{wallet.name}</h3>
+            <p>{Number(wallet2.account.chain) >= 0 ? 'mainnet' : 'testnet'}</p>
+            <p
+              className="text-small"
+              style={{
+                fontSize: '0.6rem',
+              }}>
+              {address}
+            </p>
+          </div>
         </div>
       </Container>
       <Footer>
