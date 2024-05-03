@@ -6,9 +6,11 @@ from TonTools.Contracts.Jetton import Jetton
 from TonTools.Providers.TonCenterClient import TonCenterClient
 
 from architecton.contracts.crowd_sale import CrowdSale
+from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.ton_client import get_ton_client
 
-from architecton.models import Account
+from architecton.models import Account, Notification, NotificationType
+from architecton.views.account import AccountIn
 from architecton.views.project_list import ProjectListOut
 
 assets_dir = f"{os.path.dirname(os.path.dirname(__file__))}/assets"
@@ -76,6 +78,13 @@ class AccountController:
         return await contract.get_total_banker()
 
     @staticmethod
-    async def get_or_create(tg_id: int) -> Account:
-        a, _ = await Account.get_or_create(id=tg_id)
+    async def get_or_create(account_in: AccountIn) -> Account:
+        a = await Account.get_or_none(id=account_in.id)
+        if a is None:
+            a = await Account.create(**account_in.model_dump())
+            await Notification.get_or_create(tg_id=a.id, type=NotificationType.registration)
         return a
+
+    @staticmethod
+    async def get_or_none(tg_id: int) -> Account:
+        return await Account.get_or_none(id=tg_id)

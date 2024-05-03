@@ -42,10 +42,19 @@
 
     "mint_comment": "Transaction with automatic rounding. Unused Tons return to wallet Working conditions of banks.",
 
+    "referral_button": "Share",
+    "referral_title": "Referral",
+    "referral": "Referral",
+
     "launch" : "Launching Banks",
     "registration" : "Registration Completed",
     "mint": "Mint",
     "ref": "Mint Ref",
-    "linked" : "Wallet Is Linked"
+    "linked" : "Wallet Is Linked",
+
+    "workspace": "Workspace",
+    "rewards": "Your Reward",
+    "referral_bonus_title": "Referral Bonus"
+
 
 }

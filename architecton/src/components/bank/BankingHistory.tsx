@@ -29,8 +29,8 @@ function BankingHistory({ bankingHistory }: Props) {
             date={now.toISOString()}
           />
         )}
-        {bankingHistory.map((h) => (
-          <BankingHistoryItem {...h} />
+        {bankingHistory.map((h, i) => (
+          <BankingHistoryItem {...h} key={i} />
         ))}
       </div>
     </div>

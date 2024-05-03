@@ -20,20 +20,23 @@ import { useNavigate } from 'react-router-dom';
 import { useTonConnect } from '../../hooks/useTonConnect';
 import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
 import Footer from '../../components/ui/Footer';
+import { useInitData } from '@tma.js/sdk-react';
+import useApi from '../../hooks/useApi';
 
 function Mint() {
   // if (error) return <div className="failed">failed to load</div>;
   // if (isLoading) return <div className="Loading">Loading...</div>;
-  const tadddress = useTonAddress(false);
+  const tadddress = useTonAddress();
 
   const [tonBalance, setTonBalance] = useState<number | null>(null);
+  const [isGLoading, setIsGLoading] = useState<boolean>(true);
   const [bankBalance, setBankBalance] = useState<number | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const [ContractAddress, setContractAddress] = useState<string | null>(null);
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const { connected, wallet } = useTonConnect();
+  const { connected } = useTonConnect();
 
   //const navigate = useNavigate();
 
@@ -47,8 +50,12 @@ function Mint() {
 
   const { t } = useTranslation();
 
-  //const walletAddress = '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK';
+  const initData = useInitData();
 
+  const ref = initData.startParam;
+
+  //const walletAddress = '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK';
+  const { writeData } = useApi();
   const [recvBank, setRecvBank] = useState<number>(1);
   const [sendTon, setSendTon] = useState<number>(0.1);
   const [buyDisabled, setbuyDisabled] = useState<boolean>(false);
@@ -63,33 +70,42 @@ function Mint() {
     //const value = parseInt(e.currentTarget.value);
   };
   //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
-  const { crowdSale, buyBank } = useCrowdSaleContract();
+  const { buyBank, buyRefferalBank } = useCrowdSaleContract();
   const handleBuyBanks = async () => {
-    console.log('Try buy: ', sendTon);
-    const tx = await buyBank(sendTon);
+    //console.log('Try buy: ', sendTon, ref);
+    const tx =
+      ref && ref != ''
+        ? await buyRefferalBank(sendTon, Address.parse(ref))
+        : await buyBank(sendTon);
     console.log('Transaction responce:', tx);
-
+    setIsGLoading(true);
+    await writeData(`/bank/${tadddress}?tgid=${initData.user.id}`, {
+      bankBefore: bankBalance,
+      bankAfter: bankBalance + recvBank,
+      ref: ref && ref != '' ? ref : null,
+    });
     navigate('/');
   };
 
-  const fetchData = async () => {
-    console.log('call balance', crowdSale);
-    if (connected && crowdSale && wallet) {
-      console.log('get balance');
-      const amount = await crowdSale?.getBanks(Address.parse(wallet));
-      console.log('getBanks:', amount);
-      setBankBalance(Number(amount));
-    }
-  };
+  // const fetchData = async () => {
+  //   console.log('call balance', crowdSale);
+  //   if (connected && crowdSale && wallet) {
+  //     console.log('get balance');
+  //     const amount = await crowdSale?.getBanks(Address.parse(wallet));
+  //     console.log('getBanks:', amount);
+  //     setBankBalance(Number(amount));
+  //   }
+  // };
 
   useEffect(() => {
     if (!isLoading) {
       console.log('DATA:', data);
       if (data) {
-        fetchData();
+        // fetchData();
         setTonBalance(Number(data.tons) / 1e9);
         // setContractAddress(data.address);
         setBankBalance(data.banks);
+        setIsGLoading(false);
       }
     }
   }, [isLoading]);
@@ -104,7 +120,7 @@ function Mint() {
 
   return (
     <Layout2Row>
-      <Container isLoading={isLoading} loadingTitle={t(`mint_title`)}>
+      <Container isLoading={isGLoading} loadingTitle={t(`mint_title`)}>
         <div>
           <h2
             style={{

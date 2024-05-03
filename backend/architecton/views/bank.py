@@ -3,6 +3,7 @@ from typing import List
 
 from pydantic import Field
 
+from architecton.views.account import AccountOut
 from architecton.views.base import BaseViewModel
 from architecton.views.project_list import ProjectListOut
 from architecton.views.token import TokenOut
@@ -30,6 +31,12 @@ class BankOut(BaseViewModel):
     balance: BankBalanceOut | None = Field(default=None)
     bank: BankInfoOut = Field(default=BankInfoOut())
     histories: List[BankHistoryOut] = Field(default=[])
+    account: AccountOut | None =Field(default=None)
+
+class BankIn(BaseViewModel):
+    bank_before: int = Field(default=0)
+    bank_after: int = Field(default=0)
+    ref: str | None = Field(default=0)
 
 
 

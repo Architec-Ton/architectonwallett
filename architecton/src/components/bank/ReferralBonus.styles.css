@@ -1,0 +1,38 @@
+.referral-bonus{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+}
+
+.referral-bonus h4{
+    margin: 5px 0;
+}
+
+.referral-bonus-link{
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+    column-gap: 1rem;
+}
+
+.referral-bonus-input{
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--color-bg-primary);
+    padding: 1rem;
+    color: var(--color-text-secondary);
+}
+
+.referral-bonus-copy{
+    background-color: var(--color-bg-primary);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.referral-bonus-copy:hover{
+    cursor: pointer;
+}

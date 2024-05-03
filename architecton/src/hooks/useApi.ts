@@ -3,6 +3,25 @@ import { BE_URL } from '../constants';
 
 import { useState } from 'react';
 const useApi = () => {
+  const writeData = async (url: string, body = null) => {
+    const options = {
+      method: 'post',
+      headers: {
+        //'Access-Control-Allow-Origin': '*',
+        //'Access-Control-Allow-Headers': '*',
+        'Content-Type': 'application/json',
+        //referrerPolicy: 'unsafe-url',
+      },
+      mode: 'cors',
+    } as RequestInit;
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
+    console.log('options', options);
+    const response = await fetch(`${BE_URL}${url}`, options);
+    console.log('response', response);
+    return response;
+  };
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,7 +42,7 @@ const useApi = () => {
       if (body) {
         options.body = body;
       }
-
+      console.log(options);
       const response = await fetch(`${BE_URL}${url}`, options);
       if (!response.ok || response.status > 399) {
         console.log('fetchError', response.status);
@@ -40,6 +59,6 @@ const useApi = () => {
       setIsLoading(false);
     }
   };
-  return { data, isLoading, error, fetchData };
+  return { data, isLoading, error, fetchData, writeData };
 };
 export default useApi;

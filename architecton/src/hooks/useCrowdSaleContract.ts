@@ -11,7 +11,7 @@ import {
 } from '../contracts/tact_BanksCrowdSale';
 //import { useQuery } from '@tanstack/react-query';
 
-function useCrowdSaleContract() {
+function useCrowdSaleContract(address?: string) {
   const { client } = useTonClient();
   const { sender, network } = useTonConnect();
 
@@ -22,11 +22,13 @@ function useCrowdSaleContract() {
   const crowdSale = useAsyncInitialize(async () => {
     if (!client) return;
     const contract = CrowdSale.fromAddress(
-      Address.parse(
-        network === CHAIN.MAINNET
-          ? ''
-          : 'EQAX7oplsImoCvaQRppCEO_NT4qlmhHE4z9UkzSrEvDNvpqV' //'EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6'
-      ) // replace with your address from tutorial 2 step 8
+      address
+        ? Address.parse(address)
+        : Address.parse(
+            network === CHAIN.MAINNET
+              ? ''
+              : 'EQD_mIzsfn5yzzUbh-iRjU8cpfllNPHEhSLVw-kl_YRL1smw' //'EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6'
+          )
     );
     return client.open(contract) as OpenedContract<CrowdSale>;
   }, [client]);

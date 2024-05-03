@@ -34,14 +34,18 @@ class NotificationController:
         return notifications
 
     @staticmethod
-    async def get_notifications(tg_id: int, address: str | None, limit: int = 3) -> List[Notification]:
+    async def get_notifications(tg_id: int, address: str | None, limit: int = 2) -> List[Notification]:
         if tg_id is not None:
-            query = Q(Q(tg_id=tg_id) & Q(Q(address=address) | Q(address__isnull=True)) | Q(tg_id__isnull=True))
+            query = Q(
+                Q(tg_id=tg_id, address=address)
+                | Q(address__isnull=True, tg_id__isnull=True)
+                | Q(address__isnull=True, tg_id=tg_id)
+            )
         else:
             query = Q(Q(Q(address=address) | Q(address__isnull=True)) | Q(tg_id__isnull=True))
 
         notifications = await Notification.filter(query).limit(limit).order_by("-created_at")
-        count = len(notifications)
-        if count < 3:
-            notifications = await NotificationController.update_notification(tg_id, address)
+        # count = len(notifications)
+        # if count < limit:
+        #     notifications = await NotificationController.update_notification(tg_id, address)
         return notifications

@@ -15,6 +15,7 @@ import useApi from '../../hooks/useApi';
 import Footer from '../../components/ui/Footer';
 import assets from '../../assets';
 import Button from '../../components/buttons/Button';
+import { useInitData } from '@tma.js/sdk-react';
 //import { useTonClient } from '../../hooks/useTonClient';
 //import { Address } from '@ton/core';
 //import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
@@ -25,6 +26,8 @@ function Bank() {
   //const { auth, setAuth } = useAuth();
 
   //const wallet = useTonWallet();
+
+  const initData = useInitData();
 
   const [bankInfo, setBankInfo] = useState<IBankOut>({
     balance: null,
@@ -43,13 +46,23 @@ function Bank() {
 
   //const { crowdSale, sendInc } = useCrowdSaleContract();
 
-  const { data, isLoading, fetchData, error } = useApi();
+  const { data, isLoading, fetchData, error, writeData } = useApi();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      fetchData(`/bank/${userFriendlyAddress ? userFriendlyAddress : 'none'}`);
-    }, 100);
-    return () => clearTimeout(timeout);
+    const preRun = async () => {
+      const tgid = initData.user.id;
+      console.log(initData);
+      const timeout = setTimeout(() => {
+        console.log('fetch banks:', tgid, userFriendlyAddress);
+        fetchData(
+          `/bank/${
+            userFriendlyAddress ? userFriendlyAddress : 'none'
+          }?tgid=${tgid}`
+        );
+      }, 600);
+      return () => clearTimeout(timeout);
+    };
+    preRun();
   }, [userFriendlyAddress]);
 
   useEffect(() => {
@@ -58,6 +71,18 @@ function Bank() {
       setBankInfo(data as IBankOut);
     }
   }, [isLoading, connected]);
+
+  useEffect(() => {
+    if (data && bankInfo) {
+      console.log('bankInfo data', bankInfo);
+      if (!bankInfo.account) {
+        writeData(
+          `/account/${userFriendlyAddress ? userFriendlyAddress : 'none'}`,
+          initData.user
+        );
+      }
+    }
+  }, [bankInfo]);
 
   return (
     <Layout2Row>
@@ -97,8 +122,8 @@ function Bank() {
                 <Button
                   title="Referrals"
                   icon={assets.iconRef}
-                  onClick={() => navigate('/bank/ref')}
-                  disabled={true}
+                  onClick={() => navigate('/bank/referral')}
+                  disabled={bankInfo.balance?.bankAmount == 0}
                 />
               </div>
             )}

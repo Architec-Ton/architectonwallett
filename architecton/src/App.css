@@ -99,3 +99,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+h3{
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}

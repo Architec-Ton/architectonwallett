@@ -26,6 +26,8 @@ import imageLogo from './images/logo.jpg';
 
 import iconBankWhite from './icon-bank-white.svg';
 
+import iconCopy from './icon-copy.svg';
+
 import iconHistEmpty from './icon-empty.svg';
 
 import iconExchange from './icon-exchange.svg';
@@ -52,6 +54,7 @@ export default {
   iconArray,
   iconReceive,
   iconSend,
+  iconCopy,
   iconSwap,
   iconFees,
   iconExchange,

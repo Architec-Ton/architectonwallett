@@ -3,14 +3,14 @@ import base64
 from TonTools.Contracts.Contract import Contract
 from ton.utils import read_address
 from tonsdk.boc import Cell
-from architecton.config import crowd_sale_address
+from architecton.config import SMART_CONTRACT_CROWDSALE
 from tonsdk.utils import Address, bytes_to_b64str
 
 
 class CrowdSale(Contract):
     def __init__(self, provider):
         self.provider = provider
-        self.address = crowd_sale_address
+        self.address = SMART_CONTRACT_CROWDSALE
         if isinstance(self.address, str):
             super().__init__(self.address, provider)
 

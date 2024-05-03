@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import './Layout.styles.css';
 import { CSSProperties } from '@linaria/core';
 import Header from '../header/Header';
+// import Header from '../header/Header';
 // import { useMiniApp } from '@tma.js/sdk-react';
 
 // import { useMiniApp } from '@tma.js/sdk-react';

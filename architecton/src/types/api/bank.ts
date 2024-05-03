@@ -18,8 +18,15 @@ export interface IBankHistoryOut {
   changes?: string;
 }
 
+export interface IAccountOut {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
 export interface IBankOut {
   balance?: IBalanceOut;
   bank: IBankInfoOut;
   histories: IBankHistoryOut[];
+  account?: IAccountOut;
 }

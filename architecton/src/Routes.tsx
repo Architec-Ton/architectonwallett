@@ -10,6 +10,7 @@ import Main from './views/pages/Main';
 import Mint from './views/pages/Mint';
 import BankHistory from './views/pages/BankHistory';
 import Wallet from './views/pages/Wallet';
+import Referral from './views/pages/Referral';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/bank/history',
     element: <BankHistory />,
+  },
+  {
+    path: '/bank/referral',
+    element: <Referral />,
   },
   {
     path: '/wallet',

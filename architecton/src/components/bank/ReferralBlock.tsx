@@ -4,12 +4,12 @@ import assets from '../../assets';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  bank_count: number;
-  bank_income: number;
+  referralCount: number;
+  referralBought: number;
   title?: string;
 };
 
-function Workspace({ title, bank_count, bank_income }: Props) {
+function ReferralBlock({ title, referralCount, referralBought }: Props) {
   const { t } = useTranslation();
   return (
     <div
@@ -21,22 +21,22 @@ function Workspace({ title, bank_count, bank_income }: Props) {
       <h3>{t(title)}</h3>
       <div className="workspace-banks">
         <div className="workspace-banks-icon">
-          <img src={assets.iconBankWhite} />
+          <img src={assets.iconRef} />
         </div>
-        <div>{bank_count}</div>
+        <div>{referralCount}</div>
       </div>
       <div className="workspace-bank-income">
-        <h4>Bank Income</h4>
+        <h4>Bought a Bank</h4>
         <div>
-          {bank_income} $BNK <span>/ h</span>
+          {referralBought} <span>Referral</span>
         </div>
       </div>
     </div>
   );
 }
 
-Workspace.defaultProps = {
-  title: 'workspace',
+ReferralBlock.defaultProps = {
+  title: 'referral',
 };
 
-export default Workspace;
+export default ReferralBlock;
