@@ -6,6 +6,9 @@ import { TonConnectButton } from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useTonConnect } from '../../hooks/useTonConnect';
 import Footer from '../../components/ui/Footer';
+import { useMainButton, useMiniApp } from '@tma.js/sdk-react';
+import { use } from 'i18next';
+import { useEffect } from 'react';
 
 function Wallet() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -13,7 +16,6 @@ function Wallet() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
-
   const { t } = useTranslation();
 
   return (

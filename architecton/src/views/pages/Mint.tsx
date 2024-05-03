@@ -57,13 +57,13 @@ function Mint() {
   //const walletAddress = '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK';
   const { writeData } = useApi();
   const [recvBank, setRecvBank] = useState<number>(1);
-  const [sendTon, setSendTon] = useState<number>(0.1);
+  const [sendTon, setSendTon] = useState<number>(1);
   const [buyDisabled, setbuyDisabled] = useState<boolean>(false);
 
   const onChangeBank = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
     setRecvBank(value);
-    setSendTon(value / 10);
+    setSendTon(value); // /10
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onChangeTon = (e: React.ChangeEvent<HTMLInputElement>) => {

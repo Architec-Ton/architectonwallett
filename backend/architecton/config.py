@@ -49,7 +49,7 @@ bbb = "0QCtwujhh-vTomKvurFgHifJOb4mK-vHnBjELhkhfLVvJ0Tz"
 ccc = "EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6"
 lll = "EQDIfqmP71phy7GlkRrx86eQrtufpj9HDjNAt5uhTFr-JUVH"
 testnet_crowd_sale_v2 = "EQC64tH5_uPMRcfy2KOXm0h-udsL6FA5U3cfm60tCK4shNux"
-bank_crowd_sale = "EQD_mIzsfn5yzzUbh-iRjU8cpfllNPHEhSLVw-kl_YRL1smw"
+bank_crowd_sale = "EQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMIYF"
 
 
 SMART_CONTRACT_CROWDSALE = os.getenv("SMART_CONTRACT_CROWDSALE", bank_crowd_sale)

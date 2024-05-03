@@ -27,7 +27,7 @@ function useCrowdSaleContract(address?: string) {
         : Address.parse(
             network === CHAIN.MAINNET
               ? ''
-              : 'EQD_mIzsfn5yzzUbh-iRjU8cpfllNPHEhSLVw-kl_YRL1smw' //'EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6'
+              : 'EQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMIYF' //'EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6'
           )
     );
     return client.open(contract) as OpenedContract<CrowdSale>;
