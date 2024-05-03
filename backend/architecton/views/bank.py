@@ -40,6 +40,12 @@ class BankIn(BaseViewModel):
     tx: Dict | None = Field(default=None)
 
 
+class BankReferralOut(BaseViewModel):
+    bnk_per_hour: float = Field(default=0)
+    bank_reward: int = Field(default=0)
+    ref_count: int = Field(default=0)
+    ref_bought: int = Field(default=0)
+
 
 
 

@@ -9,7 +9,11 @@ import Workspace from '../../components/bank/Workspace';
 import ReferralBlock from '../../components/bank/ReferralBlock';
 import ReferralBonus from '../../components/bank/ReferralBonus';
 import { useTonAddress } from '@tonconnect/ui-react';
-import { APP_URL } from '../../constants';
+import { APP_URL, BE_URL } from '../../constants';
+import useSWR from 'swr';
+import { useInitData } from '@tma.js/sdk-react';
+import { useEffect, useState } from 'react';
+import { IBankReferralOut } from '../../types/api/bank';
 
 function Referral() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -17,9 +21,33 @@ function Referral() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
+  const tadddress = useTonAddress();
 
   const { t } = useTranslation();
   const userFriendlyAddress = useTonAddress();
+  const initData = useInitData();
+
+  const [referral, setReferral] = useState<IBankReferralOut>({
+    bnkPerHour: 0,
+    bankReward: 0,
+    refBought: 0,
+    refCount: 0,
+  } as IBankReferralOut);
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+  const tgid = initData.user.id;
+
+  const { data, isLoading } = useSWR(
+    `${BE_URL}/bank/${tadddress}/referral?tgid=${tgid}`,
+    connected ? fetcher : null
+  );
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setReferral(data as IBankReferralOut);
+    }
+  }, [isLoading, data]);
 
   return (
     <Layout2Row>
@@ -36,8 +64,15 @@ function Referral() {
         <ReferralBonus link={`${APP_URL}?startapp=${userFriendlyAddress}`} />
 
         <div className="two-column">
-          <Workspace bank_count={0} bank_income={0} title="rewards" />
-          <ReferralBlock referralBought={0} referralCount={0} />
+          <Workspace
+            bank_count={referral.bankReward}
+            bank_income={referral.bnkPerHour}
+            title="rewards"
+          />
+          <ReferralBlock
+            referralBought={referral.refBought}
+            referralCount={referral.refCount}
+          />
         </div>
       </Container>
       <Footer>

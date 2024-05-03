@@ -2,21 +2,25 @@ import FooterButton from '../../components/buttons/FooterButton';
 import { useTranslation } from 'react-i18next';
 import Layout2Row from '../layout/Layout2Row';
 import Container from '../../components/ui/Container';
-import { TonConnectButton } from '@tonconnect/ui-react';
+import { useTonConnectUI } from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useTonConnect } from '../../hooks/useTonConnect';
 import Footer from '../../components/ui/Footer';
-import { useMainButton, useMiniApp } from '@tma.js/sdk-react';
-import { use } from 'i18next';
-import { useEffect } from 'react';
 
 function Wallet() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { connected, wallet } = useTonConnect();
 
+  const [tonConnectUI] = useTonConnectUI();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const disconnect = async () => {
+    await tonConnectUI.disconnect();
+    navigate('/');
+  };
 
   return (
     <Layout2Row>
@@ -29,10 +33,9 @@ function Wallet() {
             {t(`wallet_title`)}
           </h2>
         </div>
-        <TonConnectButton />
       </Container>
       <Footer>
-        <FooterButton title={t('wallet_disconnect')} />
+        <FooterButton title={t('wallet_disconnect')} onClick={disconnect} />
       </Footer>
     </Layout2Row>
   );

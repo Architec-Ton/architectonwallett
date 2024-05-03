@@ -30,3 +30,17 @@ export interface IBankOut {
   histories: IBankHistoryOut[];
   account?: IAccountOut;
 }
+
+export interface IBankReferralOut {
+  balance?: IBalanceOut;
+  bank: IBankInfoOut;
+  histories: IBankHistoryOut[];
+  account?: IAccountOut;
+}
+
+export interface IBankReferralOut {
+  bnkPerHour: number;
+  bankReward: number;
+  refCount: number;
+  refBought: number;
+}

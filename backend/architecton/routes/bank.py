@@ -9,7 +9,7 @@ from architecton.controllers.account_controller import AccountController
 from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.project_controller import ProjectController
 from architecton.models import Wallet, Notification, NotificationType
-from architecton.views.bank import BankOut, BankBalanceOut, BankInfoOut, BankHistoryOut, BankIn
+from architecton.views.bank import BankOut, BankBalanceOut, BankInfoOut, BankHistoryOut, BankIn, BankReferralOut
 from architecton.views.info import InfoOut
 
 router = APIRouter(tags=["General route"])
@@ -55,6 +55,19 @@ async def bank(address: str, tgid=Query(default=None)):
 async def history(address: str, tgid=Query(default=None)):
     notifications = await NotificationController.get_notifications(tgid, address if address != "none" else None, 100)
     return notifications
+
+
+@router.get("/{address}/referral", response_model=BankReferralOut)
+async def referral_info(address: str, tgid=Query(default=None)):
+    notifications = await NotificationController.get_notifications(tgid, address if address != "none" else None, 10000)
+    bank_reward = 0
+    ref_bought = 0
+    for n in notifications:
+        if n.type == NotificationType.ref:
+            bank_reward += n.bank_after - n.bank_before
+            ref_bought += 1
+
+    return BankReferralOut(bank_reward=bank_reward, ref_bought=ref_bought, ref_count=ref_bought)
 
 
 @router.post("/{address}")

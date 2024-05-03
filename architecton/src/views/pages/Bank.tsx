@@ -163,7 +163,9 @@ function Bank() {
             maxBanks={bankInfo.bank.bankTotal}
             freeBanks={bankInfo.bank.bankFree}
             mintingPercent={
-              (1 - bankInfo.bank.bankFree / bankInfo.bank.bankTotal) * 100
+              bankInfo.bank.bankTotal
+                ? (1 - bankInfo.bank.bankFree / bankInfo.bank.bankTotal) * 100
+                : 0
             }
           />
         </div>
