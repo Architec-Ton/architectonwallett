@@ -26,6 +26,8 @@ class Notification(Model):
     title = fields.CharField(max_length=128, null=True, default=None)
     symbol = fields.CharField(max_length=128, null=True, default=None)
     changes = fields.CharField(max_length=512, null=True, default=None)
+    url = fields.CharField(max_length=512, null=True, default=None)
+    payload = fields.JSONField(null=True, default=None)
     completed = fields.BooleanField(default=True)
     bank_before = fields.IntField(default=0)
     bank_after = fields.IntField(default=0)

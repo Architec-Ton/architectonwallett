@@ -46,29 +46,43 @@ function Bank() {
 
   //const { crowdSale, sendInc } = useCrowdSaleContract();
 
-  const { data, isLoading, fetchData, error, writeData } = useApi();
+  const { data, isLoading, fetchData, error, writeData, setIsLoading } =
+    useApi();
 
   useEffect(() => {
     const preRun = async () => {
       const tgid = initData.user.id;
-      console.log(initData);
-      const timeout = setTimeout(() => {
-        console.log('fetch banks:', tgid, userFriendlyAddress);
-        fetchData(
+      console.log('connected', connected);
+      console.log('userFriendlyAddress', userFriendlyAddress);
+      console.log('fetch banks:', tgid, userFriendlyAddress);
+
+      if (userFriendlyAddress) {
+        await fetchData(
           `/bank/${
             userFriendlyAddress ? userFriendlyAddress : 'none'
           }?tgid=${tgid}`
         );
-      }, 600);
-      return () => clearTimeout(timeout);
+      } else {
+        setIsLoading(false);
+      }
+      console.log('fetch banks finish:', tgid, userFriendlyAddress);
     };
     preRun();
-  }, [userFriendlyAddress]);
+  }, [userFriendlyAddress, connected]);
 
   useEffect(() => {
     if (!isLoading && error == null && data) {
       console.log('set data', data);
-      setBankInfo(data as IBankOut);
+      const dt: IBankOut = data as IBankOut;
+
+      if (bankInfo.balance && !dt.balance) {
+        console.log('Skip this input ', dt);
+        console.log('Skip this bankInfo ', bankInfo);
+      } else {
+        console.log('set this input ', dt);
+        console.log('Set this bankInfo ', bankInfo);
+        setBankInfo(dt);
+      }
     }
   }, [isLoading, connected]);
 

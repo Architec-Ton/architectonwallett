@@ -82,7 +82,10 @@ class AccountController:
         a = await Account.get_or_none(id=account_in.id)
         if a is None:
             a = await Account.create(**account_in.model_dump())
-            await Notification.get_or_create(tg_id=a.id, type=NotificationType.registration)
+            n = await Notification.get_or_none(tg_id=a.id, type=NotificationType.registration)
+            if n is None:
+                await Notification.create(tg_id=a.id, type=NotificationType.registration)
+
         return a
 
     @staticmethod

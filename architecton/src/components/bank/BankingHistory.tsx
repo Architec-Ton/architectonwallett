@@ -10,7 +10,7 @@ type Props = {
 function BankingHistory({ bankingHistory }: Props) {
   const now = new Date();
   const navigate = useNavigate();
-  console.log('banking:', bankingHistory);
+  //console.log('banking:', bankingHistory);
   return (
     <div className="bank-mint-history">
       <div className="bank-mint-history-title">

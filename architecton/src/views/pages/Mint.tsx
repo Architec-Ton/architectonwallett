@@ -74,7 +74,7 @@ function Mint() {
   const handleBuyBanks = async () => {
     //console.log('Try buy: ', sendTon, ref);
     const tx =
-      ref && ref != ''
+      ref && ref != '' && ref != tadddress
         ? await buyRefferalBank(sendTon, Address.parse(ref))
         : await buyBank(sendTon);
     console.log('Transaction responce:', tx);
@@ -82,7 +82,13 @@ function Mint() {
     await writeData(`/bank/${tadddress}?tgid=${initData.user.id}`, {
       bankBefore: bankBalance,
       bankAfter: bankBalance + recvBank,
-      ref: ref && ref != '' ? ref : null,
+      ref: ref && ref != '' && ref != tadddress ? ref : null,
+      tx: {
+        tx: tx,
+        ref: ref,
+        sendTon: sendTon,
+        recvBank: recvBank,
+      },
     });
     navigate('/');
   };
@@ -98,7 +104,7 @@ function Mint() {
   // };
 
   useEffect(() => {
-    if (!isLoading) {
+    if (isLoading === false) {
       console.log('DATA:', data);
       if (data) {
         // fetchData();
@@ -108,7 +114,7 @@ function Mint() {
         setIsGLoading(false);
       }
     }
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   useEffect(() => {
     if (sendTon > tonBalance) {

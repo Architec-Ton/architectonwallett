@@ -59,6 +59,6 @@ const useApi = () => {
       setIsLoading(false);
     }
   };
-  return { data, isLoading, error, fetchData, writeData };
+  return { data, isLoading, error, fetchData, writeData, setIsLoading };
 };
 export default useApi;

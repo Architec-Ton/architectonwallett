@@ -1,5 +1,5 @@
 import datetime
-from typing import List
+from typing import List, Dict
 
 from pydantic import Field
 
@@ -37,6 +37,7 @@ class BankIn(BaseViewModel):
     bank_before: int = Field(default=0)
     bank_after: int = Field(default=0)
     ref: str | None = Field(default=0)
+    tx: Dict | None = Field(default=None)
 
 
 
