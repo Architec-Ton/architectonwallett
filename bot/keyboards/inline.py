@@ -44,6 +44,21 @@ main = InlineKeyboardMarkup(
 )
 
 
+def generate_wallet_keyboard(wallet_addresses):
+    keyboard = InlineKeyboardBuilder()
+    
+    for address in wallet_addresses:
+        # Формируем текст кнопки (первые три буквы...последние три буквы адреса)
+        button_text = address[:3] + "..." + address[-3:]
+        # Используем адрес кошелька как callback_data
+        button_callback_data = address
+        keyboard.button(text=button_text, callback_data=button_callback_data)
+    keyboard.adjust(*[2]*2)
+    keyboard.button(text="🔙Back", callback_data="backone")
+    
+    return keyboard.as_markup()
+
+
 my_account = InlineKeyboardMarkup(
     inline_keyboard=[
         [
@@ -54,7 +69,7 @@ my_account = InlineKeyboardMarkup(
                 text="👥Friends", callback_data="friends"
             ),
             InlineKeyboardButton(
-                text="back", callback_data="back"
+                text="🔙Back", callback_data="back"
             )
         ]
     ]
