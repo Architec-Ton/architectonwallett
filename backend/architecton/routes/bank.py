@@ -60,7 +60,7 @@ async def history(address: str, tgid=Query(default=None)):
 @router.post("/{address}")
 async def bank_purchase(address: str, bank_in: BankIn, tgid=Query(default=None)):
     logging.info(f"Data wallet: {bank_in.model_dump_json(indent=4)} -> {address} {tgid}")
-    wallet = await Wallet(address=address, tg_id=int(tgid)).get_or_none()
+    wallet = await Wallet.filter(address=address, tg_id=tgid).first()
     logging.info(f"Get wallet: {wallet} -> {address} {tgid}")
     if wallet is not None:
         await Notification.create(
@@ -76,7 +76,7 @@ async def bank_purchase(address: str, bank_in: BankIn, tgid=Query(default=None))
         logging.info("notification created")
 
         if bank_in.ref:
-            wallet = await Wallet(address=bank_in.ref).first()
+            wallet = await Wallet.filter(address=bank_in.ref).first()
             if wallet is not None:
                 await Notification.create(
                     type=NotificationType.ref,
