@@ -54,10 +54,10 @@ async def account(address: str, account_in: AccountIn):
     return tg_user
 
 
-@router.get("/test/{address}")
+@router.get("/test/")
 async def test(address: str = None):
     client = get_ton_client()
     contract = CrowdSale(client)
-    data = await contract.get_banks(address)
+    data = await contract.get_owner()
 
     return data

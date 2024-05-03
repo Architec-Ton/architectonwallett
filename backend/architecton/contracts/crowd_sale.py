@@ -1,6 +1,7 @@
 import base64
 
 from TonTools.Contracts.Contract import Contract
+from TonTools.Contracts.Jetton import Jetton
 from ton.utils import read_address
 from tonsdk.boc import Cell
 from architecton.config import SMART_CONTRACT_CROWDSALE
@@ -35,6 +36,20 @@ class CrowdSale(Contract):
             stack=[],
         )
         return int(data[0][1], 16)
+
+    async def get_owner(self):
+        data = await self.provider.run_get_method(
+            address=self.address,
+            method="owner",
+            stack=[],
+        )
+        print(data)
+        jetton_wallet_address = self.provider._process_address(
+            read_address(Cell.one_from_boc(base64.b64decode(data[1][1]["bytes"])))
+        ).to_string()
+        print(jetton_wallet_address)
+
+    # return int(data[0][1], 16)
 
     async def get_total_banker(self):
         data = await self.provider.run_get_method(
