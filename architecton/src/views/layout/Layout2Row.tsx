@@ -12,7 +12,7 @@ function Layout2Row({ children }: Props) {
       style={{
         maxWidth: '475px',
         justifyContent: 'space-between',
-        minHeight: '100vh',
+        minHeight: '100%',
         display: 'flex',
         flexDirection: 'column',
       }}>

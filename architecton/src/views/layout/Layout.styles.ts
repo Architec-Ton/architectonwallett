@@ -4,7 +4,7 @@ const Layout = css`
   border: 1px dashed #00f;
   min-width: 375px;
   max-width: 375px;
-  min-height: 100vh;
+  height: 100%;
   padding: 2rem;
 `;
 
