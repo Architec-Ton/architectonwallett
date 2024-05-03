@@ -67,7 +67,9 @@ function Mint() {
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onChangeTon = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //const value = parseInt(e.currentTarget.value);
+    const value = parseInt(e.currentTarget.value);
+    setRecvBank(value);
+    setSendTon(value); // /10
   };
   //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
   const { buyBank, buyRefferalBank } = useCrowdSaleContract();
