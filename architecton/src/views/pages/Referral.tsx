@@ -37,7 +37,7 @@ function Referral() {
 
         <div className="two-column">
           <Workspace bank_count={0} bank_income={0} title="rewards" />
-          <ReferralBlock referralBought={1} referralCount={2} />
+          <ReferralBlock referralBought={0} referralCount={0} />
         </div>
       </Container>
       <Footer>
