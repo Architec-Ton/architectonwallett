@@ -26,7 +26,7 @@ function useCrowdSaleContract(address?: string) {
         ? Address.parse(address)
         : Address.parse(
             network === CHAIN.MAINNET
-              ? ''
+              ? 'EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g'
               : 'EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g' //'EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6'
           )
     );
