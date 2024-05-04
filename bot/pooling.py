@@ -5,8 +5,10 @@ import aiohttp
 from aiogram import Bot
 
 async def get_updates():
+    base_url = "https://architecton.site"
+    # base_url = "http://localhost:8000"
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
-        async with session.get('https://architecton.site/api/v1/account/none/update') as resp:
+        async with session.get(f'{base_url}/api/v1/account/none/update') as resp:
             if resp.status == 200:
                 return await resp.json()
             else:
@@ -16,7 +18,8 @@ async def get_updates():
 
 async def worker(bot: Bot):
     while True:
-        await asyncio.sleep(60)
+        # await asyncio.sleep(60)
+        await asyncio.sleep(90)
         try:
             data = await get_updates()
             if data is not None:
@@ -28,12 +31,23 @@ async def worker(bot: Bot):
                                 "Check your wallet now."
                                 )
                     elif msg['type'] == 'ref':
-                        text = (f"""🎉 Congratulations! 
-                        
-    You've earned a reward through your referral link.
-    Enjoy your bonus +{banks} BNK! 
-    Check your wallet now."""
-                                )
+
+                        if msg['stgid'] is not None:
+                            if msg['stgid'] == msg['tgid']:
+                                text = f"""🤑 Looks like you're your own best friend! 
+You've just earned a reward for using your own referral link. 
+Treat yourself with the bonus +{banks} BNK! 💰"""
+                            else:
+                                text = f"""🎉 Congratulations!                   
+You've earned a reward through your referral link from @{msg['sname']} .
+Enjoy your bonus +{banks} BNK! 
+Check your wallet now."""
+                        else:
+                            text = f"""🎉 Congratulations!
+You've earned a reward through your referral link.
+Enjoy your bonus +{banks} BNK!
+Check your wallet now."""
+
                     await bot.send_message(chat_id=msg['tgid'], text=text)
 
         except Exception as e:
