@@ -53,6 +53,8 @@ class BankUpdatesOut(BaseViewModel):
     banks: int
     address: str
     date: str
+    stgid: int | None = Field(default=None)
+    sname: str | None = Field(default=None)
 
 
 

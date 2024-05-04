@@ -8,7 +8,7 @@ from architecton.config import SMART_CONTRACT_CROWDSALE
 from architecton.contracts.crowd_sale import CrowdSale
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.ton_client import get_ton_client
-from architecton.models import Wallet, Notification, NotificationType
+from architecton.models import Wallet, Notification, NotificationType, Account
 from architecton.views.account import AccountBalanceOut, AccountIn, WalletOut
 from architecton.views.bank import BankUpdatesOut
 
@@ -48,22 +48,29 @@ async def last_updates():
     notifys = []
 
     for n in notifications:
+        account = None
+        if n.title is not None:
+            wallet = await Wallet.filter(address=n.title).first()
+            if wallet is not None and wallet.tg_id is not None:
+                account = await Account.filter(id=wallet.tg_id).first()
         balance = await AccountController.get_balance(n.address)
         if balance >= n.bank_after:
             n.completed = True
             await n.save()
-            notifys.append(n)
+            notifys.append({"n": n, "a": account})
 
     #
     # tons, banks = await asyncio.gather(AccountController.get_balance(address), AccountController.get_banks(address))
     # return AccountBalanceOut(tons=tons, banks=banks, address=SMART_CONTRACT_CROWDSALE)
     return [
         BankUpdatesOut(
-            tgid=n.tg_id,
-            type=n.type,
-            banks=n.bank_after - n.bank_before,
-            address=n.address,
-            date=n.created_at.isoformat(),
+            tgid=n["n"].tg_id,
+            type=n["n"].type,
+            banks=n["n"].bank_after - n["n"].bank_before,
+            address=n["n"].address,
+            date=n["n"].created_at.isoformat(),
+            stgid=n["a"].id if n["a"] is not None else None,
+            sname=n["a"].username if n["a"] is not None else None,
         )
         for n in notifys
     ]
