@@ -1,0 +1,63 @@
+{
+    "welcome_to" : "欢迎来到",
+    "welcome_info_ltf_title" : "低交易费",
+    "welcome_info_ltf_desc" : "在 TON 区块链网络上，我们的钱包是世界上交易量最低的钱包之一。我们正在努力确保您支付更少的费用。",
+    "welcome_info_cgp_title" : "组合游戏项目",
+    "welcome_info_cgp_desc" : "为基于 TON 区块链创建的大量游戏项目的代币提供大规模支持。日常产品的代币化。",
+    "welcome_info_dsl_title" : "数据安全级别",
+    "welcome_info_dsl_desc" : "个人数据高度安全。对所有信息的下放负全责。",
+    "add_wallet_header": "添加钱包",
+    "add_wallet_btn_new_title": "新钱包",
+    "add_wallet_btn_new_desc": "点击两下即可创建新的自定义钱包",
+    "add_wallet_btn_existing_title": "现有钱包",
+    "add_wallet_btn_existing_desc": "使用 24 字秘钥添加现有钱包。",
+    "new_wallet_header_0": "您的秘钥",
+    "new_wallet_header_1": "确认密钥",
+    "new_wallet_header_2": "设置密码",
+
+    "btn_next" : "Futher",
+    "btn_create" : "创建",
+    "btn_check" : "检查",
+
+
+    "footer_our": "我们的",
+    "footer_support_team": "支持团队",
+    "footer_in_telegram": "电传",
+
+
+    "bank_mint_header": "银行造币厂（预售）",
+
+    "mint_title": "薄荷糖",
+    "mint_buy": "购买",
+
+    "mint_input_recv" : "接收",
+    "mint_input_send" : "发送",
+    "mint_input_balance" : "平衡",
+
+
+
+    "bank_history_title": "银行历史",
+
+    "wallet_disconnect": "断开",
+
+    "mint_comment": "交易自动四舍五入。未使用的吨返回钱包 银行的工作条件。",
+
+    "referral_button": "分享",
+    "referral_title": "转介",
+    "referral": "转介",
+
+    "launch" : "启动银行",
+    "registration" : "注册已完成",
+    "mint": "Mint",
+    "ref": "造币厂编号",
+    "linked" : "钱包相连",
+
+    "workspace": "工作空间",
+    "rewards": "您的奖励",
+
+    "wallet_title": "断开钱包连接",
+
+    "referral_bonus_title": "推荐奖金"
+
+
+}
