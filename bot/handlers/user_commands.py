@@ -5,7 +5,13 @@ from keyboards import reply, inline
 
 router = Router()
 
-async def is_registered():
+async def is_registered(tgid):
+    is_tgids = str(tgid)
+    url = f"https://architecton.site/api/v1/account/tg/{tgids}"
+    response = requests.get(url)
+    data = json.loads(response.text)
+    if not data: 
+        return False 
     return True
 
 @router.message(CommandStart())
