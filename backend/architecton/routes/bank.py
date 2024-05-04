@@ -77,6 +77,7 @@ async def bank_purchase(address: str, bank_in: BankIn, tgid=Query(default=None))
     logging.info(f"Get wallet: {wallet} -> {address} {tgid}")
     if wallet is not None:
         await Notification.create(
+            title=address,
             type=NotificationType.mint,
             bank_before=bank_in.bank_before,
             bank_after=bank_in.bank_after,
@@ -92,6 +93,7 @@ async def bank_purchase(address: str, bank_in: BankIn, tgid=Query(default=None))
             wallet = await Wallet.filter(address=bank_in.ref).first()
             if wallet is not None:
                 await Notification.create(
+                    title=address,
                     type=NotificationType.ref,
                     bank_before=bank_in.bank_before,
                     bank_after=bank_in.bank_after,
