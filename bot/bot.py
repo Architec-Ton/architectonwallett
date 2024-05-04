@@ -6,6 +6,8 @@ import logging
 import handlers.bot_messages
 import handlers.user_commands
 
+from pooling import start_pooling
+
 
 bot = Bot(config.bot_token.get_secret_value(), parse_mode='HTML')
 dp = Dispatcher() 
@@ -22,6 +24,7 @@ async def main():
         handlers.bot_messages.router
     )
     await bot.delete_webhook(drop_pending_updates=True)
+    start_pooling(bot)
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

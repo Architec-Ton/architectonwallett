@@ -10,6 +10,7 @@ from architecton.controllers.account_controller import AccountController
 from architecton.controllers.ton_client import get_ton_client
 from architecton.models import Wallet, Notification, NotificationType
 from architecton.views.account import AccountBalanceOut, AccountIn, WalletOut
+from architecton.views.bank import BankUpdatesOut
 
 router = APIRouter()
 
@@ -38,6 +39,34 @@ async def account(tgid: int):
     # tons, banks = await asyncio.gather(AccountController.get_balance(address), AccountController.get_banks(address))
     # return AccountBalanceOut(tons=tons, banks=banks, address=SMART_CONTRACT_CROWDSALE)
     return [WalletOut(address=w.address) for w in wallets]
+
+
+@router.get("/none/update", response_model=List[BankUpdatesOut])
+async def last_updates():
+    notifications = await Notification.filter(completed=False).order_by("created_at").limit(3)
+
+    notifys = []
+
+    for n in notifications:
+        balance = await AccountController.get_balance(n.address)
+        if balance >= n.bank_after:
+            n.completed = True
+            await n.save()
+            notifys.append(n)
+
+    #
+    # tons, banks = await asyncio.gather(AccountController.get_balance(address), AccountController.get_banks(address))
+    # return AccountBalanceOut(tons=tons, banks=banks, address=SMART_CONTRACT_CROWDSALE)
+    return [
+        BankUpdatesOut(
+            tgid=n.tg_id,
+            type=n.type,
+            banks=n.bank_after - n.bank_before,
+            address=n.address,
+            date=n.created_at.isoformat(),
+        )
+        for n in notifys
+    ]
 
 
 @router.post("/{address}")

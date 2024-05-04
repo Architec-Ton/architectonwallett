@@ -25,3 +25,5 @@ class AccountBalanceOut(BaseViewModel):
 
 class WalletOut(BaseViewModel):
     address: str
+
+

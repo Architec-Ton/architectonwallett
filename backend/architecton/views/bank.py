@@ -47,6 +47,12 @@ class BankReferralOut(BaseViewModel):
     ref_bought: int = Field(default=0)
 
 
+class BankUpdatesOut(BaseViewModel):
+    tgid: int
+    type: str
+    banks: int
+    address: str
+    date: str
 
 
 
