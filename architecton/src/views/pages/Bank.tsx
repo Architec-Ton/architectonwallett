@@ -15,7 +15,7 @@ import useApi from '../../hooks/useApi';
 import Footer from '../../components/ui/Footer';
 import assets from '../../assets';
 import Button from '../../components/buttons/Button';
-import { useCloudStorage, useInitData } from '@tma.js/sdk-react';
+import { useCloudStorage, useInitData, usePopup } from '@tma.js/sdk-react';
 import { use } from 'i18next';
 //import { useTonClient } from '../../hooks/useTonClient';
 //import { Address } from '@ton/core';
@@ -45,6 +45,8 @@ function Bank() {
 
   const storageTelegram = useCloudStorage();
 
+  const popup = usePopup();
+
   const navigate = useNavigate();
 
   //const { crowdSale, sendInc } = useCrowdSaleContract();
@@ -55,8 +57,16 @@ function Bank() {
   useEffect(() => {
     if (ref && ref != '' && userFriendlyAddress != ref) {
       storageTelegram.set('ref', ref);
+    } else if (userFriendlyAddress && userFriendlyAddress == ref) {
+      console.log('This you address:', userFriendlyAddress, ref);
+      popup.open({
+        title: 'Referral link wrong!',
+        message:
+          "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
+        //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
+      });
     }
-  }, []);
+  }, [userFriendlyAddress, ref]);
 
   useEffect(() => {
     const preRun = async () => {
