@@ -1,4 +1,6 @@
 import asyncio
+import logging
+
 import aiohttp
 from aiogram import Bot
 
@@ -8,7 +10,7 @@ async def get_updates():
             if resp.status == 200:
                 return await resp.json()
             else:
-                print("GET UPDATE ERROR:", await resp.text())
+                logging.error(f"GET UPDATE ERROR: {await resp.text()}")
 
 
 
@@ -20,7 +22,7 @@ async def worker(bot: Bot):
             if data is not None:
                 for msg in data:
                     banks = msg['banks']
-                    print("id:", msg['tgid'], "t:", msg['type'], "b:", banks)
+                    logging.info(f"id: {msg['tgid']} t: {msg['type']} b: {banks}")
                     if msg['type'] == 'mint':
                         text = (f"🚀 You've has been minted a +{banks} BNK! \n "
                                 "Check your wallet now."
@@ -35,7 +37,7 @@ async def worker(bot: Bot):
                     await bot.send_message(chat_id=msg['tgid'], text=text)
 
         except Exception as e:
-            print('Error:', e)
+            logging.error(f"Error: {e}")
 
 
 def start_pooling(bot):
