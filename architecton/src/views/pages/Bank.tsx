@@ -15,7 +15,8 @@ import useApi from '../../hooks/useApi';
 import Footer from '../../components/ui/Footer';
 import assets from '../../assets';
 import Button from '../../components/buttons/Button';
-import { useInitData } from '@tma.js/sdk-react';
+import { useCloudStorage, useInitData } from '@tma.js/sdk-react';
+import { use } from 'i18next';
 //import { useTonClient } from '../../hooks/useTonClient';
 //import { Address } from '@ton/core';
 //import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
@@ -42,12 +43,20 @@ function Bank() {
 
   const userFriendlyAddress = useTonAddress();
 
+  const storageTelegram = useCloudStorage();
+
   const navigate = useNavigate();
 
   //const { crowdSale, sendInc } = useCrowdSaleContract();
 
   const { data, isLoading, fetchData, error, writeData, setIsLoading } =
     useApi();
+  const ref = initData.startParam;
+  useEffect(() => {
+    if (ref && ref != '' && userFriendlyAddress != ref) {
+      storageTelegram.set('ref', ref);
+    }
+  }, []);
 
   useEffect(() => {
     const preRun = async () => {
@@ -129,12 +138,12 @@ function Bank() {
                   justifyContent: 'space-around',
                 }}>
                 <Button
-                  title="Mint"
+                  title={t('Mint')}
                   icon={assets.iconBankWhite}
                   onClick={() => navigate('/bank/mint')}
                 />
                 <Button
-                  title="Referrals"
+                  title={t('Referrals')}
                   icon={assets.iconRef}
                   onClick={() => navigate('/bank/referral')}
                   disabled={bankInfo.balance?.bankAmount == 0}

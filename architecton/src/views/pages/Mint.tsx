@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTonConnect } from '../../hooks/useTonConnect';
 import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
 import Footer from '../../components/ui/Footer';
-import { useInitData } from '@tma.js/sdk-react';
+import { useCloudStorage, useInitData } from '@tma.js/sdk-react';
 import useApi from '../../hooks/useApi';
 
 function Mint() {
@@ -48,11 +48,24 @@ function Mint() {
 
   const navigate = useNavigate();
 
-  const { t } = useTranslation();
+  const storageTelegram = useCloudStorage();
 
   const initData = useInitData();
 
-  const ref = initData.startParam;
+  let ref = initData.startParam;
+
+  useEffect(() => {
+    const a = async () => {
+      if (!ref || ref == '') {
+        ref = await storageTelegram.get('ref');
+      }
+
+      console.log('REF in async:', ref);
+    };
+    a();
+  }, []);
+
+  const { t } = useTranslation();
 
   //const walletAddress = '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK';
   const { writeData } = useApi();
@@ -74,9 +87,9 @@ function Mint() {
   //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
   const { buyBank, buyRefferalBank } = useCrowdSaleContract();
   const handleBuyBanks = async () => {
-    //console.log('Try buy: ', sendTon, ref);
+    console.log('Try buy: ', sendTon, ref);
     const tx =
-      ref && ref != ''
+      ref && ref != '' && ref != tadddress
         ? await buyRefferalBank(sendTon, Address.parse(ref))
         : await buyBank(sendTon);
     console.log('Transaction responce:', tx);

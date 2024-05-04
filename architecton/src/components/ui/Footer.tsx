@@ -1,6 +1,7 @@
 import { useUtils } from '@tma.js/sdk-react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   children?: ReactNode;
@@ -8,9 +9,10 @@ type Props = {
 
 function Footer({ children }: Props) {
   const utils = useUtils();
+  const { t } = useTranslation();
 
   const clickSupport = () => {
-    utils.openTelegramLink('https://t.me/architec_ton_ru');
+    utils.openTelegramLink('https://t.me/architecton_support');
   };
   return (
     <div
@@ -20,12 +22,12 @@ function Footer({ children }: Props) {
       })}>
       <div>
         <p>
-          Our{' '}
+          {t('footer_our')}{' '}
           <a href="#" onClick={clickSupport}>
-            Support Team
+            {t('footer_support_team')}
           </a>
         </p>
-        <p>in Telegram</p>
+        <p>{t('footer_in_telegram')}</p>
       </div>
       {children}
     </div>

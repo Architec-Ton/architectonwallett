@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import './Workspace.styles.css';
 
 import './Minting.styles.css';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   bankers_count: number;
@@ -16,6 +17,7 @@ function Minting({
   maxBanks,
   freeBanks,
 }: Props) {
+  const { t } = useTranslation();
   return (
     <div
       className={classNames({
@@ -23,7 +25,7 @@ function Minting({
         'square-block': true,
         workspace: true,
       })}>
-      <h3>Minting</h3>
+      <h3>{t('Minting')}</h3>
       <div className="minting-banks">
         <div className="minting-progress-bar">
           <div
@@ -36,11 +38,11 @@ function Minting({
         </div>
         <div className="minting-banks-info">
           <div>
-            <h4>Bankers</h4>
+            <h4>{t('Bankers')}</h4>
             <div>{bankers_count} / ∞ </div>
           </div>
           <div>
-            <h4>Free banks</h4>
+            <h4>{t('Free banks')}</h4>
             <div>
               {freeBanks} / {maxBanks}
             </div>

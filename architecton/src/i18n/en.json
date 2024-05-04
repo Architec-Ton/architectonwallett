@@ -57,7 +57,13 @@
 
     "wallet_title": "Disconnect Wallet",
 
-    "referral_bonus_title": "Referral Bonus"
+    "referral_bonus_title": "Referral Bonus",
+
+    "Bankers": "Bankers",
+    "Free banks": "Free banks",
+    "Minting": "Minting",
+    "Mint": "Mint",
+    "Referrals": "Referrals"
 
 
 }
