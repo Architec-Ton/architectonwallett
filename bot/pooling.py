@@ -14,7 +14,7 @@ async def get_updates():
 
 async def worker(bot: Bot):
     while True:
-        await asyncio.sleep(3*60)
+        await asyncio.sleep(60)
         try:
             data = await get_updates()
             if data is not None:
