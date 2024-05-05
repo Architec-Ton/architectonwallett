@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import logging
 from typing import List
 
@@ -46,18 +47,24 @@ async def last_updates():
     notifications = await Notification.filter(completed=False).order_by("created_at").limit(3)
 
     notifys = []
-
-    for n in notifications:
-        account = None
-        if n.title is not None:
-            wallet = await Wallet.filter(address=n.title).first()
-            if wallet is not None and wallet.tg_id is not None:
-                account = await Account.filter(id=wallet.tg_id).first()
-        balance = await AccountController.get_balance(n.address)
-        if balance >= n.bank_after:
-            n.completed = True
-            await n.save()
-            notifys.append({"n": n, "a": account})
+    try:
+        for n in notifications:
+            account = None
+            if n.title is not None:
+                wallet = await Wallet.filter(address=n.title).first()
+                if wallet is not None and wallet.tg_id is not None:
+                    account = await Account.filter(id=wallet.tg_id).first()
+            balance = await AccountController.get_balance(n.address)
+            if balance >= n.bank_after:
+                n.completed = True
+                await n.save()
+                notifys.append({"n": n, "a": account})
+            elif (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=15)) > n.created_at:
+                n.changes = "cancel"
+                n.completed = True
+                await n.save()
+    except Exception as e:
+        logging.error(f"error: {e}")
 
     #
     # tons, banks = await asyncio.gather(AccountController.get_balance(address), AccountController.get_banks(address))
