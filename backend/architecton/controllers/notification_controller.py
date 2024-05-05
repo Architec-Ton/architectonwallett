@@ -21,9 +21,7 @@ class NotificationController:
     def get_query(tg_id: int, address: str | None):
         if tg_id is not None:
             query = Q(
-                Q(tg_id=tg_id, address=address)
-                | Q(address__isnull=True, tg_id__isnull=True)
-                | Q(address__isnull=True, tg_id=tg_id)
+                Q(address=address) | Q(address__isnull=True, tg_id__isnull=True) | Q(address__isnull=True, tg_id=tg_id)
             )
         elif address is None:
             query = Q(address__isnull=True, tg_id__isnull=True)
