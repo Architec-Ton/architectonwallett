@@ -18,7 +18,13 @@ async def is_registered(tgid):
 
 @router.message(CommandStart())
 async def start(msg: Message):
-    if await is_registered(msg.from_user.id) == False:
-        await msg.answer("Hi, you haven't registered yet. Connect your wallet here ⬇️⬇️⬇️", reply_markup=inline.not_register)
+    if msg.from_user.language_code == 'ru':
+        if await is_registered(msg.from_user.id) == False:
+            await msg.answer("Привет! Ты еще не зарегистрирован. ПОдключи кошелёк здесь ⬇️⬇️⬇️", reply_markup=inline.not_register)
+        else:
+            await msg.answer("С возвращением!", reply_markup=inline.main)
     else:
-        await msg.answer("Hi, welcome back", reply_markup=inline.main)
+        if await is_registered(msg.from_user.id) == False:
+            await msg.answer("Hi, you haven't registered yet. Connect your wallet here ⬇️⬇️⬇️", reply_markup=inline.not_register)
+        else:
+            await msg.answer("Hi, welcome back", reply_markup=inline.main)
