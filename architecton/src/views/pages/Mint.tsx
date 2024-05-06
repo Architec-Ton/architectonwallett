@@ -127,6 +127,17 @@ function Mint() {
         // setContractAddress(data.address);
         setBankBalance(data.banks);
         setIsGLoading(false);
+        const tons = Math.floor(Number(data.tons) / 1e9);
+        if (tons > 10) {
+          setRecvBank(10);
+          setSendTon(10); // /10
+        } else if (tons <= 10 && tons > 0) {
+          setRecvBank(tons);
+          setSendTon(tons); // /10
+        } else {
+          setRecvBank(1);
+          setSendTon(1); // /10
+        }
       }
     }
   }, [isLoading, data]);
