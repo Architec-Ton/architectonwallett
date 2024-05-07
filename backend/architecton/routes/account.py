@@ -59,9 +59,14 @@ async def last_updates():
             if n.type == "mint":
                 addr = n.title
             else:
-                addr = Address(n.title)
-                addr.hash_part = bytearray.fromhex(n.address)
-                addr = addr.to_string(is_user_friendly=True)
+                try:
+                    addr = Address(n.title)
+                    addr.hash_part = bytearray.fromhex(n.address)
+                    addr = addr.to_string(is_user_friendly=True)
+                    n.address = addr
+                except Exception as e:
+                    logging.error(e)
+                    continue
 
             balance = await AccountController.get_balance(addr)
             if balance >= n.bank_after:
