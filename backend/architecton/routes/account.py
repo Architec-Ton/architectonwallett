@@ -55,9 +55,14 @@ async def last_updates():
                 wallet = await Wallet.get_wallet(address=n.title)
                 if wallet is not None and wallet.tg_id is not None:
                     account = await Account.filter(id=wallet.tg_id).first()
-            addr = Address(n.address).to_string()
+
             if n.type == "mint":
                 addr = n.title
+            else:
+                addr = Address(n.title)
+                addr.hash_part = bytearray.fromhex(n.address)
+                addr = addr.to_string(is_user_friendly=True)
+
             balance = await AccountController.get_balance(addr)
             if balance >= n.bank_after:
                 n.completed = True
