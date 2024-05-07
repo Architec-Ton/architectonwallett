@@ -4,6 +4,7 @@ import logging
 from typing import List
 
 from fastapi import APIRouter
+from tonsdk.utils import Address
 
 from architecton.config import SMART_CONTRACT_CROWDSALE
 from architecton.contracts.crowd_sale import CrowdSale
@@ -51,10 +52,13 @@ async def last_updates():
         for n in notifications:
             account = None
             if n.title is not None:
-                wallet = await Wallet.filter(address=n.title).first()
+                wallet = await Wallet.get_wallet(address=n.title)
                 if wallet is not None and wallet.tg_id is not None:
                     account = await Account.filter(id=wallet.tg_id).first()
-            balance = await AccountController.get_balance(n.address)
+            addr = Address(n.address).to_string()
+            if n.type == "mint":
+                addr = n.title
+            balance = await AccountController.get_balance(addr)
             if balance >= n.bank_after:
                 n.completed = True
                 await n.save()
