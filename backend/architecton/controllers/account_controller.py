@@ -4,12 +4,14 @@ import os.path
 
 from TonTools.Contracts.Jetton import Jetton
 from TonTools.Providers.TonCenterClient import TonCenterClient
+from tonsdk.utils import Address
+from fastapi.exceptions import HTTPException
 
 from architecton.contracts.crowd_sale import CrowdSale
 from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.ton_client import get_ton_client
 
-from architecton.models import Account, Notification, NotificationType
+from architecton.models import Account, Notification, NotificationType, ReferralsNotification, ReferralsNotificationType
 from architecton.views.account import AccountIn
 from architecton.views.project_list import ProjectListOut
 
@@ -91,3 +93,54 @@ class AccountController:
     @staticmethod
     async def get_or_none(tg_id: int) -> Account:
         return await Account.get_or_none(id=tg_id)
+
+    @staticmethod
+    async def update_referral(tg_id: int, address: str, ref: str, banks: int):
+        logging.info(f"update ref ref: {ref} tgid: {tg_id} address:{address} banks: {banks}")
+        ref_address = None
+        try:
+            owner_address = Address(address)
+            if ref is not None and len(ref) > 40:
+                ref_address = Address(ref)
+        except Exception as e:
+            raise HTTPException(400, "Wrong TON address")
+
+        if ref_address is not None:
+            if owner_address.hash_part.hex() == ref_address.hash_part.hex():
+                logging.warning(f"Referal same: {address} {ref}")
+                return None
+                # raise HTTPException(400, "Referral same as wallet")
+
+        # logging.info(owner_address.to_string(is_bounceable=True))
+        # logging.info(owner_address.to_string(is_user_friendly=True))
+        # logging.info(owner_address.to_string(is_url_safe=True))
+        # logging.info(owner_address.to_string(is_test_only=True))
+        # logging.info(owner_address)
+        #
+        # logging.info(Address("UQDX96iy4NuIM-opmGoIuRLHm5y12AlC9oAJbiP_xjvQhHVa").hash_part.hex())
+        # logging.info(Address("EQDX96iy4NuIM-opmGoIuRLHm5y12AlC9oAJbiP_xjvQhCif").hash_part.hex())
+        # logging.info(Address("UQDX96iy4NuIM-opmGoIuRLHm5y12AlC9oAJbiP_xjvQhHVa").hash_part.hex())
+        # logging.info(Address("0QDX96iy4NuIM-opmGoIuRLHm5y12AlC9oAJbiP_xjvQhM7Q").hash_part.hex())
+        last_update = (
+            await ReferralsNotification.filter(tg_id=tg_id, address_raw=owner_address.hash_part.hex())
+            .order_by("-created_at")
+            .first()
+        )
+
+        if last_update is None or (ref_address is not None and ref_address.hash_part.hex() != last_update.ref_raw):
+            logging.info("create")
+            await ReferralsNotification.create(
+                tg_id=tg_id,
+                address_raw=owner_address.hash_part.hex(),
+                address=address,
+                ref=ref,
+                ref_raw=ref_address.hash_part.hex() if ref_address is not None else None,
+                type=ReferralsNotificationType.open if last_update is None else ReferralsNotificationType.update,
+                banks_balance=banks,
+                direction="in",
+            )
+
+        # logging.info(ref_address.to_string(is_bounceable=True))
+
+        if ref_address is not None:
+            return ref_address.to_string(is_bounceable=True)

@@ -32,6 +32,7 @@ class BankOut(BaseViewModel):
     bank: BankInfoOut = Field(default=BankInfoOut())
     histories: List[BankHistoryOut] = Field(default=[])
     account: AccountOut | None =Field(default=None)
+    referral: str | None =Field(default=None)
 
 class BankIn(BaseViewModel):
     bank_before: int = Field(default=0)

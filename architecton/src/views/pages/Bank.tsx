@@ -16,7 +16,7 @@ import Footer from '../../components/ui/Footer';
 import assets from '../../assets';
 import Button from '../../components/buttons/Button';
 import { useCloudStorage, useInitData, usePopup } from '@tma.js/sdk-react';
-import { use } from 'i18next';
+import { Address } from '@ton/core';
 //import { useTonClient } from '../../hooks/useTonClient';
 //import { Address } from '@ton/core';
 //import useCrowdSaleContract from '../../hooks/useCrowdSaleContract';
@@ -29,6 +29,10 @@ function Bank() {
   //const wallet = useTonWallet();
 
   const initData = useInitData();
+
+  const [isGLoading, setIsGLoading] = useState<boolean>(true);
+
+  const [refActive, setRefActive] = useState<boolean>(true);
 
   const [bankInfo, setBankInfo] = useState<IBankOut>({
     balance: null,
@@ -53,61 +57,111 @@ function Bank() {
 
   const { data, isLoading, fetchData, error, writeData, setIsLoading } =
     useApi();
-  const ref = initData.startParam;
-  useEffect(() => {
-    if (ref && ref != '' && userFriendlyAddress != ref) {
-      storageTelegram.set('ref', ref);
-    } else if (userFriendlyAddress && userFriendlyAddress == ref) {
-      console.log('This you address:', userFriendlyAddress, ref);
-      popup.open({
-        title: 'Referral link wrong!',
-        message:
-          "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
-        //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
-      });
-    }
-  }, [userFriendlyAddress, ref]);
+
+  // useEffect(() => {
+
+  //   if (ref && ref != '' && userFriendlyAddress) {
+  //     Address.parse
+  //     storageTelegram.set('ref', ref);
+  //   } else if (userFriendlyAddress && userFriendlyAddress == ref) {
+  //     //console.log('This you address:', userFriendlyAddress, ref);
+  //     popup.open({
+  //       title: 'Referral link wrong!',
+  //       message:
+  //         "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
+  //       //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
+  //     });
+  //   }
+  // }, [userFriendlyAddress, ref]);
 
   useEffect(() => {
     const preRun = async () => {
       const tgid = initData.user.id;
-      console.log('connected', connected);
+      let ref = initData.startParam;
+      if (
+        ref &&
+        userFriendlyAddress &&
+        Address.parse(ref).hash == Address.parse(userFriendlyAddress).hash
+      ) {
+        ref = null;
+      }
+      if (!ref) {
+        ref = await storageTelegram.get('ref');
+      }
+      if (ref && ref != '' && userFriendlyAddress) {
+        console.log('ref', ref, userFriendlyAddress);
+        const ref_addr = Address.parse(ref);
+
+        if (userFriendlyAddress) {
+          const owner_addr = Address.parse(userFriendlyAddress);
+
+          if (ref_addr.equals(owner_addr)) {
+            await storageTelegram.set('ref', null);
+            ref = null;
+            popup.open({
+              title: 'Referral link wrong!',
+              message:
+                "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
+              //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
+            });
+            setRefActive(false);
+          }
+        }
+        if (ref) {
+          setRefActive(true);
+          ref = ref_addr.toString({ urlSafe: true, bounceable: true });
+          await storageTelegram.set('ref', ref);
+        }
+      }
+
+      console.log('ref', ref);
       console.log('userFriendlyAddress', userFriendlyAddress);
       console.log('fetch banks:', tgid, userFriendlyAddress);
 
       if (userFriendlyAddress) {
+        setIsGLoading(true);
         await fetchData(
           `/bank/${
             userFriendlyAddress ? userFriendlyAddress : 'none'
-          }?tgid=${tgid}`
+          }?tgid=${tgid}&ref=${ref}`
         );
       } else {
-        setIsLoading(false);
+        setIsGLoading(false);
       }
-      console.log('fetch banks finish:', tgid, userFriendlyAddress);
+      //console.log('fetch banks finish:', tgid, userFriendlyAddress);
     };
     preRun();
-  }, [userFriendlyAddress, connected]);
+  }, [userFriendlyAddress, initData, connected]);
 
   useEffect(() => {
     if (!isLoading && error == null && data) {
-      console.log('set data', data);
+      // console.log('set data', data);
       const dt: IBankOut = data as IBankOut;
+      const ref = initData.startParam;
 
       if (bankInfo.balance && !dt.balance) {
-        console.log('Skip this input ', dt);
-        console.log('Skip this bankInfo ', bankInfo);
+        // console.log('Skip this input ', dt);
+        // console.log('Skip this bankInfo ', bankInfo);
       } else {
-        console.log('set this input ', dt);
-        console.log('Set this bankInfo ', bankInfo);
+        // console.log('set this input ', dt);
+        // console.log('Set this bankInfo ', bankInfo);
         setBankInfo(dt);
+        if (ref && ref != '' && bankInfo.referral === null) {
+          popup.open({
+            title: 'Referral wrong!',
+            message:
+              "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
+            //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
+          });
+        }
       }
+      setIsGLoading(isLoading);
     }
-  }, [isLoading, connected]);
+  }, [isLoading, data]);
 
   useEffect(() => {
     if (data && bankInfo) {
-      console.log('bankInfo data', bankInfo);
+      // console.log('bankInfo data', bankInfo);
       if (!bankInfo.account) {
         writeData(
           `/account/${userFriendlyAddress ? userFriendlyAddress : 'none'}`,
@@ -119,7 +173,7 @@ function Bank() {
 
   return (
     <Layout2Row>
-      <Container isLoading={isLoading} loadingTitle="Bank Mint">
+      <Container isLoading={isGLoading} loadingTitle="Bank Mint">
         <div
           style={{
             display: 'flex',

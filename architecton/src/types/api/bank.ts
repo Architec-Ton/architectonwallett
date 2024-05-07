@@ -29,6 +29,7 @@ export interface IBankOut {
   bank: IBankInfoOut;
   histories: IBankHistoryOut[];
   account?: IAccountOut;
+  referral?: string;
 }
 
 export interface IBankReferralOut {

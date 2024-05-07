@@ -5,10 +5,11 @@ from typing import List
 
 from TonTools.Contracts.Jetton import Jetton
 from TonTools.Providers.TonCenterClient import TonCenterClient
+from tonsdk.utils import Address
 
 from architecton.contracts.crowd_sale import CrowdSale
 from architecton.controllers.ton_client import get_ton_client
-from architecton.models import Notification, NotificationType
+from architecton.models import Notification, NotificationType, ReferralsNotification, ReferralsNotificationType
 from architecton.views.project_list import ProjectListOut
 from tortoise.queryset import Q
 
@@ -20,8 +21,12 @@ class NotificationController:
     @staticmethod
     def get_query(tg_id: int, address: str | None):
         if tg_id is not None:
+            addr = Address(address).hash_part.hex() if address else None
             query = Q(
-                Q(address=address) | Q(address__isnull=True, tg_id__isnull=True) | Q(address__isnull=True, tg_id=tg_id)
+                Q(address=addr)
+                | Q(address=address)
+                | Q(address__isnull=True, tg_id__isnull=True)
+                | Q(address__isnull=True, tg_id=tg_id)
             )
         elif address is None:
             query = Q(address__isnull=True, tg_id__isnull=True)
@@ -50,3 +55,14 @@ class NotificationController:
         # if count < limit:
         #     notifications = await NotificationController.update_notification(tg_id, address)
         return notifications
+
+    @staticmethod
+    async def get_referal_view(tg_id: int, address: str | None) -> int:
+        if address is not None:
+            address_raw = Address(address).hash_part.hex()
+            return await ReferralsNotification.filter(ref_raw=address_raw).count()
+
+        # count = len(notifications)
+        # if count < limit:
+        #     notifications = await NotificationController.update_notification(tg_id, address)
+        return 0

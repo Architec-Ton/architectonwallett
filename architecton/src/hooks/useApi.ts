@@ -42,7 +42,7 @@ const useApi = () => {
       if (body) {
         options.body = body;
       }
-      console.log(options);
+      //console.log(options);
       const response = await fetch(`${BE_URL}${url}`, options);
       if (!response.ok || response.status > 399) {
         console.log('fetchError', response.status);

@@ -14,6 +14,7 @@ import useSWR from 'swr';
 import { useInitData } from '@tma.js/sdk-react';
 import { useEffect, useState } from 'react';
 import { IBankReferralOut } from '../../types/api/bank';
+import { Address } from '@ton/core';
 
 function Referral() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -22,6 +23,8 @@ function Referral() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
   const tadddress = useTonAddress();
+
+  const [refUrl, setRefUrl] = useState<string>('');
 
   const { t } = useTranslation();
   const userFriendlyAddress = useTonAddress();
@@ -44,6 +47,17 @@ function Referral() {
   );
 
   useEffect(() => {
+    if (userFriendlyAddress) {
+      setRefUrl(
+        Address.parse(userFriendlyAddress).toString({
+          urlSafe: true,
+          bounceable: true,
+        })
+      );
+    }
+  }, [userFriendlyAddress]);
+
+  useEffect(() => {
     if (!isLoading && data) {
       setReferral(data as IBankReferralOut);
     }
@@ -51,7 +65,7 @@ function Referral() {
 
   return (
     <Layout2Row>
-      <Container isLoading={false} loadingTitle={t(`mint_title`)}>
+      <Container isLoading={isLoading} loadingTitle={t(`mint_title`)}>
         <div>
           <h2
             style={{
@@ -61,7 +75,7 @@ function Referral() {
             {t(`referral_title`)}
           </h2>
         </div>
-        <ReferralBonus link={`${APP_URL}?startapp=${userFriendlyAddress}`} />
+        <ReferralBonus link={`${APP_URL}?startapp=${refUrl}`} />
 
         <div className="two-column">
           <Workspace

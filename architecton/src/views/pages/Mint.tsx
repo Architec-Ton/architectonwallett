@@ -60,7 +60,7 @@ function Mint() {
         ref = await storageTelegram.get('ref');
       }
 
-      console.log('REF in async:', ref);
+      //console.log('REF in async:', ref);
     };
     a();
   }, []);
@@ -87,12 +87,12 @@ function Mint() {
   //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
   const { buyBank, buyRefferalBank } = useCrowdSaleContract();
   const handleBuyBanks = async () => {
-    console.log('Try buy: ', sendTon, ref);
+    //console.log('Try buy: ', sendTon, ref);
     const tx =
       ref && ref != '' && ref != tadddress
         ? await buyRefferalBank(sendTon, Address.parse(ref))
         : await buyBank(sendTon);
-    console.log('Transaction responce:', tx);
+    //console.log('Transaction responce:', tx);
     setIsGLoading(true);
     await writeData(`/bank/${tadddress}?tgid=${initData.user.id}`, {
       bankBefore: bankBalance,
@@ -120,7 +120,7 @@ function Mint() {
 
   useEffect(() => {
     if (isLoading === false) {
-      console.log('DATA:', data);
+      //console.log('DATA:', data);
       if (data) {
         // fetchData();
         setTonBalance(Number(data.tons) / 1e9);

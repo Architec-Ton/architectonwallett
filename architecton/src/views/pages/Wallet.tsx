@@ -19,7 +19,7 @@ function Wallet() {
   //const { connected } = useTonConnect();
 
   const wallet = useTonWallet() as WalletInfoWithOpenMethod;
-  const wallet2 = useTonWallet();
+  //const wallet2 = useTonWallet();
 
   const address = useTonAddress();
 
