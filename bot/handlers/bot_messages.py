@@ -120,13 +120,13 @@ async def friends_of_wallet(callback: CallbackQuery, state: FSMContext):
         data = json.loads(response.text)
         if callback.from_user.language_code == 'ru':
             await callback.message.edit_text(
-                text=f"Ваша реферальная ссылка принесла {data['refCount']} друзей\nВаша награда: {data['refBought']}",
+                text=f"Ваша реферальная ссылка принесла {data['refCount']} друзей\nВаша награда: {data['bankReward']}",
                 reply_markup=inline.my_account
             )
             await state.clear()
         else:
             await callback.message.edit_text(
-                text=f"Your referral link brought in {data['refCount']} friends\nYour award: {data['refBought']}",
+                text=f"Your referral link brought in {data['refCount']} friends\nYour award: {data['bankReward']}",
                 reply_markup=inline.my_account
             )
             await state.clear()
