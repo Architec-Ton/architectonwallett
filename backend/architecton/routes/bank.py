@@ -92,8 +92,8 @@ async def referral_info(address: str, tgid=Query(default=None)):
             mint += n.bank_after - n.bank_before
             # ref_bought += 1
 
-    if mint >= bank_balance:
-        mint = bank_balance - 1
+    if mint > bank_balance:
+        mint = bank_balance
 
     if ref_bought > referals:
         ref_bought = referals
