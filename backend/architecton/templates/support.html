@@ -1,10 +1,45 @@
 {% extends "layout.html" %}
 {% block main%}
+{% if not account %}
+<h3>Not found!</h3>
+{% else %}
+<h3>Account</h3>
+<dl>
+    <dt>Username</dt>
+    <dd>{{ account.username}}</dd>
+    <dt>tg id</dt>
+    <dd>{{ account.id}}</dd>
+</dl>
+<h3>Wallets</h3>
+<dl>
+{% for w in wallets %}
+     <dt>{{w.wallet.address}}</dt>
+     <dd>{{ w.banks}} BNK</dd>
+{% endfor %}
+</dl>
+<h3>Notifications</h3>
+<dl>
+{% for n in notifications %}
+    {% if n.type=='mint' %}
+     <dt>{{n.type.value}} {{ n.changes or ''}} +{{ n.bank_after - n.bank_before}}BNK {{ n.completed}}</dt>
+     <dd>{{n.created_at}} </dd>
+    {% elif n.type=='ref' %}
+     <dt class="green">{{n.type.value}} {{ n.changes or ''}} +{{ n.bank_after - n.bank_before}}BNK {{ n.completed}}</dt>
+     <dd> <a href="?address={{ n.title }}">{{n.title}} </a> {{n.created_at}} </dd>
+    {% endif %}
+{% endfor %}
+</dl>
 
-<form method="post" >
-    <input name="address" />
-    <button type="submit">Submit</button>
-</form>
+<h3>Referalls</h3>
+<dl>
+{% for n in refferer %}
+     <dt>{{n.type.value}} {{ n.address}} </dt>
+    <dd>REF ADDRESS <a href="?address={{ n.ref }}">{{n.ref}}</a> </dd>
+{% endfor %}
+</dl>
+
+
+{% endif %}
 
 
 {% endblock %}
