@@ -11,6 +11,7 @@ orjson = "*"
 aiohttp = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 tontools = "*"
+jinja2 = "*"
 
 [dev-packages]
 pytest = "*"

@@ -25,13 +25,15 @@ class NotificationController:
             query = Q(
                 Q(address=addr)
                 | Q(address=address)
+                | Q(address_orig=addr)
                 | Q(address__isnull=True, tg_id__isnull=True)
                 | Q(address__isnull=True, tg_id=tg_id)
             )
         elif address is None:
             query = Q(address__isnull=True, tg_id__isnull=True)
         else:
-            query = Q(Q(address=address) | Q(address__isnull=True, tg_id__isnull=True))
+            addr = Address(address).hash_part.hex() if address else None
+            query = Q(Q(address=address) | Q(address__isnull=True, tg_id__isnull=True) | Q(address_orig=addr))
         return query
 
     @staticmethod

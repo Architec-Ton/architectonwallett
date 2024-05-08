@@ -70,9 +70,22 @@ async def referral_info(address: str, tgid=Query(default=None)):
     bank_balance = await AccountController.get_banks(address)
     add = Address(address)
     query = Q(
-        Q(type="ref") & Q(Q(title=add.to_string(is_bounceable=True)) | Q(title=address) | Q(title=add.hash_part.hex()))
+        Q(type="ref")
+        & Q(
+            Q(address=add.to_string(is_bounceable=True, is_user_friendly=True))
+            | Q(address=address)
+            | Q(address_orig=add.hash_part.hex())
+            | Q(address=add.hash_part.hex())
+        )
     )
-    ref_bought = await Notification.filter(query).count()
+    ref_boughts = await Notification.filter(query)
+    ref_bought = 0
+    bouth = set()
+    for r in ref_boughts:
+        if r.title not in bouth:
+            ref_bought += 1
+            bouth.add(r.title)
+
     mint = 0
     for n in notifications:
         if n.type == NotificationType.mint:
@@ -101,8 +114,8 @@ async def bank_purchase(address: str, bank_in: BankIn, tgid=Query(default=None))
             bank_before=bank_in.bank_before,
             bank_after=bank_in.bank_after,
             completed=False,
-            address=addr,
-            address_orig=address,
+            address=address,
+            address_orig=addr,
             tg_id=tgid,
             symbol="TON",
             changes=f"+{bank_in.bank_after-bank_in.bank_before} bnk",
@@ -119,8 +132,8 @@ async def bank_purchase(address: str, bank_in: BankIn, tgid=Query(default=None))
                     bank_before=bank_in.bank_before,
                     bank_after=bank_in.bank_after,
                     completed=False,
-                    address=ref,
-                    address_orig=bank_in.ref,
+                    address=bank_in.ref,
+                    address_orig=ref,
                     tg_id=wallet.tg_id,
                     symbol="ref",
                     changes=f"+{bank_in.bank_after-bank_in.bank_before} bnk",
