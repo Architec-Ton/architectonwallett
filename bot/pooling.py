@@ -3,10 +3,13 @@ import logging
 
 import aiohttp
 from aiogram import Bot
-
+from config_reader import config
 async def get_updates():
-    base_url = "https://architecton.site"
-    # base_url = "http://localhost:8000"
+    if config.local:
+        base_url = "http://localhost:8000"
+    else:
+        base_url = "https://architecton.site"
+
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
         async with session.get(f'{base_url}/api/v1/account/none/update') as resp:
             if resp.status == 200:
@@ -17,6 +20,8 @@ async def get_updates():
 
 
 async def worker(bot: Bot):
+    logging.info(f"local: {config.local}")
+
     while True:
         # await asyncio.sleep(60)
         await asyncio.sleep(90)
@@ -28,6 +33,10 @@ async def worker(bot: Bot):
                     logging.info(f"id: {msg['tgid']} t: {msg['type']} b: {banks}")
                     if msg['type'] == 'mint':
                         text = (f"🚀 You've has been minted a +{banks} BNK! \n "
+                                "Check your wallet now."
+                                )
+                    elif msg['type'] == 'notcoin':
+                        text = (f"♪ You've has been minted a +{banks} BNK! \n "
                                 "Check your wallet now."
                                 )
                     elif msg['type'] == 'ref':
@@ -47,8 +56,8 @@ Check your wallet now."""
 You've earned a reward through your referral link.
 Enjoy your bonus +{banks} BNK!
 Check your wallet now."""
-
-                    await bot.send_message(chat_id=msg['tgid'], text=text)
+                    if msg['tgid'] is not None:
+                        await bot.send_message(chat_id=msg['tgid'], text=text)
 
         except Exception as e:
             logging.error(f"Error: {e}")

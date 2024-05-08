@@ -7,6 +7,7 @@ from tortoise.models import Model
 
 
 class NotificationType(str, Enum):
+    notcoin = "notcoin"
     mint = "mint"
     ref = "ref"
     launch = "launch"

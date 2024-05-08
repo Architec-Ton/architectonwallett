@@ -49,7 +49,7 @@ class BankReferralOut(BaseViewModel):
 
 
 class BankUpdatesOut(BaseViewModel):
-    tgid: int
+    tgid: int | None
     type: str
     banks: int
     address: str

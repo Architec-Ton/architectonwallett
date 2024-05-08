@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import os.path
@@ -6,12 +7,22 @@ from TonTools.Contracts.Jetton import Jetton
 from TonTools.Providers.TonCenterClient import TonCenterClient
 from tonsdk.utils import Address
 from fastapi.exceptions import HTTPException
+from tortoise.functions import Sum
 
 from architecton.contracts.crowd_sale import CrowdSale
+from architecton.controllers.nftscan_controller import NFTscanController
 from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.ton_client import get_ton_client
 
-from architecton.models import Account, Notification, NotificationType, ReferralsNotification, ReferralsNotificationType
+from architecton.models import (
+    Account,
+    Notification,
+    NotificationType,
+    ReferralsNotification,
+    ReferralsNotificationType,
+    Notcoin,
+    Wallet,
+)
 from architecton.views.account import AccountIn
 from architecton.views.project_list import ProjectListOut
 
@@ -28,19 +39,61 @@ class AccountController:
     async def get_banks(address: str):
         client = get_ton_client()
         contract = CrowdSale(client)
-        return await contract.get_banks(address)
+        banks, notcoin_banks = await asyncio.gather(
+            contract.get_banks(address),
+            Notcoin.filter(address_hash=Address(address).hash_part.hex())
+            .annotate(notcoin_banks=Sum("bank_count"))
+            .values("notcoin_banks"),
+        )
+        if (
+            len(notcoin_banks) > 0
+            and "notcoin_banks" in notcoin_banks[0]
+            and notcoin_banks[0]["notcoin_banks"] is not None
+        ):
+            total_notcoins = notcoin_banks[0]["notcoin_banks"]
+        else:
+            total_notcoins = 0
+        logging.info(f"{address} banks: {banks} notcoin: {total_notcoins}")
+        return total_notcoins + banks
 
     @staticmethod
     async def get_total():
         client = get_ton_client()
         contract = CrowdSale(client)
-        return await contract.get_total()
+        total_contract, total_notcoins = await asyncio.gather(
+            contract.get_total(),
+            Notcoin.all().annotate(notcoin_banks=Sum("bank_count")).values("notcoin_banks"),
+        )
+        if (
+            len(total_notcoins) > 0
+            and "notcoin_banks" in total_notcoins[0]
+            and total_notcoins[0]["notcoin_banks"] is not None
+        ):
+            total_notcoins = total_notcoins[0]["notcoin_banks"]
+        else:
+            total_notcoins = 0
+        logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}")
+        return total_contract + total_notcoins
 
     @staticmethod
     async def get_total_bankers():
         client = get_ton_client()
         contract = CrowdSale(client)
-        return await contract.get_total_banker()
+        total_contract_bankers, notcoins_bankers = await asyncio.gather(
+            contract.get_total_banker(),
+            Notcoin.all().distinct().count(),
+        )
+        logging.info(f"Bankers: {total_contract_bankers} notcoin: {notcoins_bankers}")
+        return total_contract_bankers + notcoins_bankers
+
+    @staticmethod
+    async def get_transactions(address: str):
+        client = get_ton_client()
+        # contract = CrowdSale(client)
+        # client.get_nft_owner()
+        return await client.get_transactions(address, limit=100)
+
+        return await contract.get_banks(address)
 
     @staticmethod
     async def get_wallet(address: str):
@@ -73,11 +126,11 @@ class AccountController:
         # print(jetton_wallet)  # JettonWallet({"address": "EQDgCBnCncRp4jOi3CMeLn-b71gymAX3W28YZT3Dn0a2dKj-"})
         # # return await get_ton_client().get_balance(address)
 
-    @staticmethod
-    async def get_total_bankers():
-        client = get_ton_client()
-        contract = CrowdSale(client)
-        return await contract.get_total_banker()
+    # @staticmethod
+    # async def get_total_bankers():
+    #     client = get_ton_client()
+    #     contract = CrowdSale(client)
+    #     return await contract.get_total_banker()
 
     @staticmethod
     async def get_or_create(account_in: AccountIn) -> Account:
@@ -144,3 +197,56 @@ class AccountController:
 
         if ref_address is not None:
             return ref_address.to_string(is_bounceable=True)
+
+    @staticmethod
+    async def update_notcoin():
+        address = Address("UQAeV4crAaUoCJo5igUIzosJXcOjtb4W7ff7Qr0DrgXPRle_")
+        # nft = Address("EQAw03ANjnM1qvHwputIZIzQbDpLmpD_StejKybrpFxdqBzR")
+        # resp = await NFTscanController.get_all_nfts_by_account(address)
+        # return resp
+        # resp = await NFTscanController.get_single_nft(nft)
+        resp = await NFTscanController.get_transactions_by_account(address)
+
+        # resp = await NFTscanController.get_transactions_by_account(address)
+
+        if "data" in resp and "content" in resp["data"]:
+            content = resp["data"]["content"]
+            for nft in content:
+                if nft["contract_address"] == "EQDmkj65Ab_m0aZaW8IpKw4kYqIgITw_HRstYEkVQ6NIYCyW":
+                    source = nft["source"]
+                    token_address = nft["token_address"]
+                    src_address = Address(source)
+                    nft_address = Address(token_address)
+                    nft_model = await Notcoin.get_or_none(nft_hash=nft_address.hash_part.hex())
+
+                    if nft_model is None:
+                        wallet = await Wallet.get_wallet(
+                            src_address.to_string(is_user_friendly=True, is_bounceable=True)
+                        )
+                        account_id = None
+                        if wallet is not None:
+                            account_id = wallet.tg_id
+
+                        await Notcoin.create(
+                            account=account_id,
+                            address=source,
+                            address_hash=src_address.hash_part.hex(),
+                            nft=token_address,
+                            nft_hash=nft_address.hash_part.hex(),
+                            nft_count=10000,
+                            bank_count=19,
+                        )
+                        addr = Address(address).hash_part.hex()
+                        await Notification.create(
+                            title=src_address.to_string(is_bounceable=True, is_user_friendly=True),
+                            type=NotificationType.notcoin,
+                            bank_before=0,
+                            bank_after=19,
+                            completed=False,
+                            address=src_address.to_string(),
+                            address_orig=src_address.hash_part.hex(),
+                            tg_id=account_id,
+                            symbol="$NOT",
+                            changes=f"+19 bnk",
+                        )
+        return resp

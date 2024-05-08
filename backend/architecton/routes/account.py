@@ -45,6 +45,10 @@ async def account(tgid: int):
 
 @router.get("/none/update", response_model=List[BankUpdatesOut])
 async def last_updates():
+    try:
+        await AccountController.update_notcoin()
+    except Exception as e:
+        logging.error(e)
     notifications = await Notification.filter(completed=False).order_by("created_at").limit(3)
 
     notifys = []
@@ -65,15 +69,21 @@ async def last_updates():
             #     except Exception as e:
             #         logging.error(e)
             #         continue
-            balance = await AccountController.get_balance(addr)
-            if balance >= n.bank_after:
+            if n.type in [NotificationType.mint, NotificationType.ref]:
+                balance = await AccountController.get_balance(addr)
+                if balance >= n.bank_after:
+                    n.completed = True
+                    await n.save()
+                    notifys.append({"n": n, "a": account})
+                elif (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=15)) > n.created_at:
+                    n.changes = "cancel"
+                    n.completed = True
+                    await n.save()
+            elif n.type == NotificationType.notcoin:
                 n.completed = True
                 await n.save()
                 notifys.append({"n": n, "a": account})
-            elif (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=15)) > n.created_at:
-                n.changes = "cancel"
-                n.completed = True
-                await n.save()
+
     except Exception as e:
         logging.error(f"error: {e}")
 
