@@ -78,10 +78,18 @@ function Bank() {
     const preRun = async () => {
       const tgid = initData.user.id;
       let ref = initData.startParam;
+      if (!ref) {
+        ref = await storageTelegram.get('ref');
+      }
+
+      console.log('ref', ref);
+      console.log('userFriendlyAddress', userFriendlyAddress);
+      console.log('fetch banks:', tgid, userFriendlyAddress);
+
       if (
         ref &&
         userFriendlyAddress &&
-        Address.parse(ref).hash == Address.parse(userFriendlyAddress).hash
+        Address.parse(ref).equals(Address.parse(userFriendlyAddress))
       ) {
         ref = null;
         popup.open({
@@ -90,9 +98,6 @@ function Bank() {
             "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
           //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
         });
-      }
-      if (!ref) {
-        ref = await storageTelegram.get('ref');
       }
       await storageTelegram.set('ref', ref);
 

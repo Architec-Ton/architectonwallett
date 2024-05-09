@@ -31,6 +31,7 @@ function Mint() {
   const [tonBalance, setTonBalance] = useState<number | null>(null);
   const [isGLoading, setIsGLoading] = useState<boolean>(true);
   const [bankBalance, setBankBalance] = useState<number | null>(null);
+  const [refState, setSetRefState] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const [ContractAddress, setContractAddress] = useState<string | null>(null);
 
@@ -59,8 +60,8 @@ function Mint() {
       if (!ref || ref == '') {
         ref = await storageTelegram.get('ref');
       }
-
-      //console.log('REF in async:', ref);
+      setSetRefState(ref);
+      console.log('REF in async:', ref);
     };
     a();
   }, []);
@@ -97,10 +98,10 @@ function Mint() {
     await writeData(`/bank/${tadddress}?tgid=${initData.user.id}`, {
       bankBefore: bankBalance,
       bankAfter: bankBalance + recvBank,
-      ref: ref && ref != '' ? ref : null,
+      ref: refState && refState != '' ? refState : null,
       tx: {
         tx: tx,
-        ref: ref,
+        ref: refState,
         sendTon: sendTon,
         recvBank: recvBank,
       },

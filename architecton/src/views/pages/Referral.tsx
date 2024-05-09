@@ -14,7 +14,7 @@ import useSWR from 'swr';
 import { useInitData } from '@tma.js/sdk-react';
 import { useEffect, useState } from 'react';
 import { IBankReferralOut } from '../../types/api/bank';
-import { Address } from '@ton/core';
+//import { Address } from '@ton/core';
 
 function Referral() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,12 +48,12 @@ function Referral() {
 
   useEffect(() => {
     if (userFriendlyAddress) {
-      setRefUrl(
-        Address.parse(userFriendlyAddress).toString({
-          urlSafe: true,
-          bounceable: true,
-        })
-      );
+      setRefUrl(userFriendlyAddress);
+      //   Address.parse(userFriendlyAddress).toString({
+      //     urlSafe: true,
+      //     bounceable: true,
+      //   })
+      // );
     }
   }, [userFriendlyAddress]);
 
