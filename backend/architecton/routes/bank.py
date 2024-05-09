@@ -60,7 +60,8 @@ async def bank(address: str, tgid=Query(default=None), ref=Query(default=None)):
 @router.get("/{address}/history", response_model=List[BankHistoryOut])
 async def history(address: str, tgid=Query(default=None)):
     notifications = await NotificationController.get_notifications(tgid, address if address != "none" else None, 100)
-    return notifications
+    nts = [n for n in notifications if n.completed and n.changes != "fail"]
+    return nts
 
 
 @router.get("/{address}/referral", response_model=BankReferralOut)
