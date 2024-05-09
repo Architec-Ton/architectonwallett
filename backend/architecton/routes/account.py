@@ -70,7 +70,7 @@ async def last_updates():
             #         logging.error(e)
             #         continue
             if n.type in [NotificationType.mint, NotificationType.ref]:
-                balance = await AccountController.get_balance(addr)
+                balance = await AccountController.get_banks(addr)
                 if balance >= n.bank_after:
                     n.completed = True
                     await n.save()
