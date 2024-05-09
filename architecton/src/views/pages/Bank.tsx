@@ -84,35 +84,43 @@ function Bank() {
         Address.parse(ref).hash == Address.parse(userFriendlyAddress).hash
       ) {
         ref = null;
+        popup.open({
+          title: 'Referral link wrong!',
+          message:
+            "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
+          //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
+        });
       }
       if (!ref) {
         ref = await storageTelegram.get('ref');
       }
-      if (ref && ref != '' && userFriendlyAddress) {
-        console.log('ref', ref, userFriendlyAddress);
-        const ref_addr = Address.parse(ref);
+      await storageTelegram.set('ref', ref);
 
-        if (userFriendlyAddress) {
-          const owner_addr = Address.parse(userFriendlyAddress);
+      // if (ref && ref != '' && userFriendlyAddress) {
+      //   console.log('ref', ref, userFriendlyAddress);
+      //   const ref_addr = Address.parse(ref);
 
-          if (ref_addr.equals(owner_addr)) {
-            await storageTelegram.set('ref', null);
-            ref = null;
-            popup.open({
-              title: 'Referral link wrong!',
-              message:
-                "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
-              //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
-            });
-            setRefActive(false);
-          }
-        }
-        if (ref) {
-          setRefActive(true);
-          ref = ref_addr.toString({ urlSafe: true, bounceable: true });
-          await storageTelegram.set('ref', ref);
-        }
-      }
+      //   if (userFriendlyAddress) {
+      //     const owner_addr = Address.parse(userFriendlyAddress);
+
+      //     if (ref_addr.equals(owner_addr)) {
+      //       await storageTelegram.set('ref', null);
+      //       ref = null;
+      //       popup.open({
+      //         title: 'Referral link wrong!',
+      //         message:
+      //           "Oops! 🙈 It seems like your referral link points to your own account and won't be applied. 🔒",
+      //         //buttons: [{ id: 'my-id', type: 'default', text: 'Default text' }],
+      //       });
+      //       setRefActive(false);
+      //     }
+      //   }
+      //   if (ref) {
+      //     setRefActive(true);
+      //     ref = ref_addr.toString({ urlSafe: true, bounceable: true });
+      //     await storageTelegram.set('ref', ref);
+      //   }
+      // }
 
       console.log('ref', ref);
       console.log('userFriendlyAddress', userFriendlyAddress);
