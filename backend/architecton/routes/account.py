@@ -69,7 +69,19 @@ async def last_updates():
             #     except Exception as e:
             #         logging.error(e)
             #         continue
-            if n.type in [NotificationType.mint, NotificationType.ref]:
+            if n.type in [NotificationType.ref]:
+                balance = await AccountController.get_banks(addr)
+                uns = await Notification.filter(completed=True, address_orig=Address(addr).hash_part.hex()).order_by(
+                    "created_at"
+                )
+                sum = 0
+                for un in uns:
+                    sum += un.bank_after - un.bank_before
+                if balance >= (sum + n.bank_after - n.bank_before):
+                    n.completed = True
+                    await n.save()
+                    notifys.append({"n": n, "a": account})
+            elif n.type in [NotificationType.mint]:
                 balance = await AccountController.get_banks(addr)
                 if balance >= n.bank_after:
                     n.completed = True
