@@ -81,6 +81,10 @@ async def last_updates():
                     n.completed = True
                     await n.save()
                     notifys.append({"n": n, "a": account})
+                elif (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=25)) > n.created_at:
+                    n.changes = "fail"
+                    n.completed = True
+                    await n.save()
             elif n.type in [NotificationType.mint]:
                 balance = await AccountController.get_banks(addr)
                 if balance >= n.bank_after:

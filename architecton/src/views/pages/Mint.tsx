@@ -64,7 +64,7 @@ function Mint() {
       console.log('REF in async:', ref);
     };
     a();
-  }, []);
+  }, [ref]);
 
   const { t } = useTranslation();
 
@@ -89,10 +89,9 @@ function Mint() {
   const { buyBank, buyRefferalBank } = useCrowdSaleContract();
   const handleBuyBanks = async () => {
     //console.log('Try buy: ', sendTon, ref);
-    const tx =
-      ref && ref != '' && ref != tadddress
-        ? await buyRefferalBank(sendTon, Address.parse(ref))
-        : await buyBank(sendTon);
+    const tx = refState
+      ? await buyRefferalBank(sendTon, Address.parse(refState))
+      : await buyBank(sendTon);
     //console.log('Transaction responce:', tx);
     setIsGLoading(true);
     await writeData(`/bank/${tadddress}?tgid=${initData.user.id}`, {
