@@ -87,13 +87,40 @@ class AccountController:
         return total_contract_bankers + notcoins_bankers
 
     @staticmethod
-    async def get_transactions(address: str):
+    async def get_transactions(address: str, limit=5):
         client = get_ton_client()
         # contract = CrowdSale(client)
         # client.get_nft_owner()
-        return await client.get_transactions(address, limit=100)
+        return await client.get_transactions(address, limit=limit)
 
         return await contract.get_banks(address)
+
+    @staticmethod
+    async def get_nft_is_our(address: str):
+        client = get_ton_client()
+        # contract = CrowdSale(client)
+        # client.get_nft_owner()
+        res = await client.get_nft_owner(address)
+        if res.address == "EQAeV4crAaUoCJo5igUIzosJXcOjtb4W7ff7Qr0DrgXPRgp6":
+            return True
+        return False
+
+    @staticmethod
+    async def get_check_collection(address: str):
+        client = get_ton_client()
+        # contract = CrowdSale(client)
+        # client.get_nft_owner()
+        res = await client.get_nft_items([address])
+        if len(res) > 0 and str(res[0].collection_address) == "EQDmkj65Ab_m0aZaW8IpKw4kYqIgITw_HRstYEkVQ6NIYCyW":
+            return True
+        return False
+
+    @staticmethod
+    async def get_nft(address: str):
+        client = get_ton_client()
+        # contract = CrowdSale(client)
+        # client.get_nft_owner()
+        return await client.get_nft_owner(address)
 
     @staticmethod
     async def get_wallet(address: str):

@@ -61,8 +61,15 @@ async def update_contect(context, request, address, username):
 
 
 @router.get("")
-async def get_support_form(request: Request, address=Query(default=None), username=Query(default=None)):
-    context = {"request": request, "address": address, "username": username}
+async def get_support_form(
+    request: Request, address=Query(default=None), username=Query(default=None), secret=Query(default=None)
+):
+    context = {"request": request, "address": address, "username": username, "secret": secret}
+    if address is None and username is None:
+        return render.TemplateResponse("support.html", context=context)
+
+    if secret != "archibank":
+        return render.TemplateResponse("support.html", context=context)
 
     context = await update_contect(context, request, address, username)
 
@@ -72,13 +79,81 @@ async def get_support_form(request: Request, address=Query(default=None), userna
 
 @router.get("/test")
 async def get_test(request: Request):
-    trxs = await AccountController.get_transactions("UQAeV4crAaUoCJo5igUIzosJXcOjtb4W7ff7Qr0DrgXPRle_")
+    trxs = await AccountController.get_transactions("UQAeV4crAaUoCJo5igUIzosJXcOjtb4W7ff7Qr0DrgXPRle_", 1000)
 
     out = []
     for tx in trxs:
         if tx.in_msg.source == "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g":
             continue
-        print(tx)
-        out.append(tx)
+        if (
+            tx.in_msg is None
+            or tx.out_msgs
+            or tx.status is False
+            or tx.in_msg.source == "EQAeV4crAaUoCJo5igUIzosJXcOjtb4W7ff7Qr0DrgXPRgp6"
+        ):
+            continue
+        logging.info(tx.in_msg.source)
+        logging.info(tx)
+        nft_address = Address(tx.in_msg.source)
+
+        notcoin = await Notcoin.get_or_none(nft_hash=nft_address.hash_part.hex())
+        if notcoin is not None:
+            continue
+        try:
+            is_our = await AccountController.get_nft_is_our(tx.in_msg.source)
+        except BaseException as e:
+            logging.warning(f"Wrong: {tx.in_msg.source} {e}")
+            continue
+        if is_our is False:
+            continue
+
+        logging.info(f"Notcoin : {tx.in_msg.source}")
+        try:
+            is_collection = await AccountController.get_check_collection(tx.in_msg.source)
+        except Exception as e:
+            logging.error(e)
+        if is_collection is False:
+            continue
+
+        nft_trx = await AccountController.get_transactions(tx.in_msg.source)
+        sender = None
+        for ntx in nft_trx:
+            if ntx.in_msg.op_code == "5fcc3d14":
+                sender = ntx.in_msg.source
+                break
+
+        if sender is not None:
+            src_address = Address(sender)
+            token_address = tx.in_msg.source
+            token_add = Address(token_address)
+            wallet = await Wallet.get_wallet(src_address.to_string(is_user_friendly=True, is_bounceable=True))
+            account_id = None
+            if wallet is not None:
+                account_id = wallet.tg_id
+
+            await Notcoin.create(
+                account=account_id,
+                address=sender,
+                address_hash=src_address.hash_part.hex(),
+                nft=token_address,
+                nft_hash=token_add.hash_part.hex(),
+                nft_count=10000,
+                bank_count=19,
+            )
+            await Notification.create(
+                title=src_address.to_string(is_bounceable=True, is_user_friendly=True),
+                type=NotificationType.notcoin,
+                bank_before=0,
+                bank_after=19,
+                completed=False,
+                address=src_address.to_string(),
+                address_orig=src_address.hash_part.hex(),
+                tg_id=account_id,
+                symbol="$NOT",
+                changes=f"+19 bnk",
+            )
+
+            out.append(nft_trx)
+
     return out
     # return await AccountController.update_notcoin()
