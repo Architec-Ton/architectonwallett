@@ -52,7 +52,8 @@ async def bank(address: str, tgid=Query(default=None), ref=Query(default=None)):
     referral = await AccountController.update_referral(tgid, address, ref, banks)
 
     # AccountController.
-    bank_out = BankOut(balance=balance, bank=bank_info, histories=notifications, account=account, referral=referral)
+    nts = [n for n in notifications if n.completed and n.changes != "fail"]
+    bank_out = BankOut(balance=balance, bank=bank_info, histories=nts, account=account, referral=referral)
 
     return bank_out
 
