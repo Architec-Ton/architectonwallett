@@ -114,8 +114,11 @@ async def get_test(request: Request):
             logging.error(e)
         if is_collection is False:
             continue
-
-        nft_trx = await AccountController.get_transactions(tx.in_msg.source)
+        try:
+            nft_trx = await AccountController.get_transactions(tx.in_msg.source)
+        except BaseException as e:
+            logging.error(e)
+            continue
         sender = None
         for ntx in nft_trx:
             if ntx.in_msg.op_code == "5fcc3d14":
