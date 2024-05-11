@@ -2,10 +2,11 @@ from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery
 from keyboards import inline
 from keyboards.inline import generate_wallet_keyboard
-
+import json
 import aiohttp
 from aiogram.fsm.context import FSMContext
 from utils.states import *
+from config_reader import config
 
 router = Router()
 
@@ -18,24 +19,30 @@ async def get_wallet_address(tgid):
             print(data)
             return data
 
+def get_message_from_file(key, language_code):
+    # Определяем имя файла на основе языкового кода
+    if language_code == 'ru':
+        filename = 'bot/handlers/messages_ru.json'
+    else:
+        filename = 'bot/handlers/messages_en.json'
+    
+    # Открываем соответствующий файл с сообщениями
+    with open(filename, 'r') as f:
+        messages = json.load(f)
+    
+    # Извлекаем сообщение по ключу, если такой ключ есть
+    return messages.get(key, None)
+    # Загружаем сообщения из файла
+    
+
+
 
 @router.callback_query(F.data == "my_account")
 async def my_account_menu(callback: CallbackQuery):
-    wallet_data = await get_wallet_address(callback.message.chat.id)
-    wallet_addresses = [address['address'] for address in wallet_data]
-    keyboard = generate_wallet_keyboard(wallet_addresses)
-    if callback.from_user.language_code == 'ru':
-        await callback.message.edit_text(
-            text="Выберите действие",
+    await callback.message.edit_text(
+        text=str(get_message_from_file(key="choose_action", language_code=callback.from_user.language_code)),
         reply_markup=inline.my_account
-        )
-    else:  
-        await callback.message.edit_text(
-            text="Choose an action",
-            reply_markup=inline.my_account
-        )
-    
-    
+    )
     
     
 @router.callback_query(F.data == 'balance')
@@ -44,16 +51,10 @@ async def show_balance(callback: CallbackQuery, state: FSMContext):
     wallet_data = await get_wallet_address(callback.message.chat.id)
     wallet_addresses = [address['address'] for address in wallet_data]
     keyboard = generate_wallet_keyboard(wallet_addresses)
-    if callback.from_user.language_code == 'ru':
-        await callback.message.edit_text(
-            text="Пожалуйста, выберите кошелек",
-            reply_markup=keyboard
-        )
-    else:
-        await callback.message.edit_text(
-            text="Please, choose the wallet",
-            reply_markup=keyboard
-        )
+    await callback.message.edit_text(
+        text=str(get_message_from_file(key="choose_wallet", language_code=callback.from_user.language_code)),
+        reply_markup=keyboard
+    )
     
 @router.callback_query(UserWallet.address)
 async def balance_of_wallet(callback: CallbackQuery, state: FSMContext):
@@ -65,31 +66,19 @@ async def balance_of_wallet(callback: CallbackQuery, state: FSMContext):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 data = await response.json()
-                if callback.from_user.language_code == 'ru':
-                    await callback.message.edit_text(
-                        text=f"Ваш баланс: {data['balance']['bankAmount']}\nМинтинг банков в час: {data['balance']['bnkPerHour']}",
-                        reply_markup=inline.my_account
-                    )    
-                    await state.clear()
-                else:
-                    await callback.message.edit_text(
-                        text=f"Your balance: {data['balance']['bankAmount']}\nBank's minting per hour: {data['balance']['bnkPerHour']}",
-                        reply_markup=inline.my_account
-                    )    
-                    await state.clear()
+                balance = data['balance']['bankAmount']
+                minting = data['balance']['bnkPerHour']
+                await callback.message.edit_text(
+                    text=str(get_message_from_file(key="your_balance", language_code=callback.from_user.language_code)),
+                    reply_markup=inline.my_account
+                )
+                await state.clear()
     else:
-        if callback.from_user.language_code == 'ru':
-            await callback.message.edit_text(
-                text="Выберите действие",
-                reply_markup=inline.my_account
-            )
-            await state.clear()
-        else:  
-            await callback.message.edit_text(
-                text="Choose an action",
-                reply_markup=inline.my_account
-            )
-            await state.clear()
+        await callback.message.edit_text(
+            text=str(get_message_from_file(key="choose_action", language_code=callback.from_user.language_code)),
+            reply_markup=inline.my_account
+        )
+        await state.clear()
     
     
     
@@ -99,16 +88,10 @@ async def friends_referrall(callback: CallbackQuery, state: FSMContext):
     wallet_data = await get_wallet_address(callback.message.chat.id)
     wallet_addresses = [address['address'] for address in wallet_data]
     keyboard = generate_wallet_keyboard(wallet_addresses)
-    if callback.from_user.language_code == 'ru':
-        await callback.message.edit_text(
-            text="Пожалуйста, выберите кошелек",
-            reply_markup=keyboard
-        )
-    else:
-        await callback.message.edit_text(
-            text="Please, choose the wallet",
-            reply_markup=keyboard
-        )
+    await callback.message.edit_text(
+        text=str(get_message_from_file(key="choose_wallet", language_code=callback.from_user.language_code)),
+        reply_markup=keyboard
+    )
 
 @router.callback_query(UserWallet.addresss)
 async def friends_of_wallet(callback: CallbackQuery, state: FSMContext):
@@ -120,48 +103,36 @@ async def friends_of_wallet(callback: CallbackQuery, state: FSMContext):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 data = await response.json()
-                if callback.from_user.language_code == 'ru':
-                    await callback.message.edit_text(
-                        text=f"Ваша реферальная ссылка принесла {data['refCount']} друзей\nВаша награда: {data['bankReward']}",
-                        reply_markup=inline.my_account
-                    )
-                    await state.clear()
-                else:
-                    await callback.message.edit_text(
-                        text=f"Your referral link brought in {data['refCount']} friends\nYour award: {data['bankReward']}",
-                        reply_markup=inline.my_account
-                    )
-                    await state.clear()
+                refCount = data['refCount']
+                bankReward = data['bankReward']
+                await callback.message.edit_text(
+                    text=str(get_message_from_file(key="referral_link", language_code=callback.from_user.language_code)),
+                    reply_markup=inline.my_account
+                )
+                await state.clear()
     else:
-        if callback.from_user.language_code == 'ru':
-            await callback.message.edit_text(
-                text="Выберите действие",
-                reply_markup=inline.my_account
-            )
-            await state.clear()
-        else:  
-            await callback.message.edit_text(
-                text="Choose an action",
-                reply_markup=inline.my_account
-            )
-            await state.clear()
+        await callback.message.edit_text(
+            text=str(get_message_from_file(key="choose_action", language_code=callback.from_user.language_code)),
+            reply_markup=inline.my_account
+        )
+        await state.clear()
     
     
     
     
 @router.callback_query(F.data == 'backone')
 async def back_one(callback: CallbackQuery):
-    if callback.from_user.language_code == 'ru':
-        await callback.message.edit_text(
-            text="Выберите действие",
-            reply_markup=inline.my_account
-        )
-    else:  
-        await callback.message.edit_text(
-            text="Choose an action",
-            reply_markup=inline.my_account
-        )
-            
+    await callback.message.edit_text(
+        text=str(get_message_from_file(key="choose_action", language_code=callback.from_user.language_code)),
+        reply_markup=inline.my_account
+    )
+    
+@router.callback_query(F.data == 'back')
+async def back_button(callback: CallbackQuery):
+    await callback.message.edit_text(
+        text=str(get_message_from_file(key="welcome_back", language_code=callback.from_user.language_code)),
+        reply_markup=inline.main
+    )
 
 
 # @router.callback_query(F.data == 'balance')
@@ -183,17 +154,4 @@ async def back_one(callback: CallbackQuery):
 #     )
 
         
-@router.callback_query(F.data == 'back')
-async def back_button(callback: CallbackQuery):
-    
-    if callback.from_user.language_code == 'ru':
-        await callback.message.edit_text(
-            text="С возвращением!",
-            reply_markup=inline.main
-        )
-    else:  
-        await callback.message.edit_text(
-            text="Welcome back!",
-            reply_markup=inline.main
-        )
 

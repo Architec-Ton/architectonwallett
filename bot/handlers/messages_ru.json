@@ -1,0 +1,7 @@
+{
+    "choose_action": "Выберите действие",
+    "choose_wallet": "Пожалуйста, выберите кошелек",
+    "your_balance": "Ваш баланс: {balance}\nМинтинг банков в час: {minting}",
+    "referral_link": "Ваша реферальная ссылка принесла {refCount} друзей\nВаша награда: {bankReward}",
+    "welcome_back": "С возвращением!"
+}
