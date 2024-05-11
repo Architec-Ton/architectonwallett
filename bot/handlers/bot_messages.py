@@ -1,9 +1,8 @@
 from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery
 from keyboards import inline
-import requests
 from keyboards.inline import generate_wallet_keyboard
-import json
+
 import aiohttp
 from aiogram.fsm.context import FSMContext
 from utils.states import *
@@ -13,10 +12,11 @@ router = Router()
 async def get_wallet_address(tgid):
     tgids = str(tgid)
     url = f"https://architecton.site/api/v1/account/tg/{tgids}"
-    response = requests.get(url)
-    data = json.loads(response.text)
-    print(data)
-    return data
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            data = await response.json()
+            print(data)
+            return data
 
 
 @router.callback_query(F.data == "my_account")
@@ -62,25 +62,26 @@ async def balance_of_wallet(callback: CallbackQuery, state: FSMContext):
         dt = await state.get_data()
         address = dt.get('address')
         url = f"https://architecton.site/api/v1/bank/{str(address)}"
-        response = requests.get(url)
-        data = json.loads(response.text)
-        if callback.from_user.language_code == 'ru':
-            await callback.message.edit_text(
-                text=f"Ваш баланс: {data['balance']['bankAmount']}\nМинтинг банков в час: {data['balance']['bnkPerHour']}",
-                reply_markup=inline.my_account
-            )    
-            await state.clear()
-        else:
-            await callback.message.edit_text(
-                text=f"Your balance: {data['balance']['bankAmount']}\nBank's minting per hour: {data['balance']['bnkPerHour']}",
-                reply_markup=inline.my_account
-            )    
-            await state.clear()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                data = await response.json()
+                if callback.from_user.language_code == 'ru':
+                    await callback.message.edit_text(
+                        text=f"Ваш баланс: {data['balance']['bankAmount']}\nМинтинг банков в час: {data['balance']['bnkPerHour']}",
+                        reply_markup=inline.my_account
+                    )    
+                    await state.clear()
+                else:
+                    await callback.message.edit_text(
+                        text=f"Your balance: {data['balance']['bankAmount']}\nBank's minting per hour: {data['balance']['bnkPerHour']}",
+                        reply_markup=inline.my_account
+                    )    
+                    await state.clear()
     else:
         if callback.from_user.language_code == 'ru':
             await callback.message.edit_text(
                 text="Выберите действие",
-            reply_markup=inline.my_account
+                reply_markup=inline.my_account
             )
             await state.clear()
         else:  
@@ -116,25 +117,26 @@ async def friends_of_wallet(callback: CallbackQuery, state: FSMContext):
         dt = await state.get_data()
         address = dt.get('addresss')
         url = f"https://architecton.site/api/v1/bank/{str(address)}/referral"
-        response = requests.get(url)
-        data = json.loads(response.text)
-        if callback.from_user.language_code == 'ru':
-            await callback.message.edit_text(
-                text=f"Ваша реферальная ссылка принесла {data['refCount']} друзей\nВаша награда: {data['bankReward']}",
-                reply_markup=inline.my_account
-            )
-            await state.clear()
-        else:
-            await callback.message.edit_text(
-                text=f"Your referral link brought in {data['refCount']} friends\nYour award: {data['bankReward']}",
-                reply_markup=inline.my_account
-            )
-            await state.clear()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                data = await response.json()
+                if callback.from_user.language_code == 'ru':
+                    await callback.message.edit_text(
+                        text=f"Ваша реферальная ссылка принесла {data['refCount']} друзей\nВаша награда: {data['bankReward']}",
+                        reply_markup=inline.my_account
+                    )
+                    await state.clear()
+                else:
+                    await callback.message.edit_text(
+                        text=f"Your referral link brought in {data['refCount']} friends\nYour award: {data['bankReward']}",
+                        reply_markup=inline.my_account
+                    )
+                    await state.clear()
     else:
         if callback.from_user.language_code == 'ru':
             await callback.message.edit_text(
                 text="Выберите действие",
-            reply_markup=inline.my_account
+                reply_markup=inline.my_account
             )
             await state.clear()
         else:  
