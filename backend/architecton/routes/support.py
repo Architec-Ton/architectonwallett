@@ -111,10 +111,11 @@ async def get_test(request: Request):
         logging.info(f"Notcoin : {tx.in_msg.source}")
         try:
             is_collection = await AccountController.get_check_collection(tx.in_msg.source)
+            if is_collection is False:
+                continue
         except Exception as e:
             logging.error(e)
-        if is_collection is False:
-            continue
+
         try:
             nft_trx = await AccountController.get_transactions(tx.in_msg.source)
         except BaseException as e:
