@@ -5,10 +5,10 @@ import aiohttp
 from aiogram import Bot
 from config_reader import config
 async def get_updates():
-    if config.local:
-        base_url = "http://localhost:8000"
-    else:
-        base_url = "https://architecton.site"
+    #if config.local:
+    #    base_url = "http://localhost:8000"
+    #else:
+    base_url = "https://architecton.site"
 
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
         async with session.get(f'{base_url}/api/v1/account/none/update') as resp:
