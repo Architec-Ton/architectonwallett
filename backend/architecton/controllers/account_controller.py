@@ -61,14 +61,14 @@ class AccountController:
             total_bonus = bonus_banks[0]["bonus_banks"]
         else:
             total_bonus = 0
-        logging.info(f"{address} banks: {banks} notcoin: {total_notcoins} bonus: {total_bonus}")
+        # logging.info(f"{address} banks: {banks} notcoin: {total_notcoins} bonus: {total_bonus}")
         return total_notcoins + banks + total_bonus
 
     @staticmethod
     async def get_total():
         client = get_ton_client()
         contract = CrowdSale(client)
-        total_contract, total_notcoins, total_bonus = await asyncio.gather(
+        total_contract, total_notcoins, bonus_banks = await asyncio.gather(
             contract.get_total(),
             Notcoin.all().annotate(notcoin_banks=Sum("bank_count")).values("notcoin_banks"),
             Bonus.filter(completed=True).annotate(bonus_banks=Sum("bank_count")).values("bonus_banks"),
@@ -82,11 +82,11 @@ class AccountController:
         else:
             total_notcoins = 0
 
-        if len(total_bonus) > 0 and "total_bonus" in total_bonus[0] and total_bonus[0]["total_bonus"] is not None:
-            total_bonus = total_bonus[0]["total_bonus"]
+        if len(bonus_banks) > 0 and "total_bonus" in bonus_banks[0] and bonus_banks[0]["total_bonus"] is not None:
+            total_bonus = bonus_banks[0]["total_bonus"]
         else:
             total_bonus = 0
-        # logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}")
+        # logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}  total_bonus: {total_bonus}")
         return total_contract + total_notcoins + total_bonus
 
     @staticmethod
