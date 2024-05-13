@@ -27,7 +27,9 @@ async def worker(bot: Bot):
         await asyncio.sleep(90)
         try:
             data = await get_updates()
+
             if data is not None:
+                logging.info(f"updates: {len(data)}")
                 for msg in data:
                     banks = msg['banks']
                     logging.info(f"id: {msg['tgid']} t: {msg['type']} b: {banks}")

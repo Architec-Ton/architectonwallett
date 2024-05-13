@@ -1,7 +1,7 @@
 {
     "choose_action": "Choose an action",
     "choose_wallet": "Please, choose the wallet",
-    "your_balance": "Your balance: {balance}\nBank's minting per hour: {minting}",
-    "referral_link": "Your referral link brought in {refCount} friends\nYour award: {bankReward}",
+    "your_balance": "Your balance: {}\nBank's minting per hour: {}",
+    "referral_link": "Your referral link brought in {} friends\nYour award: {}",
     "welcome_back": "Welcome back!"
 }  

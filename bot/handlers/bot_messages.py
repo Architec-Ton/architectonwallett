@@ -1,3 +1,5 @@
+import os.path
+
 from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery
 from keyboards import inline
@@ -10,6 +12,16 @@ from config_reader import config
 
 router = Router()
 
+dir_path = os.path.dirname(__file__)
+
+
+messages = {}
+# Открываем соответствующий файл с сообщениями
+with open(f"{dir_path}/messages_ru.json", 'r', encoding='utf8') as f:
+    messages['ru'] = json.load(f)
+with open(f"{dir_path}/messages_en.json", 'r', encoding='utf8') as f:
+    messages['ru'] = json.load(f)
+
 async def get_wallet_address(tgid):
     tgids = str(tgid)
     url = f"https://architecton.site/api/v1/account/tg/{tgids}"
@@ -20,20 +32,9 @@ async def get_wallet_address(tgid):
             return data
 
 def get_message_from_file(key, language_code):
-    # Определяем имя файла на основе языкового кода
-    if language_code == 'ru':
-        filename = 'bot/handlers/messages_ru.json'
-    else:
-        filename = 'bot/handlers/messages_en.json'
-    
-    # Открываем соответствующий файл с сообщениями
-    with open(filename, 'r') as f:
-        messages = json.load(f)
-    
     # Извлекаем сообщение по ключу, если такой ключ есть
-    return messages.get(key, None)
-    # Загружаем сообщения из файла
-    
+    return messages[language_code].get(key, None)
+
 
 
 
@@ -69,7 +70,7 @@ async def balance_of_wallet(callback: CallbackQuery, state: FSMContext):
                 balance = data['balance']['bankAmount']
                 minting = data['balance']['bnkPerHour']
                 await callback.message.edit_text(
-                    text=str(get_message_from_file(key="your_balance", language_code=callback.from_user.language_code)),
+                    text=str(get_message_from_file(key="your_balance", language_code=callback.from_user.language_code)).format(balance, minting),
                     reply_markup=inline.my_account
                 )
                 await state.clear()
@@ -106,7 +107,8 @@ async def friends_of_wallet(callback: CallbackQuery, state: FSMContext):
                 refCount = data['refCount']
                 bankReward = data['bankReward']
                 await callback.message.edit_text(
-                    text=str(get_message_from_file(key="referral_link", language_code=callback.from_user.language_code)),
+                    text=str(get_message_from_file(key="referral_link",
+                                                   language_code=callback.from_user.language_code)).format(refCount, bankReward ),
                     reply_markup=inline.my_account
                 )
                 await state.clear()
