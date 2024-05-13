@@ -22,6 +22,7 @@ from architecton.models import (
     ReferralsNotificationType,
     Notcoin,
     Wallet,
+    Bonus,
 )
 from architecton.views.account import AccountIn
 from architecton.views.project_list import ProjectListOut
@@ -39,11 +40,14 @@ class AccountController:
     async def get_banks(address: str):
         client = get_ton_client()
         contract = CrowdSale(client)
-        banks, notcoin_banks = await asyncio.gather(
+        banks, notcoin_banks, bonus_banks = await asyncio.gather(
             contract.get_banks(address),
             Notcoin.filter(address_hash=Address(address).hash_part.hex())
             .annotate(notcoin_banks=Sum("bank_count"))
             .values("notcoin_banks"),
+            Bonus.filter(address_raw=Address(address).hash_part.hex(), completed=True)
+            .annotate(bonus_banks=Sum("bank_count"))
+            .values("bonus_banks"),
         )
         if (
             len(notcoin_banks) > 0
@@ -53,16 +57,21 @@ class AccountController:
             total_notcoins = notcoin_banks[0]["notcoin_banks"]
         else:
             total_notcoins = 0
-        logging.info(f"{address} banks: {banks} notcoin: {total_notcoins}")
-        return total_notcoins + banks
+        if len(bonus_banks) > 0 and "bonus_banks" in bonus_banks[0] and bonus_banks[0]["bonus_banks"] is not None:
+            total_bonus = bonus_banks[0]["bonus_banks"]
+        else:
+            total_bonus = 0
+        logging.info(f"{address} banks: {banks} notcoin: {total_notcoins} bonus: {total_bonus}")
+        return total_notcoins + banks + total_bonus
 
     @staticmethod
     async def get_total():
         client = get_ton_client()
         contract = CrowdSale(client)
-        total_contract, total_notcoins = await asyncio.gather(
+        total_contract, total_notcoins, total_bonus = await asyncio.gather(
             contract.get_total(),
             Notcoin.all().annotate(notcoin_banks=Sum("bank_count")).values("notcoin_banks"),
+            Bonus.filter(completed=True).annotate(bonus_banks=Sum("bank_count")).values("bonus_banks"),
         )
         if (
             len(total_notcoins) > 0
@@ -72,8 +81,13 @@ class AccountController:
             total_notcoins = total_notcoins[0]["notcoin_banks"]
         else:
             total_notcoins = 0
-        logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}")
-        return total_contract + total_notcoins
+
+        if len(total_bonus) > 0 and "total_bonus" in total_bonus[0] and total_bonus[0]["total_bonus"] is not None:
+            total_bonus = total_bonus[0]["total_bonus"]
+        else:
+            total_bonus = 0
+        # logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}")
+        return total_contract + total_notcoins + total_bonus
 
     @staticmethod
     async def get_total_bankers():
@@ -83,7 +97,7 @@ class AccountController:
             contract.get_total_banker(),
             Notcoin.all().distinct().count(),
         )
-        logging.info(f"Bankers: {total_contract_bankers} notcoin: {notcoins_bankers}")
+        # logging.info(f"Bankers: {total_contract_bankers} notcoin: {notcoins_bankers}")
         return total_contract_bankers + notcoins_bankers
 
     @staticmethod
@@ -129,7 +143,7 @@ class AccountController:
 
         tons = await contract.get_balance()
 
-        print("TON on contract:", tons)
+        # print("TON on contract:", tons)
 
         banks = 0
 
@@ -138,7 +152,7 @@ class AccountController:
         except BaseException as e:
             print("Get banks fail", e)
 
-        print((banks))
+        # print((banks))
 
         return 0
 
@@ -208,7 +222,7 @@ class AccountController:
         )
 
         if last_update is None or (ref_address is not None and ref_address.hash_part.hex() != last_update.ref_raw):
-            logging.info("create")
+            # logging.info("create")
             await ReferralsNotification.create(
                 tg_id=tg_id,
                 address_raw=owner_address.hash_part.hex(),
@@ -277,3 +291,37 @@ class AccountController:
                             changes=f"+19 bnk",
                         )
         return resp
+
+    @staticmethod
+    async def update_bonus():
+        bonuses = await Bonus.filter(completed=False, type="ref")
+        for bonus in bonuses:
+            wallet = await Wallet.get_wallet(bonus.address)
+            if wallet is None or wallet is None:
+                continue
+            if bonus.tg_id is not None and bonus.tg_id != wallet.tg_id:
+                continue
+            elif bonus.tg_id is None:
+                bonus.tg_id = wallet.tg_id
+            src_address = Address(wallet.address)
+            if bonus.referral is not None:
+                ref_wallet = await Wallet.get_wallet(bonus.referral)
+                if wallet is not None:
+                    bonus.referral_tg_id = ref_wallet.tg_id
+
+            await Notification.create(
+                title=src_address.to_string(is_bounceable=True, is_user_friendly=True),
+                type=NotificationType.ref,
+                bank_before=0,
+                bank_after=bonus.bank_count,
+                completed=False,
+                address=src_address.to_string(),
+                address_orig=src_address.hash_part.hex(),
+                tg_id=wallet.tg_id,
+                symbol="*ref",
+                changes=f"+{bonus.bank_count} bnk",
+            )
+            bonus.address_raw = src_address.hash_part.hex()
+            bonus.completed = True
+            await bonus.save()
+        return {"status": "ok"}

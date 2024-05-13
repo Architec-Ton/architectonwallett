@@ -14,7 +14,17 @@
 <dl>
 {% for w in wallets %}
      <dt>{{w.wallet.address}}</dt>
-     <dd>{{ w.banks}} BNK</dd>
+     <dd><b class="text-primary">{{ w.banks}} BNK</b>
+     {% if w.bonuses %}
+         <p><b>Bonuses</b>
+        <uL>
+            {% for b in w.bonuses %}
+            <li>{{ b.bank_count }} BNK <small>FROM ref: {{ b.referral_tg_id }} {{ b.referral}} {{ b.created_at}}</small> <b>{{ b.comment }}</b></li>
+             {% endfor %}
+        </uL>
+         </p>
+     {% endif %}
+     </dd>
 {% endfor %}
 </dl>
 <h3>Notifications</h3>

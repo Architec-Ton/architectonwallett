@@ -13,7 +13,7 @@ from architecton.contracts.crowd_sale import CrowdSale
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.nftscan_controller import NFTscanController
 from architecton.controllers.ton_client import get_ton_client
-from architecton.models import Wallet, Notification, NotificationType, Account, Notcoin, ReferralsNotification
+from architecton.models import Wallet, Notification, NotificationType, Account, Notcoin, ReferralsNotification, Bonus
 from architecton.views.account import AccountBalanceOut, AccountIn, WalletOut
 from architecton.views.bank import BankUpdatesOut
 
@@ -49,11 +49,12 @@ async def update_contect(context, request, address, username):
         wallets = await Wallet.filter(tg_id=account.id)
         notifications = await Notification.filter(tg_id=account.id).order_by("-created_at")
         refferer = await ReferralsNotification.filter(tg_id=account.id).order_by("-created_at")
+
         wo = []
         for w in wallets:
             banks = await AccountController.get_banks(w.address)
-
-            wo.append({"wallet": w, "banks": banks})
+            bonuses = await Bonus.filter(address_raw=Address(w.address).hash_part.hex())
+            wo.append({"wallet": w, "banks": banks, "bonuses": bonuses})
 
     context.update({"account": account, "wallets": wo, "notifications": notifications, "refferer": refferer})
 
