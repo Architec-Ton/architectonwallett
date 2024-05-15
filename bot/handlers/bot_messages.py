@@ -20,7 +20,7 @@ messages = {}
 with open(f"{dir_path}/messages_ru.json", 'r', encoding='utf8') as f:
     messages['ru'] = json.load(f)
 with open(f"{dir_path}/messages_en.json", 'r', encoding='utf8') as f:
-    messages['ru'] = json.load(f)
+    messages['en'] = json.load(f)
 
 async def get_wallet_address(tgid):
     tgids = str(tgid)

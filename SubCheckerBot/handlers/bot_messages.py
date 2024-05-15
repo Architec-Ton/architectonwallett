@@ -7,7 +7,7 @@ from keyboards import inline
 router = Router()
 CHANNEL_ID="@architecton_tech"
 
-bot = Bot(config.bot_token.get_secret_value(), parse_mode='HTML')
+bot = Bot(config.sub_checker_bot_token.get_secret_value(), parse_mode='HTML')
 
 async def check_user_subscription(user_id):
     member = await bot.get_chat_member(CHANNEL_ID, user_id)
