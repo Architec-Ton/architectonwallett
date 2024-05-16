@@ -23,6 +23,7 @@ function TasksBlock({
   const { t } = useTranslation();
   return (
     <div
+      onClick={onClick}
       className={classNames({
         'selected-block': true,
         'square-block': true,
@@ -43,7 +44,6 @@ function TasksBlock({
 
       <div className="tasks-banks">
         <button
-          onClick={onClick}
           className="workspace-banks-icon tasks-btn"
           disabled={btnDisabled}>
           <span>{btnTitle}</span>

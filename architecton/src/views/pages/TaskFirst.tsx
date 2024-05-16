@@ -193,7 +193,9 @@ function TasksFirst() {
         </div>
       </Container>
       <Footer>
-        <FooterButton disabled={false} title={t(btnName)} onClick={onCheck} />
+        {!isLoading && (
+          <FooterButton disabled={false} title={t(btnName)} onClick={onCheck} />
+        )}
       </Footer>
     </Layout2Row>
   );

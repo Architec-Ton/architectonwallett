@@ -27,7 +27,7 @@
     }
 
 .task-button:hover{
-    background-color: var(--color-bg-selected);
+    /*background-color: var(--color-bg-selected);*/
     cursor: pointer;
 }
 
@@ -50,4 +50,8 @@
     font-size: 0.65rem;
     margin: 0;
 
+}
+
+.task-button img{
+    padding-left: 2rem;
 }
