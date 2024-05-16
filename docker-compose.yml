@@ -37,7 +37,7 @@ services:
       - DB_USER=${POSTGRES_USER}
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - NFTSCAN_APIKEY=${NFTSCAN_APIKEY}
-      - SUB_CHECKER_BOT_HOST="http://sub_checker_bot:8001"
+      - SUB_CHECKER_BOT_HOST=http://sub_checker_bot:8001
     depends_on:
       - pgdb
       - sub_checker_bot
