@@ -34,6 +34,7 @@ function TaskButton({
         src={iconState}
         style={{
           justifySelf: 'end',
+          paddingLeft: '2rem',
         }}
       />
     </div>
