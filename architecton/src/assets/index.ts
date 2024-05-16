@@ -40,7 +40,26 @@ import iconWallet from './icon-wallet.svg';
 
 import iconRef from './icon-ref.svg';
 
+import iconArrow from './iconArrow.svg';
+
+import iconOk from './iconOk.svg';
+
+import iconFail from './iconFail.svg';
+
+import taskArchitecton from './task/taskAchiteton.svg';
+import taskArch from './task/taskArch.svg';
+import taskKunguru from './task/taskKunguru.svg';
+import taskWallet from './task/taskWallet.svg';
+import taskX from './task/taskX.svg';
+import taskTimer from './task/taskTimer.svg';
+
 export default {
+  taskArchitecton,
+  taskArch,
+  taskKunguru,
+  taskWallet,
+  taskTimer,
+  taskX,
   svgdots,
   svghdots,
   svgcopy,
@@ -61,10 +80,13 @@ export default {
   iconBankColor,
   iconTon,
   iconRef,
+  iconOk,
+  iconFail,
   iconWallet,
   iconBankWhite,
   coinToncoin,
   coinUSDT,
+  iconArrow,
   coinAssets,
   imagePunk,
   imagePunkGallery,

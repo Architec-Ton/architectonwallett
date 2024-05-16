@@ -52,6 +52,8 @@ const useApi = () => {
       }
       const result = await response.json();
       setData(result);
+      setIsLoading(false);
+      return result;
     } catch (error) {
       console.log('error', error);
       setError(error);

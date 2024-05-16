@@ -10,31 +10,73 @@ from tortoise.expressions import Q
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.project_controller import ProjectController
-from architecton.models import Wallet, Notification, NotificationType
-from architecton.views.bank import BankOut, BankBalanceOut, BankInfoOut, BankHistoryOut, BankIn, BankReferralOut
+from architecton.models import Wallet, Notification, NotificationType, Bonus
+from architecton.views.bank import (
+    BankOut,
+    BankBalanceOut,
+    BankInfoOut,
+    BankHistoryOut,
+    BankIn,
+    BankReferralOut,
+)
 from architecton.views.info import InfoOut
 from architecton.views.task import TasksOut
 
 router = APIRouter(tags=["General route"])
 
 
+async def check_channel_subscription(channel: str, tgid: int):
+    url = f"{os.getenv('SUB_CHECKER_BOT_HOST')}/api/v1/info/{channel}/{tgid}"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            resp = await resp.json()
+            if "status" in resp:
+                return resp["status"]
+
+
 # , response_model=InfoOut
 @router.get("/{task_id}/{address}", response_model=TasksOut)
-async def get_tasks(task_id: str, address: str, tgid=Query(default=None), fail=Query(default=None)):
+async def get_tasks(
+    task_id: str, address: str, tgid=Query(default=None), fail=Query(default=None)
+):
     wallet = await Wallet.get_wallet(address, tgid)
     if wallet is None:
         return TasksOut()
     tasks = []
     if task_id == "1" and address and tgid:
-        check_subscription = ["main", "chat", "twitter"]
+        check_subscription = ["main", "chat"]
         for c_task in check_subscription:
-            tasks.append({"id": c_task, "completed": False})
+            completed = False
+            if c_task == "main":
+                completed = await check_channel_subscription(
+                    "@architecton_tech", int(tgid)
+                )
+            if c_task == "chat":
+                completed = await check_channel_subscription("@architec_ton", int(tgid))
+            tasks.append({"id": c_task, "completed": completed})
         balance = await AccountController.get_balance(wallet.address)
         tasks.append({"id": "balance", "completed": balance >= 3})
 
-    completed = True
-    for t in tasks:
-        if not t["completed"]:
+        completed = True
+        for t in tasks:
+            if not t["completed"]:
+                completed = False
+                break
+        if fail is not False:
             completed = False
-            break
-    return TasksOut(tasks=tasks, completed=completed)
+        if completed:
+            bonus = await Bonus.get_or_none(
+                address_raw=Address(address).hash_part.hex, type="tsk1"
+            )
+            if bonus is None:
+                Bonus.create(
+                    tg_id=wallet.tg_id,
+                    address=address,
+                    address_raw=Address(address).hash_part.hex,
+                    type="tsk1",
+                    bank_count=1,
+                )
+
+        return TasksOut(tasks=tasks, completed=completed)
+    else:
+        return TasksOut()

@@ -227,6 +227,26 @@ function Bank() {
                 />
               </div>
             )}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingTop: '1rem',
+                width: '100%',
+              }}>
+              <Button
+                title={t('tasks_title')}
+                icon={assets.iconRef}
+                onClick={() => navigate('/tasks')}
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyItems: 'center',
+                }}
+              />
+            </div>
             {!connected && (
               <div
                 style={{

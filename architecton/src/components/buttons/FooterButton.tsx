@@ -9,9 +9,14 @@ type Props = {
 
 function FooterButton({ title, onClick, disabled }: Props) {
   return (
-    <button onClick={onClick} className="footerbutton" disabled={disabled}>
-      {title}
-    </button>
+    <div
+      style={{
+        width: '100%',
+      }}>
+      <button onClick={onClick} className="footerbutton" disabled={disabled}>
+        {title}
+      </button>
+    </div>
   );
 }
 

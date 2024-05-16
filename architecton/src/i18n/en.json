@@ -65,7 +65,12 @@
     "Mint": "Mint",
     "Referrals": "Referrals",
 
-    "notcoin": "Mint"
+    "notcoin": "Mint",
+
+    "tasks_title": "Banking Task",
+    "task_first": "First Task",
+    "task_check": "Check Task",
+    "task_completed": "Task Completed"
 
 
 }

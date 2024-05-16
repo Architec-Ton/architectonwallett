@@ -25,6 +25,10 @@
   line-height: var(--text-size-primary);
 }
 
+html{
+  width: 100vw;
+}
+
 
 .color-primary{
   color: var(--color-text-primary);
@@ -70,6 +74,14 @@ button{
 
 button:hover{
   background-color: rgba(99,102,241,100);
+  border-color: rgba(99, 102, 241, 100);
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: var(--color-text-secondary);
+  border-color: var(--color-text-secondary);
+  cursor: auto;
 }
 
 .btn {

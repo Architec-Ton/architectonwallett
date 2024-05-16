@@ -11,6 +11,8 @@ import Mint from './views/pages/Mint';
 import BankHistory from './views/pages/BankHistory';
 import Wallet from './views/pages/Wallet';
 import Referral from './views/pages/Referral';
+import Tasks from './views/pages/Tasks';
+import TasksFirst from './views/pages/TaskFirst';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
   {
     path: '/wallet',
     element: <Wallet />,
+  },
+  {
+    path: '/tasks',
+    element: <Tasks />,
+  },
+  {
+    path: '/tasks/first',
+    element: <TasksFirst />,
   },
 ]);
 
