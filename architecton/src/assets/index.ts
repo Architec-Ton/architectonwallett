@@ -52,6 +52,8 @@ import taskKunguru from './task/taskKunguru.svg';
 import taskWallet from './task/taskWallet.svg';
 import taskX from './task/taskX.svg';
 import taskTimer from './task/taskTimer.svg';
+import taskMeta from './task/taskMeta.svg';
+import taskSquare from './task/task-square.svg';
 
 export default {
   taskArchitecton,
@@ -60,6 +62,8 @@ export default {
   taskWallet,
   taskTimer,
   taskX,
+  taskMeta,
+  taskSquare,
   svgdots,
   svghdots,
   svgcopy,

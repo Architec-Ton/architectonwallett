@@ -1,0 +1,70 @@
+.workspace {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 1rem;
+}
+
+
+.workspace h3 {
+    margin: 0;
+    /* font-size: 1rem; */
+    font-weight: 600;
+}
+
+.workspace h4 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary)
+}
+
+
+.tasks-btn{
+            border: 1px solid var(--color-bg-primary);
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: row;
+            justify-items: center;
+            justify-content: center;
+            align-items: center;
+            column-gap: 0.2rem;
+            color: white;
+            font-size: 0.85 rem;
+            height: 3rem;
+            padding: 0;
+}
+
+.workspace-bank-income {
+    font-size: 0.825rem;
+    color: var(--color-bg-primary);
+}
+
+.workspace-bank-income span {
+    color: var(--color-text-secondary);
+}
+
+.workspace-banks-icon {
+    background-color: var(--color-bg-primary);
+    width: 100%;
+    text-align: center;
+    border-radius: 0.5rem;
+    ;
+}
+
+
+.bank-content{
+    padding: 0 1rem;
+}
+
+.bank-content-icons {
+    display: grid;
+    grid-template-columns: 30px 30px 30px;
+    grid-gap: 7px;
+}
+
+.bank-content-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

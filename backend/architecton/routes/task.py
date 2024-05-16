@@ -1,8 +1,10 @@
 import asyncio
 import datetime
 import logging
+import os
 from typing import List
 
+import aiohttp
 from fastapi import APIRouter, Query
 from tonsdk.utils import Address
 from tortoise.expressions import Q
@@ -27,6 +29,7 @@ router = APIRouter(tags=["General route"])
 
 async def check_channel_subscription(channel: str, tgid: int):
     url = f"{os.getenv('SUB_CHECKER_BOT_HOST')}/api/v1/info/{channel}/{tgid}"
+    logging.info(f"Call: {url}")
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
             resp = await resp.json()
@@ -36,9 +39,7 @@ async def check_channel_subscription(channel: str, tgid: int):
 
 # , response_model=InfoOut
 @router.get("/{task_id}/{address}", response_model=TasksOut)
-async def get_tasks(
-    task_id: str, address: str, tgid=Query(default=None), fail=Query(default=None)
-):
+async def get_tasks(task_id: str, address: str, tgid=Query(default=None), fail=Query(default=None)):
     wallet = await Wallet.get_wallet(address, tgid)
     if wallet is None:
         return TasksOut()
@@ -48,9 +49,7 @@ async def get_tasks(
         for c_task in check_subscription:
             completed = False
             if c_task == "main":
-                completed = await check_channel_subscription(
-                    "@architecton_tech", int(tgid)
-                )
+                completed = await check_channel_subscription("@architecton_tech", int(tgid))
             if c_task == "chat":
                 completed = await check_channel_subscription("@architec_ton", int(tgid))
             tasks.append({"id": c_task, "completed": completed})
@@ -65,9 +64,7 @@ async def get_tasks(
         if fail is not False:
             completed = False
         if completed:
-            bonus = await Bonus.get_or_none(
-                address_raw=Address(address).hash_part.hex, type="tsk1"
-            )
+            bonus = await Bonus.get_or_none(address_raw=Address(address).hash_part.hex, type="tsk1")
             if bonus is None:
                 Bonus.create(
                     tg_id=wallet.tg_id,

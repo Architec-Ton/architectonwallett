@@ -5,7 +5,8 @@
     flex-direction: row;
     row-gap: 2rem;
     align-items: center;
-   
+    text-align: center;
+    justify-content: center;
 }
 
 .mainbutton:hover{
@@ -13,7 +14,7 @@
 }
 
 .mainbutton img{
-    max-height: 24px;
+    max-height: 20px;
     padding-right: 0.5rem;
 }
 

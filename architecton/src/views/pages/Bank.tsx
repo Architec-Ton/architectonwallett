@@ -28,9 +28,18 @@ function Bank() {
 
   //const wallet = useTonWallet();
 
+  const testAddress = [
+    '0QCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMGBK',
+    'UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA',
+    'UQAN0l6iey7tU5om-7_AKX0gfWOzkVj4tRlRZ9I7xwQPH72S',
+    'UQBdWTQpl6GimsddTqK1qvK6CKw5D0VPKuacuPgGsAuX6maY',
+  ];
+
   const initData = useInitData();
 
   const [isGLoading, setIsGLoading] = useState<boolean>(true);
+
+  const [kinguPromo, setKinguPromo] = useState<boolean>(false);
 
   const [refActive, setRefActive] = useState<boolean>(true);
 
@@ -144,6 +153,10 @@ function Bank() {
       //console.log('fetch banks finish:', tgid, userFriendlyAddress);
     };
     preRun();
+
+    if (testAddress.find((e) => e == userFriendlyAddress)) {
+      setKinguPromo(true);
+    }
   }, [userFriendlyAddress, initData, connected]);
 
   useEffect(() => {
@@ -212,7 +225,7 @@ function Bank() {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  justifyContent: 'space-around',
+                  justifyContent: 'space-between',
                 }}>
                 <Button
                   title={t('Mint')}
@@ -227,26 +240,28 @@ function Bank() {
                 />
               </div>
             )}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                paddingTop: '1rem',
-                width: '100%',
-              }}>
-              <Button
-                title={t('tasks_title')}
-                icon={assets.iconRef}
-                onClick={() => navigate('/tasks')}
+            {kinguPromo && (
+              <div
                 style={{
-                  width: '100%',
-                  textAlign: 'center',
                   display: 'flex',
-                  justifyItems: 'center',
-                }}
-              />
-            </div>
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  paddingTop: '1rem',
+                  width: '100%',
+                }}>
+                <Button
+                  title={t('tasks_title')}
+                  icon={assets.taskSquare}
+                  onClick={() => navigate('/tasks')}
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    display: 'flex',
+                    justifyItems: 'center',
+                  }}
+                />
+              </div>
+            )}
             {!connected && (
               <div
                 style={{
