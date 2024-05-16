@@ -294,9 +294,9 @@ class AccountController:
 
     @staticmethod
     async def update_bonus():
-        bonuses = await Bonus.filter(completed=False, type="ref")
+        bonuses = await Bonus.filter(completed=False)
         for bonus in bonuses:
-            wallet = await Wallet.get_wallet(bonus.address)
+            wallet = await Wallet.get_wallet(bonus.address, bonus.tg_id)
             if wallet is None or wallet is None:
                 continue
             if bonus.tg_id is not None and bonus.tg_id != wallet.tg_id:
@@ -311,14 +311,14 @@ class AccountController:
 
             await Notification.create(
                 title=src_address.to_string(is_bounceable=True, is_user_friendly=True),
-                type=NotificationType.ref,
+                type=NotificationType.ref if bonus.type == "ref" else NotificationType.tsk,
                 bank_before=0,
                 bank_after=bonus.bank_count,
                 completed=False,
                 address=src_address.to_string(),
                 address_orig=src_address.hash_part.hex(),
                 tg_id=wallet.tg_id,
-                symbol="*ref",
+                symbol="*ref" if bonus.type == "ref" else bonus.type,
                 changes=f"+{bonus.bank_count} bnk",
             )
             bonus.address_raw = src_address.hash_part.hex()

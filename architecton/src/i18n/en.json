@@ -50,6 +50,7 @@
     "registration" : "Registration Completed",
     "mint": "Mint",
     "ref": "Mint Ref",
+    "tsk": "Task Completed",
     "linked" : "Wallet Is Linked",
 
     "workspace": "Workspace",

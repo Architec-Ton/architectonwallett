@@ -10,6 +10,7 @@ class NotificationType(str, Enum):
     notcoin = "notcoin"
     mint = "mint"
     ref = "ref"
+    tsk = "tsk"
     launch = "launch"
     linked = "linked"
     registration = "registration"
