@@ -69,9 +69,10 @@ async def get_tasks(task_id: str, address: str, tgid=Query(default=None), fail=Q
                 await Bonus.create(
                     tg_id=wallet.tg_id,
                     address=address,
-                    address_raw=Address(address).hash_part.hex,
+                    address_raw=Address(address).hash_part.hex(),
                     type="tsk1",
                     bank_count=1,
+                    completed=False,
                 )
 
         return TasksOut(tasks=tasks, completed=completed)
