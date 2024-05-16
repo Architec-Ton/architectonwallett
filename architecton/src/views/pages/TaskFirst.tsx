@@ -30,7 +30,7 @@ function TasksFirst() {
   const { isLoading, fetchData, setIsLoading } = useApi();
 
   useEffect(() => {
-    storageTelegram.set('task1', null);
+    //storageTelegram.set('task1', null);
     setIsLoading(false);
   }, []);
 

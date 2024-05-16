@@ -55,6 +55,7 @@
 
 .bank-content{
     padding: 0 1rem;
+    min-height: 70px;
 }
 
 .bank-content-icons {
