@@ -1,11 +1,12 @@
 import os
+from contextlib import asynccontextmanager
 
 from fastapi.exceptions import RequestValidationError
 from starlette import status
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from config import TORTOISE_ORM, description, origins
+from config import description, origins
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # from tortoise.contrib.fastapi import register_tortoise
@@ -18,6 +19,14 @@ logging.basicConfig()
 logging.getLogger().setLevel(logging.INFO)
 
 SUBCHECKERBOT_API_PREFIX = os.getenv("SUBCHECKERBOT_API_PREFIX", "/api/v1")
+
+@asynccontextmanager
+async def lifespan(application: FastAPI):
+    logging.info("🚀 Starting application")
+    from bot import start_telegram
+    await start_telegram()
+    yield
+    logging.info("⛔ Stopping application")
 
 
 app = FastAPI(
