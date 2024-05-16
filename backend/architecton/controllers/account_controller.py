@@ -300,6 +300,7 @@ class AccountController:
             if wallet is None or wallet is None:
                 continue
             if bonus.tg_id is not None and bonus.tg_id != wallet.tg_id:
+                logging.info(f"Wallet different: {bonus.tg_id} <--> {wallet.tg_id}")
                 continue
             elif bonus.tg_id is None:
                 bonus.tg_id = wallet.tg_id

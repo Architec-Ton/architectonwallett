@@ -103,6 +103,10 @@ async def last_updates():
                 n.completed = True
                 await n.save()
                 notifys.append({"n": n, "a": account})
+            elif n.type == NotificationType.tsk:
+                n.completed = True
+                await n.save()
+                notifys.append({"n": n, "a": account})
 
     except Exception as e:
         logging.error(f"error: {e}")
