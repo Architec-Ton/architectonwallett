@@ -136,3 +136,5 @@ __pycache__
 .v
 public
 /SubCheckerBot/.idea
+db
+/db
