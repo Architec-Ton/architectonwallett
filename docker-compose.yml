@@ -38,6 +38,8 @@ services:
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - NFTSCAN_APIKEY=${NFTSCAN_APIKEY}
       - SUB_CHECKER_BOT_HOST=http://sub_checker_bot:8001
+      - TON_LSCLIENT=${TON_LSCLIENT}
+      - TON_TESTNET=${TON_TESTNET}
     depends_on:
       - pgdb
       - sub_checker_bot
