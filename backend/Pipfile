@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-pydantic = "*"
+pydantic = "==2.7.1"
 tortoise-orm = {extras = ["asyncpg"], version = "*"}
 orjson = "*"
 aiohttp = "*"
