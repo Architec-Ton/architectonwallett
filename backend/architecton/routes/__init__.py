@@ -5,10 +5,9 @@ from .bank import router as bank_router
 from .account import router as account_router
 from .support import router as support_router
 from .task import router as task_router
-
+from .test import router as test_router
 
 router = APIRouter()
-
 
 router.include_router(bank_router, prefix="/bank")
 router.include_router(info_router, prefix="/info")

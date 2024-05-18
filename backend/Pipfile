@@ -12,6 +12,7 @@ aiohttp = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 tontools = "*"
 jinja2 = "*"
+pytonlib = "*"
 
 [dev-packages]
 pytest = "*"
