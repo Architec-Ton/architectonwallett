@@ -8,6 +8,7 @@ TON_TESTNET = int(os.getenv("TON_TESTNET", 0))
 
 TON_LSCLIENT = bool(os.getenv("TON_LSCLIENT", 0))
 
+TON_LSCLIENT = False
 
 client = TonCenterClient(
     testnet=bool(TON_TESTNET),
