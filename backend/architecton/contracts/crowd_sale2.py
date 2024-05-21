@@ -127,7 +127,7 @@ class CrowdSale2(TopContract):
 
         query = wallet.create_transfer_message(
             contract_addr,
-            tonsdk.utils.to_nano(0, "ton"),
+            tonsdk.utils.to_nano(0.005, "ton"),
             len(trxs),
             payload=cell,
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
