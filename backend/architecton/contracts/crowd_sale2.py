@@ -120,7 +120,7 @@ class CrowdSale2(TopContract):
         contract_addr = Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
 
         # trxs = await self.provider.get_transactions(address)
-        trxs = await tc_client.get_transactions(address)
+        trxs = await tc_client.get_transactions(contract_addr)
 
         query = wallet.create_transfer_message(
             contract_addr,
