@@ -40,6 +40,7 @@ services:
       - SUB_CHECKER_BOT_HOST=http://sub_checker_bot:8001
       - TON_LSCLIENT=${TON_LSCLIENT}
       - TON_TESTNET=${TON_TESTNET}
+      - TON_MANAGER_MNEMONIC=${TON_MANAGER_MNEMONIC}
     depends_on:
       - pgdb
       - sub_checker_bot
