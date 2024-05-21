@@ -26,7 +26,6 @@ class CrowdSale2(TopContract):
             super().__init__(self.address, provider)
 
     async def get_banks(self, address: str):
-        return 0
         cell = Cell()
         cell.bits.write_address(Address(address))
         stack = [["tvm.Slice", bytes_to_b64str(cell.to_boc(False))]]
@@ -56,7 +55,6 @@ class CrowdSale2(TopContract):
         return 0
 
     async def get_total(self):
-        return 0
         data = await self.provider.run_get_method(
             address=self.address,
             method="TotalBanks",
@@ -119,9 +117,7 @@ class CrowdSale2(TopContract):
         cell.bits.write_address(Address(address))
         cell.bits.write_int(amount, 32)
 
-        contract_addr = Address(SMART_CONTRACT_CROWDSALE2).to_string(
-            is_user_friendly=True, is_bounceable=True, is_test_only=True
-        )
+        contract_addr = Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
 
         trxs = await self.provider.get_transactions(address)
 
@@ -134,7 +130,7 @@ class CrowdSale2(TopContract):
         )
         boc = bytes_to_b64str(query["message"].to_boc(False))
         response = await self.provider.send_boc(boc)
-        # print(response)
+        print("Bonus on contract: ", response, "for:", address, " amount:", amount)
         return response == 200
         # order_header = Contract.create_internal_message_header(to_addr, decimal.Decimal(0))
         #

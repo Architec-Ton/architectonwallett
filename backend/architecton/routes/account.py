@@ -45,10 +45,10 @@ async def account(tgid: int):
 
 @router.get("/none/update", response_model=List[BankUpdatesOut])
 async def last_updates():
-    try:
-        await AccountController.update_notcoin()
-    except Exception as e:
-        logging.error(e)
+    # try:
+    #     await AccountController.update_notcoin()
+    # except Exception as e:
+    #     logging.error(e)
     try:
         await AccountController.update_bonus()
     except Exception as e:

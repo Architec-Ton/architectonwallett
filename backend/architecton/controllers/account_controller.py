@@ -89,7 +89,7 @@ class AccountController:
         #     total_bonus = bonus_banks[0]["total_bonus"]
         # else:
         #     total_bonus = 0
-        # logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}  total_bonus: {total_bonus}")
+        logging.info(f"Contract banks: {total_contract} ")
         return total_contract  #  + total_notcoins + total_bonus
 
     @staticmethod
@@ -326,6 +326,9 @@ class AccountController:
                 bonus.on_contract = True
                 await bonus.save()
             else:
+                bonus.on_contract = True
+                bonus.comment = f"Problem for set bonus"
+                await bonus.save()
                 continue
 
             await Notification.create(
