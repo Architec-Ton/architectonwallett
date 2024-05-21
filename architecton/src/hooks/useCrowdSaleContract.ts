@@ -6,9 +6,9 @@ import { Address, OpenedContract, toNano } from '@ton/core';
 //import { useQuery } from '@tanstack/react-query';
 import { CHAIN } from '@tonconnect/protocol';
 import {
-  BanksCrowdSale as CrowdSale,
+  BanksCrowdSaleV2 as CrowdSale,
   ReferralAddress,
-} from '../contracts/tact_BanksCrowdSale';
+} from '../contracts/tact_BanksCrowdSaleV2';
 //import { useQuery } from '@tanstack/react-query';
 
 function useCrowdSaleContract(address?: string) {
@@ -24,7 +24,7 @@ function useCrowdSaleContract(address?: string) {
     const contract = CrowdSale.fromAddress(
       Address.parse(
         network === CHAIN.MAINNET
-          ? 'EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g'
+          ? 'EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp'
           : 'EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g' //'EQD_E6xHRe9_FnF0IJYpQKJK62yANQsgOTA80_pyUhLWe6F6'
       )
     );

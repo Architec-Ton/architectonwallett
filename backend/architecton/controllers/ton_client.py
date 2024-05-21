@@ -6,7 +6,7 @@ from TonTools import TonCenterClient, LsClient, TonApiClient
 
 TON_TESTNET = int(os.getenv("TON_TESTNET", 0))
 
-TON_LSCLIENT = bool(os.getenv("TON_LSCLIENT", 0))
+TON_LSCLIENT = bool(int(os.getenv("TON_LSCLIENT"), 0))
 
 TON_LSCLIENT = False
 
