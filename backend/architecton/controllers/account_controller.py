@@ -331,19 +331,20 @@ class AccountController:
                 await bonus.save()
                 continue
 
-            await Notification.create(
-                title=src_address.to_string(is_bounceable=True, is_user_friendly=True),
-                type=NotificationType.ref if bonus.type == "ref" else NotificationType.tsk,
-                bank_before=0,
-                bank_after=bonus.bank_count,
-                completed=False,
-                address=src_address.to_string(),
-                address_orig=src_address.hash_part.hex(),
-                tg_id=wallet.tg_id,
-                symbol="*ref" if bonus.type == "ref" else bonus.type,
-                changes=f"+{bonus.bank_count} bnk",
-            )
-            bonus.address_raw = src_address.hash_part.hex()
-            bonus.completed = True
-            await bonus.save()
+            if bonus.completed is False:
+                await Notification.create(
+                    title=src_address.to_string(is_bounceable=True, is_user_friendly=True),
+                    type=NotificationType.ref if bonus.type == "ref" else NotificationType.tsk,
+                    bank_before=0,
+                    bank_after=bonus.bank_count,
+                    completed=False,
+                    address=src_address.to_string(),
+                    address_orig=src_address.hash_part.hex(),
+                    tg_id=wallet.tg_id,
+                    symbol="*ref" if bonus.type == "ref" else bonus.type,
+                    changes=f"+{bonus.bank_count} bnk",
+                )
+                bonus.address_raw = src_address.hash_part.hex()
+                bonus.completed = True
+                await bonus.save()
         return {"status": "ok"}
