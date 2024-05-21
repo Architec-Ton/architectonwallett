@@ -77,12 +77,12 @@ function Mint() {
   const onChangeBank = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
     setRecvBank(value);
-    setSendTon(value); // /10
+    setSendTon(value * 1.5); // /10
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onChangeTon = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.currentTarget.value);
-    setRecvBank(value);
+    const value = parseFloat(e.currentTarget.value);
+    setRecvBank(Math.floor(value / 1.5));
     setSendTon(value); // /10
   };
   //const ContractAddress = 'EQBXfJkeDheR_vzI1DDXcZipaKBhyMtkfophZI8CbKuvMZZX';
@@ -127,16 +127,17 @@ function Mint() {
         // setContractAddress(data.address);
         setBankBalance(data.banks);
         setIsGLoading(false);
-        const tons = Math.floor(Number(data.tons) / 1e9);
-        if (tons > 10) {
-          setRecvBank(10);
-          setSendTon(10); // /10
+        const tons = Math.floor(Number(data.tons) / 1e9 / 1.5) * 1.5;
+        if (tons > 10.5) {
+          setRecvBank(7);
+          setSendTon(10.5); // /10
         } else if (tons <= 10 && tons > 0) {
-          setRecvBank(tons);
-          setSendTon(tons); // /10
+          const bank = Math.floor(tons / 1.5);
+          setRecvBank(bank);
+          setSendTon(bank * 1.5); // /10
         } else {
           setRecvBank(1);
-          setSendTon(1); // /10
+          setSendTon(1.5); // /10
         }
       }
     }
