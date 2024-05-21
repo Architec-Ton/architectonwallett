@@ -300,7 +300,7 @@ class AccountController:
 
     @staticmethod
     async def update_bonus():
-        bonuses = await Bonus.filter(on_contract=False)
+        bonuses = await Bonus.filter(on_contract=False).limit(1)
         for bonus in bonuses:
             wallet = await Wallet.get_wallet(bonus.address, bonus.tg_id)
             if wallet is None or wallet is None:
