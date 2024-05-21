@@ -121,7 +121,7 @@ class CrowdSale2(TopContract):
         contract_addr = Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
 
         # trxs = await self.provider.get_transactions(address)
-        trxs = await tc_client.get_transactions(contract_addr)
+        # rxs = await tc_client.get_transactions(contract_addr)
 
         trxs = await tc_client.get_transactions(contract_addr)
 
@@ -136,10 +136,10 @@ class CrowdSale2(TopContract):
         # response = await self.provider.send_boc(boc)
 
         async with aiohttp.ClientSession() as session:
-            url = tc_client.base_url + "sendBoc"
+            url = "https://ton.architecton.site/api/v2/" + "sendBocReturnHash"
             data = {"boc": boc}
             response = await session.post(url=url, json=data)
-            print(await response.json())
+            print("DATA: ", await response.json())
             print("response.status:", response.status)
             # response = await tc_client.send_boc(boc)
         print("secno:", len(trxs))
