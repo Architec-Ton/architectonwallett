@@ -8,6 +8,7 @@ TON_TESTNET = int(os.getenv("TON_TESTNET", 0))
 
 TON_LSCLIENT = bool(os.getenv("TON_LSCLIENT", 0))
 
+TON_LSCLIENT = False
 
 client = TonCenterClient(
     # testnet=bool(TON_TESTNET),
@@ -15,20 +16,21 @@ client = TonCenterClient(
     base_url="https://ton.architecton.site/api/v2/",
 )
 
-lsclient = LsClient(ls_index=0, default_timeout=60, config="https://architecton.site/ton.config.json")
+# lsclient = LsClient(ls_index=0, default_timeout=60, config="https://architecton.site/ton.config.json")
 # lsclient = LsClient(ls_index=5, default_timeout=60)
 
 
 # jetton_wallet_data = await client.get_jetton_wallet(address)
 async def init_ton_client():
-    if bool(TON_LSCLIENT):
-        logging.info("Initialize ton ls client")
-        await asyncio.sleep(2)
-        await lsclient.init_tonlib()
-        logging.info("Done ton ls client")
+    pass
+    # if bool(TON_LSCLIENT):
+    #     logging.info("Initialize ton ls client")
+    #     await asyncio.sleep(2)
+    #     await lsclient.init_tonlib()
+    #     logging.info("Done ton ls client")
 
 
 def get_ton_client() -> TonCenterClient:
-    if bool(TON_LSCLIENT):
-        return lsclient
+    # if bool(TON_LSCLIENT):
+    #     return lsclient
     return client

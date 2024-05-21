@@ -1,4 +1,6 @@
 import asyncio
+import os
+
 from aiogram import Bot, Dispatcher
 from config_reader import config
 from aiogram import Bot, Dispatcher
@@ -8,8 +10,8 @@ import handlers.user_commands
 
 from pooling import start_pooling
 
-
-bot = Bot(config.bot_token.get_secret_value(), parse_mode='HTML')
+bot_token = os.getenv("BOT_TOKEN", None)
+bot = Bot(bot_token, parse_mode='HTML')
 dp = Dispatcher() 
 
 logging.basicConfig(level=logging.INFO)
