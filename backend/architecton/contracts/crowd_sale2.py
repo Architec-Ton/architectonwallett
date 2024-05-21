@@ -14,7 +14,7 @@ from tonsdk.contract.wallet import Wallets, WalletVersionEnum, SendModeEnum, Wal
 from architecton.config import SMART_CONTRACT_CROWDSALE2
 from tonsdk.utils import Address, bytes_to_b64str, sign_message
 
-from architecton.controllers.ton_client import TON_LSCLIENT
+from architecton.controllers.ton_client import TON_LSCLIENT, tc_client
 
 
 class CrowdSale2(TopContract):
@@ -119,7 +119,8 @@ class CrowdSale2(TopContract):
 
         contract_addr = Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
 
-        trxs = await self.provider.get_transactions(address)
+        # trxs = await self.provider.get_transactions(address)
+        trxs = await tc_client.get_transactions(address)
 
         query = wallet.create_transfer_message(
             contract_addr,
@@ -129,7 +130,8 @@ class CrowdSale2(TopContract):
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
         )
         boc = bytes_to_b64str(query["message"].to_boc(False))
-        response = await self.provider.send_boc(boc)
+        # response = await self.provider.send_boc(boc)
+        response = await tc_client.send_boc(boc)
         print("Bonus on contract: ", response, "for:", address, " amount:", amount)
         return response == 200
         # order_header = Contract.create_internal_message_header(to_addr, decimal.Decimal(0))
