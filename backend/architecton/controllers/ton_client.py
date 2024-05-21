@@ -2,16 +2,17 @@ import asyncio
 import logging
 import os
 
-from TonTools import TonCenterClient, LsClient
+from TonTools import TonCenterClient, LsClient, TonApiClient
 
 TON_TESTNET = int(os.getenv("TON_TESTNET", 0))
 
-TON_LSCLIENT = bool(os.getenv("TON_LSCLIENT", 1))
+TON_LSCLIENT = bool(os.getenv("TON_LSCLIENT", 0))
 
 
 client = TonCenterClient(
-    testnet=bool(TON_TESTNET),
+    # testnet=bool(TON_TESTNET),
     key="88d5912ad2394e5cbae97a351bb6a3e1174e09f7956d096beaae3acab91324da",
+    base_url="https://ton.architecton.site/api/v2/",
 )
 
 lsclient = LsClient(ls_index=0, default_timeout=60, config="https://architecton.site/ton.config.json")

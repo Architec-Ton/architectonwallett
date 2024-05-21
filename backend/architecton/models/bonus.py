@@ -15,6 +15,7 @@ class Bonus(Model):
     referral = fields.CharField(max_length=128, null=True, index=True, default=None)
     type = fields.CharField(max_length=32, null=True, default=None)
     completed = fields.BooleanField(default=True)
+    on_contract = fields.BooleanField(default=False)
     bank_count = fields.IntField(default=0)
     comment = fields.TextField(null=True, default=None)
     created_at = fields.DatetimeField(auto_now_add=True)

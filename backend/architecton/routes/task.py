@@ -52,6 +52,8 @@ async def get_tasks(task_id: str, address: str, tgid=Query(default=None), fail=Q
                 completed = await check_channel_subscription("@architecton_tech", int(tgid))
             if c_task == "chat":
                 completed = await check_channel_subscription("@architec_ton", int(tgid))
+            if c_task == "eu":
+                completed = await check_channel_subscription("@architec_ton_en", int(tgid))
             tasks.append({"id": c_task, "completed": completed})
         balance = await AccountController.get_balance(wallet.address)
         tasks.append({"id": "balance", "completed": balance >= 3})
@@ -73,6 +75,7 @@ async def get_tasks(task_id: str, address: str, tgid=Query(default=None), fail=Q
                     type="tsk1",
                     bank_count=1,
                     completed=False,
+                    on_contract=False,
                 )
 
         return TasksOut(tasks=tasks, completed=completed)

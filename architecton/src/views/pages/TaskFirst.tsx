@@ -24,6 +24,7 @@ function TasksFirst() {
     assets.iconArrow,
     assets.iconArrow,
     assets.iconArrow,
+    assets.iconArrow,
     null,
   ]);
 
@@ -42,12 +43,12 @@ function TasksFirst() {
       btnState[2] = (await onTgCheck('investkingyru'))
         ? assets.iconOk
         : assets.iconFail;
-      btnState[3] = (await onTgCheck('meta')) ? assets.iconOk : assets.iconFail;
+      btnState[4] = (await onTgCheck('meta')) ? assets.iconOk : assets.iconFail;
 
       let fail = true;
       if (
         btnState[2] == assets.iconOk &&
-        btnState[3] == assets.iconOk &&
+        btnState[4] == assets.iconOk &&
         btnState[1] == assets.iconOk
       )
         fail = false;
@@ -64,11 +65,14 @@ function TasksFirst() {
           if (resp.tasks[e].id == 'main') {
             idx = 0;
           }
+          if (resp.tasks[e].id == 'eu') {
+            idx = 3;
+          }
           if (resp.tasks[e].id == 'chat') {
-            idx = 4;
+            idx = 5;
           }
           if (resp.tasks[e].id == 'balance') {
-            idx = 5;
+            idx = 6;
           }
           btnState[idx] = resp.tasks[e].completed
             ? assets.iconOk
@@ -78,7 +82,7 @@ function TasksFirst() {
         if (
           resp.completed &&
           btnState[2] == assets.iconOk &&
-          btnState[3] == assets.iconOk &&
+          btnState[4] == assets.iconOk &&
           btnState[1] == assets.iconOk
         ) {
           setBtnName('task_completed');
@@ -165,6 +169,15 @@ function TasksFirst() {
               iconState={btnState[2]}
             />
             <TaskButton
+              icon={assets.taskArchEu}
+              title="Architec.ton EU"
+              subTitle="Join the EU channel of the project"
+              onClick={() =>
+                utils.openTelegramLink('https://t.me/architec_ton_en')
+              }
+              iconState={btnState[3]}
+            />
+            <TaskButton
               icon={assets.taskMeta}
               title="Meta Silense TON"
               subTitle="Subscribe to Metukhin's main channel"
@@ -172,7 +185,7 @@ function TasksFirst() {
                 await onTgSet('meta');
                 utils.openTelegramLink('https://t.me/ToNmetasilense');
               }}
-              iconState={btnState[3]}
+              iconState={btnState[4]}
             />
             <TaskButton
               icon={assets.taskArch}
@@ -181,13 +194,13 @@ function TasksFirst() {
               onClick={() =>
                 utils.openTelegramLink('https://t.me/architec_ton')
               }
-              iconState={btnState[4]}
+              iconState={btnState[5]}
             />
             <TaskButton
               icon={assets.taskWallet}
               title="Balance Bank Mint"
               subTitle="It is necessary to have at least 3 BNK on balance"
-              iconState={btnState[5]}
+              iconState={btnState[6]}
             />
           </div>
         </div>

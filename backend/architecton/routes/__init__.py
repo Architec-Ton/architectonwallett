@@ -9,6 +9,8 @@ from .test import router as test_router
 
 router = APIRouter()
 
+router.include_router(test_router, prefix="/test")
+
 router.include_router(bank_router, prefix="/bank")
 router.include_router(info_router, prefix="/info")
 router.include_router(task_router, prefix="/task")

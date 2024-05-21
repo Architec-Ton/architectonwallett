@@ -10,6 +10,7 @@ from fastapi.exceptions import HTTPException
 from tortoise.functions import Sum
 
 from architecton.contracts.crowd_sale import CrowdSale
+from architecton.contracts.crowd_sale2 import CrowdSale2
 from architecton.controllers.nftscan_controller import NFTscanController
 from architecton.controllers.notification_controller import NotificationController
 from architecton.controllers.ton_client import get_ton_client
@@ -40,14 +41,16 @@ class AccountController:
     async def get_banks(address: str):
         client = get_ton_client()
         contract = CrowdSale(client)
-        banks, notcoin_banks, bonus_banks = await asyncio.gather(
+        contract2 = CrowdSale2(client)
+        banks, banks2, notcoin_banks = await asyncio.gather(
             contract.get_banks(address),
+            contract2.get_banks(address),
             Notcoin.filter(address_hash=Address(address).hash_part.hex())
             .annotate(notcoin_banks=Sum("bank_count"))
             .values("notcoin_banks"),
-            Bonus.filter(address_raw=Address(address).hash_part.hex(), completed=True)
-            .annotate(bonus_banks=Sum("bank_count"))
-            .values("bonus_banks"),
+            # Bonus.filter(address_raw=Address(address).hash_part.hex(), completed=True)
+            # .annotate(bonus_banks=Sum("bank_count"))
+            # .values("bonus_banks"),
         )
         if (
             len(notcoin_banks) > 0
@@ -57,48 +60,51 @@ class AccountController:
             total_notcoins = notcoin_banks[0]["notcoin_banks"]
         else:
             total_notcoins = 0
-        if len(bonus_banks) > 0 and "bonus_banks" in bonus_banks[0] and bonus_banks[0]["bonus_banks"] is not None:
-            total_bonus = bonus_banks[0]["bonus_banks"]
-        else:
-            total_bonus = 0
+        # if len(bonus_banks) > 0 and "bonus_banks" in bonus_banks[0] and bonus_banks[0]["bonus_banks"] is not None:
+        #     total_bonus = bonus_banks[0]["bonus_banks"]
+        # else:
+        #     total_bonus = 0
         # logging.info(f"{address} banks: {banks} notcoin: {total_notcoins} bonus: {total_bonus}")
-        return total_notcoins + banks + total_bonus
+        return total_notcoins + banks + banks2
 
     @staticmethod
     async def get_total():
         client = get_ton_client()
-        contract = CrowdSale(client)
-        total_contract, total_notcoins, bonus_banks = await asyncio.gather(
-            contract.get_total(),
-            Notcoin.all().annotate(notcoin_banks=Sum("bank_count")).values("notcoin_banks"),
-            Bonus.filter(completed=True).annotate(bonus_banks=Sum("bank_count")).values("bonus_banks"),
-        )
-        if (
-            len(total_notcoins) > 0
-            and "notcoin_banks" in total_notcoins[0]
-            and total_notcoins[0]["notcoin_banks"] is not None
-        ):
-            total_notcoins = total_notcoins[0]["notcoin_banks"]
-        else:
-            total_notcoins = 0
+        # contract = CrowdSale(client) total_notcoins, bonus_banks
+        contract2 = CrowdSale2(client)
+        total_contract = await contract2.get_total()
+        # Notcoin.all().annotate(notcoin_banks=Sum("bank_count")).values("notcoin_banks"),
+        # Bonus.filter(completed=True).annotate(bonus_banks=Sum("bank_count")).values("bonus_banks"),
 
-        if len(bonus_banks) > 0 and "total_bonus" in bonus_banks[0] and bonus_banks[0]["total_bonus"] is not None:
-            total_bonus = bonus_banks[0]["total_bonus"]
-        else:
-            total_bonus = 0
+        # if (
+        #     len(total_notcoins) > 0
+        #     and "notcoin_banks" in total_notcoins[0]
+        #     and total_notcoins[0]["notcoin_banks"] is not None
+        # ):
+        #     total_notcoins = total_notcoins[0]["notcoin_banks"]
+        # else:
+        #     total_notcoins = 0
+
+        # if len(bonus_banks) > 0 and "total_bonus" in bonus_banks[0] and bonus_banks[0]["total_bonus"] is not None:
+        #     total_bonus = bonus_banks[0]["total_bonus"]
+        # else:
+        #     total_bonus = 0
         # logging.info(f"Contract banks: {total_contract} notcoin: {total_notcoins}  total_bonus: {total_bonus}")
-        return total_contract + total_notcoins + total_bonus
+        return total_contract  #  + total_notcoins + total_bonus
 
     @staticmethod
     async def get_total_bankers():
         client = get_ton_client()
-        contract = CrowdSale(client)
-        total_contract_bankers, notcoins_bankers = await asyncio.gather(
-            contract.get_total_banker(),
-            Notcoin.all().distinct().count(),
-        )
+        # contract = CrowdSale(client)
+        contract2 = CrowdSale2(client)
+        total_contract_bankers = await contract2.get_total_banker()
+        # total_contract_bankers, total_contract_bankers2 = await asyncio.gather(
+        #     contract.get_total_banker(),
+        #     contract2.get_total_banker(),
+        #     Notcoin.all().distinct().count(),
+        # )
         # logging.info(f"Bankers: {total_contract_bankers} notcoin: {notcoins_bankers}")
-        return total_contract_bankers + notcoins_bankers
+        return total_contract_bankers
 
     @staticmethod
     async def get_transactions(address: str, limit=5):
@@ -294,7 +300,7 @@ class AccountController:
 
     @staticmethod
     async def update_bonus():
-        bonuses = await Bonus.filter(completed=False)
+        bonuses = await Bonus.filter(on_contract=False)
         for bonus in bonuses:
             wallet = await Wallet.get_wallet(bonus.address, bonus.tg_id)
             if wallet is None or wallet is None:
@@ -309,6 +315,18 @@ class AccountController:
                 ref_wallet = await Wallet.get_wallet(bonus.referral)
                 if wallet is not None:
                     bonus.referral_tg_id = ref_wallet.tg_id
+
+            if bonus.bank_count > 100:
+                continue
+
+            client = get_ton_client()
+            contract = CrowdSale2(client)
+
+            if await contract.set_bonus(bonus.address, bonus.bank_count):
+                bonus.on_contract = True
+                await bonus.save()
+            else:
+                continue
 
             await Notification.create(
                 title=src_address.to_string(is_bounceable=True, is_user_friendly=True),

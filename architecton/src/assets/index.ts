@@ -54,6 +54,7 @@ import taskX from './task/taskX.svg';
 import taskTimer from './task/taskTimer.svg';
 import taskMeta from './task/taskMeta.svg';
 import taskSquare from './task/task-square.svg';
+import taskArchEu from './task/taskArchEu.svg';
 
 export default {
   taskArchitecton,
@@ -64,6 +65,7 @@ export default {
   taskX,
   taskMeta,
   taskSquare,
+  taskArchEu,
   svgdots,
   svghdots,
   svgcopy,

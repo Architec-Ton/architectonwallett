@@ -15,7 +15,7 @@ async def main():
     # async with aiohttp.ClientSession() as session:
     tsk = []
     start_time = time.time()
-    for i in range(50):
+    for i in range(100):
         tsk.append(
             get_balance("UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA", 0)
         )  # "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"

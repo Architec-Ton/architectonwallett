@@ -1,9 +1,11 @@
 from TonTools import TonCenterClient, LsClient, TonlibClient
-
+from TonTools.Providers.TonApiClient import TonApiClient
+from tonsdk.contract.wallet import Wallets, WalletVersionEnum
 
 client = LsClient(ls_index=0, default_timeout=30, config="http://127.0.0.1:5500/local.config.json")
 
 # jetton_wallet_data = await client.get_jetton_wallet(address)
+client = TonCenterClient(base_url="http://103.219.170.103:8080/")
 
 
 import asyncio
@@ -16,8 +18,8 @@ from fastapi import APIRouter, Form, Query
 from fastapi.templating import Jinja2Templates
 from tonsdk.utils import Address
 
-from architecton.config import SMART_CONTRACT_CROWDSALE
-from architecton.contracts.crowd_sale import CrowdSale
+from architecton.config import SMART_CONTRACT_CROWDSALE, SMART_CONTRACT_CROWDSALE2
+from architecton.contracts.crowd_sale2 import CrowdSale2
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.nftscan_controller import NFTscanController
 from architecton.controllers.ton_client import get_ton_client
@@ -68,10 +70,23 @@ async def get_client():
 
 @router.get("")
 async def get_balance(address: str):
-    # cl = await get_client()
 
-    # return await cl.get_transactions(address)
     return await client.get_balance(address)
+
+    # client = get_ton_client()
+    # contract = CrowdSale2(client)
+    # banks = await contract.get_banks(address)
+    # total_banks = await contract.get_total()
+    # total_banker = await contract.get_total_banker()
+    #
+    # return await contract.set_bonus(address, 1)
+    #
+    # return {
+    #     "mmm": 0,
+    #     "banks": banks,
+    #     "total_banks": total_banks,
+    #     "total_banker": total_banker,
+    # }
 
 
 @router.get("/config")
