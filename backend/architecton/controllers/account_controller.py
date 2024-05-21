@@ -70,9 +70,9 @@ class AccountController:
     @staticmethod
     async def get_total():
         client = get_ton_client()
-        # contract = CrowdSale(client) total_notcoins, bonus_banks
+        contract = CrowdSale(client)  # total_notcoins, bonus_banks
         contract2 = CrowdSale2(client)
-        total_contract = await contract2.get_total()
+        total_contract = await contract.get_total()
         # Notcoin.all().annotate(notcoin_banks=Sum("bank_count")).values("notcoin_banks"),
         # Bonus.filter(completed=True).annotate(bonus_banks=Sum("bank_count")).values("bonus_banks"),
 
@@ -95,9 +95,9 @@ class AccountController:
     @staticmethod
     async def get_total_bankers():
         client = get_ton_client()
-        # contract = CrowdSale(client)
+        contract = CrowdSale(client)
         contract2 = CrowdSale2(client)
-        total_contract_bankers = await contract2.get_total_banker()
+        total_contract_bankers = await contract.get_total_banker()
         # total_contract_bankers, total_contract_bankers2 = await asyncio.gather(
         #     contract.get_total_banker(),
         #     contract2.get_total_banker(),

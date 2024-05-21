@@ -49,10 +49,10 @@ async def last_updates():
     #     await AccountController.update_notcoin()
     # except Exception as e:
     #     logging.error(e)
-    try:
-        await AccountController.update_bonus()
-    except Exception as e:
-        logging.error(e)
+    # try:
+    #     await AccountController.update_bonus()
+    # except Exception as e:
+    #     logging.error(e)
     notifications = await Notification.filter(completed=False).order_by("created_at").limit(3)
 
     notifys = []
@@ -144,8 +144,4 @@ async def account(address: str, account_in: AccountIn):
 
 @router.get("/test/")
 async def test(address: str = None):
-    client = get_ton_client()
-    contract = CrowdSale(client)
-    data = await contract.get_owner()
-
-    return data
+    await AccountController.update_bonus()
