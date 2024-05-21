@@ -3,6 +3,7 @@ import logging
 import decimal
 import os
 
+import aiohttp
 import tonsdk
 from TonTools.Contracts.Contract import Contract as TopContract
 from TonTools.Contracts.Jetton import Jetton
@@ -122,6 +123,8 @@ class CrowdSale2(TopContract):
         # trxs = await self.provider.get_transactions(address)
         trxs = await tc_client.get_transactions(contract_addr)
 
+        trxs = await tc_client.get_transactions(contract_addr)
+
         query = wallet.create_transfer_message(
             contract_addr,
             tonsdk.utils.to_nano(0, "ton"),
@@ -131,9 +134,19 @@ class CrowdSale2(TopContract):
         )
         boc = bytes_to_b64str(query["message"].to_boc(False))
         # response = await self.provider.send_boc(boc)
-        response = await tc_client.send_boc(boc)
+
+        async with aiohttp.ClientSession() as session:
+            url = tc_client.base_url + "sendBoc"
+            data = {"boc": boc}
+            response = await session.post(url=url, json=data)
+            print(await response.json())
+            print("response.status:", response.status)
+            # response = await tc_client.send_boc(boc)
+        print("secno:", len(trxs))
+        print("query:", query)
+
         print("Bonus on contract: ", response, "for:", address, " amount:", amount)
-        return response == 200
+        return False  # response.status == 200
         # order_header = Contract.create_internal_message_header(to_addr, decimal.Decimal(0))
         #
         # signing_message = self.create_signing_message(1)

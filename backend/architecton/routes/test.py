@@ -2,10 +2,10 @@ from TonTools import TonCenterClient, LsClient, TonlibClient
 from TonTools.Providers.TonApiClient import TonApiClient
 from tonsdk.contract.wallet import Wallets, WalletVersionEnum
 
-client = LsClient(ls_index=0, default_timeout=30, config="http://127.0.0.1:5500/local.config.json")
-
-# jetton_wallet_data = await client.get_jetton_wallet(address)
-client = TonCenterClient(base_url="http://103.219.170.103:8080/")
+# client = LsClient(ls_index=0, default_timeout=30, config="http://127.0.0.1:5500/local.config.json")
+#
+# # jetton_wallet_data = await client.get_jetton_wallet(address)
+# client = TonCenterClient(base_url="http://103.219.170.103:8080/")
 
 
 import asyncio
@@ -22,7 +22,7 @@ from architecton.config import SMART_CONTRACT_CROWDSALE, SMART_CONTRACT_CROWDSAL
 from architecton.contracts.crowd_sale2 import CrowdSale2
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.nftscan_controller import NFTscanController
-from architecton.controllers.ton_client import get_ton_client
+from architecton.controllers.ton_client import get_ton_client, client, tc_client
 from architecton.models import Wallet, Notification, NotificationType, Account, Notcoin, ReferralsNotification, Bonus
 from architecton.views.account import AccountBalanceOut, AccountIn, WalletOut
 from architecton.views.bank import BankUpdatesOut
@@ -36,6 +36,7 @@ from architecton.views.info import InfoOut
 
 from TonTools import TonCenterClient
 from fastapi.templating import Jinja2Templates
+
 
 path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 render = Jinja2Templates(directory=f"{path}/templates")
@@ -71,7 +72,9 @@ async def get_client():
 @router.get("")
 async def get_balance(address: str):
 
-    return await client.get_balance(address)
+    trx = await tc_client.get_transactions(address)
+
+    return len(trx)
 
     # client = get_ton_client()
     # contract = CrowdSale2(client)
