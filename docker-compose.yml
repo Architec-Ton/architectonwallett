@@ -29,7 +29,7 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "8000:8000"
-    command: python -m uvicorn architecton.app:app --host 0.0.0.0 --port 8000 --workers 1 --forwarded-allow-ips '*'
+    command: python -m uvicorn architecton.app:app --host 0.0.0.0 --port 8000 --workers 4 --forwarded-allow-ips '*'
     environment:
       - DB_HOST=pgdb
       - DB_PORT=5432
@@ -66,6 +66,6 @@ services:
     build:
       context: ./SubCheckerBot
       dockerfile: ./Dockerfile
-    command: python -m uvicorn app:app --host 0.0.0.0 --port 8001 --workers 2 --forwarded-allow-ips '*'
+    command: python -m uvicorn app:app --host 0.0.0.0 --port 8001 --workers 1 --forwarded-allow-ips '*'
     environment:
       - SUB_CHECKER_BOT_TOKEN=${SUB_CHECKER_BOT_TOKEN}
