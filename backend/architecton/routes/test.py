@@ -73,7 +73,7 @@ async def get_client():
 async def get_balance(address: str):
 
     trx = await tc_client.get_transactions(address)
-
+    print(trx)
     return len(trx)
 
     # client = get_ton_client()

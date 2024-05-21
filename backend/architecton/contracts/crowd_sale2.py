@@ -118,16 +118,18 @@ class CrowdSale2(TopContract):
         cell.bits.write_address(Address(address))
         cell.bits.write_int(amount, 32)
 
-        contract_addr = Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
+        contract_addr = SMART_CONTRACT_CROWDSALE2  # Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
 
         # trxs = await self.provider.get_transactions(address)
         # rxs = await tc_client.get_transactions(contract_addr)
 
         trxs = await tc_client.get_transactions(contract_addr)
 
+        print("Set secno:", len(trxs))
+
         query = wallet.create_transfer_message(
             contract_addr,
-            tonsdk.utils.to_nano(0.005, "ton"),
+            tonsdk.utils.to_nano(0, "ton"),
             len(trxs),
             payload=cell,
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
