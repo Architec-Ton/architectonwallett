@@ -82,9 +82,9 @@ async def get_balance(address: str):
     # # total_banker = await contract.get_total_banker()
     # address = "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"
     # banks1 = await contract.get_banks(address)
-    # data = await contract.set_bonus(address, 1)
+    # data = await contract2.set_bonus(address, 1)
     # print(data)
-    # banks = await contract.get_banks(address)
+    # # banks = await contract.get_banks(address)
 
     return {
         "bank1": banks1,
