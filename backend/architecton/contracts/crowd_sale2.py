@@ -170,7 +170,7 @@ class CrowdSale2(TopContract):
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
         )
         boc = bytes_to_b64str(query["message"].to_boc(False))
-        response = await self.provider.send_boc(boc)
+        response = await tc_client.send_boc(boc)
 
         # async with aiohttp.ClientSession() as session:
         #     url = "https://ton.architecton.site/api/v2/" + "sendBocReturnHash"
