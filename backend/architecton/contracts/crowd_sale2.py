@@ -131,7 +131,7 @@ class CrowdSale2(TopContract):
         # wallet = WalletV4ContractR2(public_key=pub_k, private_key=priv_k, wc=0)
 
         cell = Cell()
-        cell.bits.write_uint(0xBA1C8008, 32)
+        cell.bits.write_uint(3122429960, 32)
         cell.bits.write_address(Address(address))
         cell.bits.write_uint(amount, 32)
         wallet_addr = wallet.address.to_string(is_user_friendly=True)
@@ -164,7 +164,7 @@ class CrowdSale2(TopContract):
 
         query = wallet.create_transfer_message(
             contract_addr,
-            tonsdk.utils.to_nano(0.005, "ton"),
+            tonsdk.utils.to_nano(0.003, "ton"),
             seqno,
             payload=cell,
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
