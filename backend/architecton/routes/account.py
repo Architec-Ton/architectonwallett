@@ -49,10 +49,10 @@ async def last_updates():
     #     await AccountController.update_notcoin()
     # except Exception as e:
     #     logging.error(e)
-    # try:
-    #     await AccountController.update_bonus()
-    # except Exception as e:
-    #     logging.error(e)
+    try:
+        await AccountController.update_bonus()
+    except Exception as e:
+        logging.error(e)
     notifications = await Notification.filter(completed=False).order_by("created_at").limit(3)
 
     notifys = []
