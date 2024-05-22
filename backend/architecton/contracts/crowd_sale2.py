@@ -18,6 +18,20 @@ from tonsdk.utils import Address, bytes_to_b64str, sign_message
 from architecton.controllers.ton_client import TON_LSCLIENT, tc_client
 
 
+async def get_ton_data(func: str):
+    async with aiohttp.ClientSession() as session:
+        url = "https://ton.architecton.site/api/v2/" + func
+        response = await session.get(url=url)
+
+        print("response.status:", response.status)
+        if response.status == 200:
+            data = await response.json()
+            print("DATA: ", data)
+            if data["ok"]:
+                return data["result"]
+            return None
+
+
 class CrowdSale2(TopContract):
     def __init__(self, provider):
         self.options = {}
@@ -110,45 +124,66 @@ class CrowdSale2(TopContract):
     async def set_bonus(self, address: Address, amount: int, mnemonic=None):
         mnemonic = os.getenv("TON_MANAGER_MNEMONIC", "")
         mnemonics, pub_k, priv_k, wallet = Wallets.from_mnemonics(mnemonic.split(" "), WalletVersionEnum("v4r2"), 0)
+
+        # print("Pubk", pub_k.hex())
+        # print("Wallet:", wallet.address.to_string(is_user_friendly=True))
         # Это какая то космическая хуйня
         # wallet = WalletV4ContractR2(public_key=pub_k, private_key=priv_k, wc=0)
 
         cell = Cell()
-        cell.bits.write_uint(3122429960, 32)
+        cell.bits.write_uint(0xBA1C8008, 32)
         cell.bits.write_address(Address(address))
-        cell.bits.write_int(amount, 32)
+        cell.bits.write_uint(amount, 32)
+        wallet_addr = wallet.address.to_string(is_user_friendly=True)
+        contract_addr = "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"  # Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
 
-        contract_addr = SMART_CONTRACT_CROWDSALE2  # Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
-
-        # trxs = await self.provider.get_transactions(address)
+        trxs = await self.provider.get_transactions(wallet_addr)
         # rxs = await tc_client.get_transactions(contract_addr)
+        # mchain = await get_ton_data("getMasterchainInfo")
+        #
+        # if mchain is None:
+        #     return False
+        # lastSeqno = mchain["last"]["seqno"]
+        #
+        # print(lastSeqno)
+        #
+        # mchain = await get_ton_data(f"getAddressState?address={wallet_addr}")
+        #
+        # if mchain is None:
+        #     return False
+        # print(mchain)
+        #
+        # return
 
-        trxs = await tc_client.get_transactions(contract_addr)
-
-        print("Set secno:", len(trxs))
+        # trxs = await self.provider.get_transactions(wallet.address.to_string(is_user_friendly=True))
+        # print("Total:", len(trxs))
+        # print(trxs)
+        filtered_tx = [t for t in trxs if t.to_dict_user_friendly()["to"] == contract_addr]
+        seqno = len(filtered_tx) + 1
+        print("Set secno:", seqno, contract_addr)
 
         query = wallet.create_transfer_message(
             contract_addr,
-            tonsdk.utils.to_nano(0.01, "ton"),
-            len(trxs),
+            tonsdk.utils.to_nano(0, "ton"),
+            seqno,
             payload=cell,
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
         )
         boc = bytes_to_b64str(query["message"].to_boc(False))
-        # response = await self.provider.send_boc(boc)
+        response = await tc_client.send_boc(boc)
 
-        async with aiohttp.ClientSession() as session:
-            url = "https://ton.architecton.site/api/v2/" + "sendBocReturnHash"
-            data = {"boc": boc}
-            response = await session.post(url=url, json=data)
-            print("DATA: ", await response.json())
-            print("response.status:", response.status)
-            # response = await tc_client.send_boc(boc)
-        print("secno:", len(trxs))
+        # async with aiohttp.ClientSession() as session:
+        #     url = "https://ton.architecton.site/api/v2/" + "sendBocReturnHash"
+        #     data = {"boc": boc}
+        #     response = await session.post(url=url, json=data)
+        #     print("DATA: ", await response.json())
+        #     print("response.status:", response.status)
+        # response = await tc_client.send_boc(boc)
+        print("secno:", seqno)
         print("query:", query)
 
-        print("Bonus on contract: ", response, "for:", address, " amount:", amount)
-        return False  # response.status == 200
+        print("Bonus on contract: ", response, "for:", address, " amount:", amount, "seqno", seqno)
+        return response == 200
         # order_header = Contract.create_internal_message_header(to_addr, decimal.Decimal(0))
         #
         # signing_message = self.create_signing_message(1)

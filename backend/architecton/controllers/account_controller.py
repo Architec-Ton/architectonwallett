@@ -326,7 +326,7 @@ class AccountController:
                 bonus.on_contract = True
                 await bonus.save()
             else:
-                bonus.on_contract = True
+                bonus.on_contract = False
                 bonus.comment = f"Problem for set bonus {bonus.comment if bonus.comment is not None else ''}"
                 await bonus.save()
                 continue

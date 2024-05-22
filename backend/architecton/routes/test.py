@@ -19,6 +19,7 @@ from fastapi.templating import Jinja2Templates
 from tonsdk.utils import Address
 
 from architecton.config import SMART_CONTRACT_CROWDSALE, SMART_CONTRACT_CROWDSALE2
+from architecton.contracts.crowd_sale import CrowdSale
 from architecton.contracts.crowd_sale2 import CrowdSale2
 from architecton.controllers.account_controller import AccountController
 from architecton.controllers.nftscan_controller import NFTscanController
@@ -72,24 +73,23 @@ async def get_client():
 @router.get("")
 async def get_balance(address: str):
 
-    trx = await tc_client.get_transactions(address)
-    print(trx)
-    return len(trx)
-
-    # client = get_ton_client()
-    # contract = CrowdSale2(client)
+    client = get_ton_client()
+    contract = CrowdSale(client)
+    contract2 = CrowdSale2(client)
+    banks1 = await contract.get_banks(address)
+    banks2 = await contract2.get_banks(address)
+    # # total_banks = await contract.get_total()
+    # # total_banker = await contract.get_total_banker()
+    # address = "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"
+    # banks1 = await contract.get_banks(address)
+    # data = await contract.set_bonus(address, 1)
+    # print(data)
     # banks = await contract.get_banks(address)
-    # total_banks = await contract.get_total()
-    # total_banker = await contract.get_total_banker()
-    #
-    # return await contract.set_bonus(address, 1)
-    #
-    # return {
-    #     "mmm": 0,
-    #     "banks": banks,
-    #     "total_banks": total_banks,
-    #     "total_banker": total_banker,
-    # }
+
+    return {
+        "bank1": banks1,
+        "bank2": banks2,
+    }
 
 
 @router.get("/config")
