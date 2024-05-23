@@ -174,7 +174,7 @@ class CrowdSale2(TopContract):
         # filtered_tx = trxs
         filtered_tx = [t for t in trxs if t.to_dict_user_friendly()["to"] == contract_addr]
 
-        seqno = len(filtered_tx) + 1
+        seqno = len(filtered_tx) + 2
         print("Set secno:", seqno, contract_addr)
         # for i in range(5):
         #     seqno = i
