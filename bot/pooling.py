@@ -27,7 +27,7 @@ async def worker(bot: Bot):
 
     while True:
         # await asyncio.sleep(60)
-        await asyncio.sleep(90)
+        await asyncio.sleep(60 * 3)
         try:
             data = await get_updates()
 
