@@ -124,7 +124,7 @@ class CrowdSale2(TopContract):
     async def send(self, wallet, contract_addr, seqno, cell):
         query = wallet.create_transfer_message(
             contract_addr,
-            tonsdk.utils.to_nano(0.05, "ton"),
+            tonsdk.utils.to_nano(0.07, "ton"),
             seqno,
             payload=cell,
             send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
@@ -179,14 +179,13 @@ class CrowdSale2(TopContract):
         # for i in range(14, 50):
         #     seqno = i
         response = await self.send(wallet, contract_addr, seqno, cell)
-        print(seqno, response)
         #     if response == 200:
         #         break
 
         print("secno:", seqno)
 
-        # print("Bonus on contract: ", response, "for:", address, " amount:", amount, "seqno", seqno)
-        return False  # response == 200
+        print("Bonus on contract: ", response, "for:", address, " amount:", amount, "seqno", seqno)
+        return response == 200
         # order_header = Contract.create_internal_message_header(to_addr, decimal.Decimal(0))
         #
         # signing_message = self.create_signing_message(1)
