@@ -93,7 +93,7 @@ async def get_balance(address: str):
     #     await b.save()
     # # total_banks = await contract.get_total()
     # # total_banker = await contract.get_total_banker()
-    address = "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"
+    # address = "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"
     # address = "UQAqLU0JcyhEKmF4WjlQ9txMS3l9OZKZhfLr5kGF8tDUurra"
     banks1 = await contract.get_banks(address)
     # data = await contract2.set_bonus(address, 1)

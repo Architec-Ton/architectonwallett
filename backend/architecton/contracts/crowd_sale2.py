@@ -169,23 +169,24 @@ class CrowdSale2(TopContract):
         # return
 
         trxs = await self.provider.get_transactions(wallet.address.to_string(is_user_friendly=True))
-        # print("Total:", len(trxs))
+        print("Total:", len(trxs), wallet.address.to_string(is_user_friendly=True))
         # print(trxs)
         # filtered_tx = trxs
-        filtered_tx = [t for t in trxs if t.to_dict_user_friendly()["to"] == contract_addr]
+        filtered_tx = [t for t in trxs if t.out_msgs]
 
-        seqno = len(filtered_tx) + 2
-        print("Set secno:", seqno, contract_addr)
-        # for i in range(5):
+        seqno = len(filtered_tx)
+        # print("Set secno:", seqno, contract_addr)
+        # for i in range(14, 50):
         #     seqno = i
         response = await self.send(wallet, contract_addr, seqno, cell)
-        # if response == 200:
-        #     break
+        print(seqno, response)
+        #     if response == 200:
+        #         break
 
         print("secno:", seqno)
 
-        print("Bonus on contract: ", response, "for:", address, " amount:", amount, "seqno", seqno)
-        return response == 200
+        # print("Bonus on contract: ", response, "for:", address, " amount:", amount, "seqno", seqno)
+        return False  # response == 200
         # order_header = Contract.create_internal_message_header(to_addr, decimal.Decimal(0))
         #
         # signing_message = self.create_signing_message(1)
