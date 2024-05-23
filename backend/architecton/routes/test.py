@@ -73,18 +73,32 @@ async def get_client():
 @router.get("")
 async def get_balance(address: str):
 
+    # bonuses = await Bonus.all()
+
     client = get_ton_client()
     contract = CrowdSale(client)
     contract2 = CrowdSale2(client)
-    banks1 = await contract.get_banks(address)
-    banks2 = await contract2.get_banks(address)
+
+    # for b in bonuses:
+    #     address = b.address
+    #
+    #     banks1 = await contract.get_banks(address)
+    #     banks2 = await contract2.get_banks(address)
+    #     print(b.address, "bonus:", b.bank_count, "b1:", banks1, "b2", banks2)
+    #
+    #     if banks2 < b.bank_count:
+    #         b.on_contract = False
+    #     else:
+    #         b.on_contract = True
+    #     await b.save()
     # # total_banks = await contract.get_total()
     # # total_banker = await contract.get_total_banker()
-    # address = "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"
-    # banks1 = await contract.get_banks(address)
+    address = "UQCto-hxbOIBe_G6ub3s3_murlWrPBo__j8zI4Fka8PAMNvA"
+    # address = "UQAqLU0JcyhEKmF4WjlQ9txMS3l9OZKZhfLr5kGF8tDUurra"
+    banks1 = await contract.get_banks(address)
     # data = await contract2.set_bonus(address, 1)
-    # print(data)
-    # # banks = await contract.get_banks(address)
+    # # print(data)
+    banks2 = await contract2.get_banks(address)
 
     return {
         "bank1": banks1,

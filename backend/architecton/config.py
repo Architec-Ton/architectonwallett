@@ -52,7 +52,11 @@ testnet_crowd_sale_v2 = "EQC64tH5_uPMRcfy2KOXm0h-udsL6FA5U3cfm60tCK4shNux"
 # bank_crowd_sale = "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g"
 
 bank_crowd_sale = "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g"
-testnet_bank_crowd_sale2 = "EQDT68dwsWPtwqU0PkRSfl7FhmqSVf5MTJ1qU3jIZbUxNHL5"
-bank_crowd_sale2 = "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"
+testnet_bank_crowd_sale2 = (
+    "EQAKBlWOqJDIEQ8t3jIAXO06N1s9utti-1JoVUuWCX_5yPIY"  # "EQDT68dwsWPtwqU0PkRSfl7FhmqSVf5MTJ1qU3jIZbUxNHL5"
+)
+bank_crowd_sale2 = (
+    "EQAKBlWOqJDIEQ8t3jIAXO06N1s9utti-1JoVUuWCX_5yPIY"  # "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"
+)
 SMART_CONTRACT_CROWDSALE = bank_crowd_sale  # os.getenv("SMART_CONTRACT_CROWDSALE", bank_crowd_sale)
 SMART_CONTRACT_CROWDSALE2 = bank_crowd_sale2  # os.getenv("SMART_CONTRACT_CROWDSALE2", bank_crowd_sale2)

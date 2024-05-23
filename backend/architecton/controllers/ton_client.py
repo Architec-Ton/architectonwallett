@@ -22,6 +22,8 @@ tc_client = TonCenterClient(
     key="88d5912ad2394e5cbae97a351bb6a3e1174e09f7956d096beaae3acab91324da",
 )
 
+# client = tc_client
+
 # lsclient = LsClient(ls_index=0, default_timeout=60, config="https://architecton.site/ton.config.json")
 # lsclient = LsClient(ls_index=5, default_timeout=60)
 

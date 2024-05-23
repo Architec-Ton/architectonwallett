@@ -121,12 +121,24 @@ class CrowdSale2(TopContract):
         cell.bits.write_uint(seqno, 32)
         return cell
 
+    async def send(self, wallet, contract_addr, seqno, cell):
+        query = wallet.create_transfer_message(
+            contract_addr,
+            tonsdk.utils.to_nano(0.05, "ton"),
+            seqno,
+            payload=cell,
+            send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
+        )
+        boc = bytes_to_b64str(query["message"].to_boc(False))
+        response = await tc_client.send_boc(boc)
+        return response
+
     async def set_bonus(self, address: Address, amount: int, mnemonic=None):
         mnemonic = os.getenv("TON_MANAGER_MNEMONIC", "")
         mnemonics, pub_k, priv_k, wallet = Wallets.from_mnemonics(mnemonic.split(" "), WalletVersionEnum("v4r2"), 0)
 
-        # print("Pubk", pub_k.hex())
-        # print("Wallet:", wallet.address.to_string(is_user_friendly=True))
+        print("Pubk", pub_k.hex())
+        print("Wallet:", wallet.address.to_string(is_user_friendly=True, is_bounceable=True))
         # Это какая то космическая хуйня
         # wallet = WalletV4ContractR2(public_key=pub_k, private_key=priv_k, wc=0)
 
@@ -134,10 +146,11 @@ class CrowdSale2(TopContract):
         cell.bits.write_uint(3122429960, 32)
         cell.bits.write_address(Address(address))
         cell.bits.write_uint(amount, 32)
-        wallet_addr = wallet.address.to_string(is_user_friendly=True)
-        contract_addr = "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"  # Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
-
-        trxs = await self.provider.get_transactions(wallet_addr)
+        wallet_addr = wallet.address.to_string(is_user_friendly=True, is_bounceable=True)
+        # contract_addr = "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"  # Address(SMART_CONTRACT_CROWDSALE2).to_string(is_user_friendly=True, is_bounceable=True)
+        contract_addr = SMART_CONTRACT_CROWDSALE2
+        # contract_addr = "EQD9s3NqM3k0hbI-iAff2VFV1SoPz5B0T1L6_krwLxvXpoxh"
+        # trxs = await self.provider.get_transactions(wallet_addr)
         # rxs = await tc_client.get_transactions(contract_addr)
         # mchain = await get_ton_data("getMasterchainInfo")
         #
@@ -155,32 +168,21 @@ class CrowdSale2(TopContract):
         #
         # return
 
-        # trxs = await self.provider.get_transactions(wallet.address.to_string(is_user_friendly=True))
+        trxs = await self.provider.get_transactions(wallet.address.to_string(is_user_friendly=True))
         # print("Total:", len(trxs))
         # print(trxs)
+        # filtered_tx = trxs
         filtered_tx = [t for t in trxs if t.to_dict_user_friendly()["to"] == contract_addr]
+
         seqno = len(filtered_tx) + 1
         print("Set secno:", seqno, contract_addr)
+        # for i in range(5):
+        #     seqno = i
+        response = await self.send(wallet, contract_addr, seqno, cell)
+        # if response == 200:
+        #     break
 
-        query = wallet.create_transfer_message(
-            contract_addr,
-            tonsdk.utils.to_nano(0.003, "ton"),
-            seqno,
-            payload=cell,
-            send_mode=SendModeEnum.pay_gas_separately | SendModeEnum.ignore_errors,
-        )
-        boc = bytes_to_b64str(query["message"].to_boc(False))
-        response = await tc_client.send_boc(boc)
-
-        # async with aiohttp.ClientSession() as session:
-        #     url = "https://ton.architecton.site/api/v2/" + "sendBocReturnHash"
-        #     data = {"boc": boc}
-        #     response = await session.post(url=url, json=data)
-        #     print("DATA: ", await response.json())
-        #     print("response.status:", response.status)
-        # response = await tc_client.send_boc(boc)
         print("secno:", seqno)
-        print("query:", query)
 
         print("Bonus on contract: ", response, "for:", address, " amount:", amount, "seqno", seqno)
         return response == 200
