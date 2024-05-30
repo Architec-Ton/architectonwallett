@@ -53,7 +53,10 @@ async def startup_event():
     logging.info("Done client")
 
 
-register_tortoise(app, generate_schemas=True, add_exception_handlers=True, config=TORTOISE_ORM)
+time.sleep(5)
+register_tortoise(
+    app, generate_schemas=True, add_exception_handlers=True, config=TORTOISE_ORM
+)
 
 
 app.add_middleware(

@@ -16,11 +16,11 @@ import TasksFirst from './views/pages/TaskFirst';
 
 const router = createBrowserRouter([
   {
-    path: '/welcome',
+    path: '/',
     element: <Main />,
   },
   {
-    path: '/',
+    path: '/bank',
     element: <Bank />,
   },
   {

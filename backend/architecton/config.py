@@ -4,11 +4,11 @@ description = """
 Architecton backend API. 🚀 This is common microservice collected all routes in one.
 """
 
-db_user = os.getenv("DB_USER", "architecton")
-db_pass = os.getenv("DB_PASS", "architecton")
+db_user = os.getenv("DB_USER", "hack")
+db_pass = os.getenv("DB_PASS", "hack")
 db_host = os.getenv("DB_HOST", "localhost")
 db_port = os.getenv("DB_PORT", "5438")
-db_name = os.getenv("DB_NAME", "architecton")
+db_name = os.getenv("DB_NAME", "hack")
 
 db_url = f"postgres://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
 
@@ -52,11 +52,11 @@ testnet_crowd_sale_v2 = "EQC64tH5_uPMRcfy2KOXm0h-udsL6FA5U3cfm60tCK4shNux"
 # bank_crowd_sale = "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g"
 
 bank_crowd_sale = "EQBhOhdA8vncTSH3ft2f-Nqj9PTmKTSZMbhkMN8DhFTeJC1g"
-testnet_bank_crowd_sale2 = (
-    "EQAKBlWOqJDIEQ8t3jIAXO06N1s9utti-1JoVUuWCX_5yPIY"  # "EQDT68dwsWPtwqU0PkRSfl7FhmqSVf5MTJ1qU3jIZbUxNHL5"
+testnet_bank_crowd_sale2 = "EQAKBlWOqJDIEQ8t3jIAXO06N1s9utti-1JoVUuWCX_5yPIY"  # "EQDT68dwsWPtwqU0PkRSfl7FhmqSVf5MTJ1qU3jIZbUxNHL5"
+bank_crowd_sale2 = "EQAKBlWOqJDIEQ8t3jIAXO06N1s9utti-1JoVUuWCX_5yPIY"  # "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"
+SMART_CONTRACT_CROWDSALE = (
+    bank_crowd_sale  # os.getenv("SMART_CONTRACT_CROWDSALE", bank_crowd_sale)
 )
-bank_crowd_sale2 = (
-    "EQAKBlWOqJDIEQ8t3jIAXO06N1s9utti-1JoVUuWCX_5yPIY"  # "EQB8EPrSzysu6wAGH9JF6X2jIOah9wUs-5sHo8oK8afKsvDp"
+SMART_CONTRACT_CROWDSALE2 = (
+    bank_crowd_sale2  # os.getenv("SMART_CONTRACT_CROWDSALE2", bank_crowd_sale2)
 )
-SMART_CONTRACT_CROWDSALE = bank_crowd_sale  # os.getenv("SMART_CONTRACT_CROWDSALE", bank_crowd_sale)
-SMART_CONTRACT_CROWDSALE2 = bank_crowd_sale2  # os.getenv("SMART_CONTRACT_CROWDSALE2", bank_crowd_sale2)

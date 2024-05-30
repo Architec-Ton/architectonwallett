@@ -15,24 +15,36 @@ function App() {
     cssVars: true,
     //async: true,
   };
-  if (import.meta.env.VITE_ENABLE_MINIAPP) {
-    return (
-      <TonConnectUIProvider
-        manifestUrl="https://architecton.site/tonconnect-manifest.json"
-        uiPreferences={{ theme: THEME.LIGHT }}
-        actionsConfiguration={{
-          twaReturnUrl: import.meta.env.VITE_BE_TWA_RETURN,
-        }}>
-        <SDKProvider options={options}>
-          <AuthProvider>
-            <RouterProvider router={router} />
-          </AuthProvider>
-        </SDKProvider>
-      </TonConnectUIProvider>
-    );
-  } else {
-    <RouterProvider router={router} />;
-  }
+  return (
+    <SDKProvider options={options}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </SDKProvider>
+  );
+  // const options: SDKInitOptions = {
+  //   acceptCustomStyles: true,
+  //   cssVars: true,
+  //   //async: true,
+  // };
+  // if (false) {
+  //   return (
+  //     <TonConnectUIProvider
+  //       manifestUrl="https://architecton.site/tonconnect-manifest.json"
+  //       uiPreferences={{ theme: THEME.LIGHT }}
+  //       actionsConfiguration={{
+  //         twaReturnUrl: import.meta.env.VITE_BE_TWA_RETURN,
+  //       }}>
+  //       <SDKProvider options={options}>
+  //         <AuthProvider>
+  //           <RouterProvider router={router} />
+  //         </AuthProvider>
+  //       </SDKProvider>
+  //     </TonConnectUIProvider>
+  //   );
+  // } else {
+  //   <RouterProvider router={router} />;
+  // }
 }
 
 export default App;
