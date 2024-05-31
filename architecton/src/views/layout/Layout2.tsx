@@ -2,9 +2,8 @@ import { ReactNode, useEffect } from 'react';
 
 import classNames from 'classnames';
 
-import './Layout.styles.css';
+import './Layout2.styles.css';
 import { CSSProperties } from '@linaria/core';
-import Header from '../header/Header';
 // import Header from '../header/Header';
 // import { useMiniApp } from '@tma.js/sdk-react';
 
@@ -15,7 +14,7 @@ type Props = {
   style?: CSSProperties;
 };
 
-function Layout({ children, style }: Props) {
+function Layout2({ children, style }: Props) {
   // const miniapp = useMiniApp();
 
   useEffect(() => {
@@ -24,7 +23,7 @@ function Layout({ children, style }: Props) {
 
   return (
     <>
-      <div className={classNames('layout')} style={style}>
+      <div className={classNames('layout2')} style={style}>
         {/* <Header /> */}
         {children}
       </div>
@@ -32,4 +31,4 @@ function Layout({ children, style }: Props) {
   ); /*<Header />*/
 }
 
-export default Layout;
+export default Layout2;

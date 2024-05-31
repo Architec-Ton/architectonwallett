@@ -1,9 +1,9 @@
-import Layout from '../layout/Layout';
 import Balance from '../../components/balance/Balance';
 import MainMenu from '../../components/menu/MainMenu';
 import CoinList from '../../components/coin/CoinList';
 import Projects from '../../components/project/Projects';
 import useSWR from 'swr';
+import Layout2 from '../layout/Layout2';
 
 function Main() {
   // created function to handle API request
@@ -25,12 +25,12 @@ function Main() {
   // if (isLoading) return <div className="Loading">Loading...</div>;
 
   return (
-    <Layout>
+    <Layout2>
       <Balance title="$152 234,17"></Balance>
       <MainMenu />
       <CoinList />
       <Projects tokens={data ? data.games : []} />
-    </Layout>
+    </Layout2>
   );
 
   // //{!isLoading && <Projects tokens={data.tokens} />}

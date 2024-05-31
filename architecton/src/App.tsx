@@ -16,11 +16,18 @@ function App() {
     //async: true,
   };
   return (
-    <SDKProvider options={options}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </SDKProvider>
+    <TonConnectUIProvider
+      manifestUrl="https://architecton.site/tonconnect-manifest.json"
+      uiPreferences={{ theme: THEME.LIGHT }}
+      actionsConfiguration={{
+        twaReturnUrl: import.meta.env.VITE_BE_TWA_RETURN,
+      }}>
+      <SDKProvider options={options}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </SDKProvider>
+    </TonConnectUIProvider>
   );
   // const options: SDKInitOptions = {
   //   acceptCustomStyles: true,

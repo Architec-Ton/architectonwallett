@@ -2,6 +2,9 @@
 import classNames from 'classnames';
 import './Balance.styles.css';
 import assets from '../../assets';
+import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
+import BalanceHeader from './BalanceHeader';
+import { Address } from '@ton/ton';
 // import BalanceHeader from './BalanceHeader';
 // import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 
@@ -15,7 +18,7 @@ type Props = {
 // import { useState } from 'react';
 
 function Balance({ title }: Props) {
-  // const wallet = useTonWallet();
+  const wallet = useTonWallet();
   // const client = useTonClient();
   //const wallet = false;
 
@@ -55,26 +58,33 @@ function Balance({ title }: Props) {
 
   //console.log(walletInit);
 
-  if (false) {
+  if (true) {
     return (
-      <></>
-      // wallet && (
-      //   <div
-      //     className={classNames('balance')}
-      //     style={{ backgroundImage: `url(${assets.svgbalance})` }}>
-      //     <div className="balance-body">
-      //       <BalanceHeader
-      //         title={wallet.device.appName}
-      //         chain={wallet.account.chain}
-      //       />
-      //       <div className="balance-amount">{amount} TON</div>
-      //     </div>
-      //     <div className="balance-footer">
-      //       Wallet {wallet.account.address} <img src={assets.svgcopy} />
-      //     </div>
-      //     <TonConnectButton />
-      //   </div>
-      // )
+      <>
+        <div
+          className={classNames('balance')}
+          style={{ backgroundImage: `url('/icons/balance-bg.svg'})` }}>
+          <div className="balance-body">
+            <BalanceHeader
+              name="Wallet"
+              title="Architec.TON" //{wallet?.device.appName}
+              chain={wallet?.account.chain}
+            />
+            <div className="balance-body-container">
+              {wallet && <div className="balance-amount">{1} TON</div>}
+              {!wallet && <TonConnectButton />}
+            </div>
+          </div>
+          <div className="balance-footer">
+            {wallet && (
+              <>
+                {Address.parse(wallet.account.address).toString()}{' '}
+                <img src={assets.svgcopy} />
+              </>
+            )}
+          </div>
+        </div>
+      </>
     );
   } else {
     return (
