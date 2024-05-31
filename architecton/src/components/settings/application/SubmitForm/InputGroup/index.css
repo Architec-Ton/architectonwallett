@@ -1,0 +1,31 @@
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    width: 100%;
+}
+
+.input-group-label {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-weight: var(--medium);
+    line-height: 2.25rem;
+}
+
+.input-group__info,
+.input-group__hint {
+    padding: 0 1.25rem;
+    font-size: 0.70rem;
+    color: var(--secondary-color)
+}
+
+.input-group__hint {
+    font-size: 0.85rem;
+}
+
+.icon-info {
+    margin-left: 0.25rem;
+}

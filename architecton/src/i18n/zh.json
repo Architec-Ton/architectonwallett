@@ -57,7 +57,32 @@
 
     "wallet_title": "断开钱包连接",
 
-    "referral_bonus_title": "推荐奖金"
+    "referral_bonus_title": "推荐奖金",
+
+    "application_submit_header": "Application submit",
+    "application_submit_resources_info": "'You need to upload content for your’s app. Logos, screenshoots, jetton logo, website logo etd. Put in a archive, upload and submit the link.'",
+    "application_submit_main_info_label": "Main info",
+    "application_submit_socials_label": "Socials",
+    "application_submit_resources_label": "Project resources",
+    "application_submit_video_label": "Video about you",
+    "application_submit_owner_label": "Project owner",
+    "application_submit_terms_label": "Submitting terms",
+    "application_submit_terms_hint": "Your’s data does not leak outside the Architect.ton project team",
+    "application_submit_agriment_label": "I read and accept",
+    "asset_name_label": "Asset name",
+    "small_description_label": "Small description",
+    "full_description_label": "Full description",
+    "tags_label": "Tags",
+    "telegram_label": "Telegram",
+    "youtube_label": "Youtube",
+    "twitter_label": "Twitter",
+    "discord_label": "Discord",
+    "resources_label": "Content link",
+    "video_about_label": "Video link",
+    "project_owner_label": "Founder's username",
+    "submit_button": "Submit",
+    "terms_label": "Terms",
+    "paste_button": "Paste"
 
 
 }

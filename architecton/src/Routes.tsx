@@ -13,6 +13,7 @@ import Wallet from './views/pages/Wallet';
 import Referral from './views/pages/Referral';
 import Tasks from './views/pages/Tasks';
 import TasksFirst from './views/pages/TaskFirst';
+import ApplicationSubmit from './views/pages/ApplicationSubmit';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
     path: '/tasks/first',
     element: <TasksFirst />,
   },
+  {
+    path: '/settings/application-submit',
+    element: <ApplicationSubmit />,
+  }
 ]);
 
 export default router;

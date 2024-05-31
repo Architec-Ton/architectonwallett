@@ -1,0 +1,53 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    height: 4rem;
+    padding: 0 1.25rem;
+    margin-bottom: 0.25rem;
+    background-color: var(--backgroud-secondary-color);
+    border-radius: 1rem;
+}
+
+.input-label {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    line-height: 2rem;
+    margin-top: 0.25rem;
+    position: relative;
+}
+
+.input-lable__title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    transition: all .3s;
+}
+
+.input-lable__title.focus {
+    transform: translateY(-1rem);
+    font-size: 0.75rem;
+}
+
+.checkbox-label .input-lable__title {
+    position: inherit;
+    transition: none;
+}
+
+.checkbox-label.input-label .input-lable__title,
+.checkbox-label.input-label .input-lable__title.focus {
+    transform: none;
+    transition: none;
+    font-size: 1rem;
+}
+
+.checkbox-label.input-label {
+    margin-top: 0;
+    flex-direction: row-reverse;
+    align-items: stretch;
+}
