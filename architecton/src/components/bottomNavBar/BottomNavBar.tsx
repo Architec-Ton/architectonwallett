@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './BottomNavBar.css';
-import { ReactComponent as WalletIcon } from './icons/.svg';
-import { ReactComponent as AppsIcon } from './icons/.svg';
-import { ReactComponent as SwapIcon } from './icons/.svg';
-import { ReactComponent as StocksIcon } from './icons/.svg';
+import { ReactComponent as WalletIcon } from '../../assets/';
+import { ReactComponent as AppsIcon } from '../../assets/';
+import { ReactComponent as SwapIcon } from '../../assets/';
+import { ReactComponent as StocksIcon } from '../../assets/';
 
 const navItems = [
     { to: '/', icon: WalletIcon, label: 'Wallet' },
