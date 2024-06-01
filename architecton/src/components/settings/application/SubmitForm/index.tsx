@@ -1,4 +1,4 @@
-import { useFetcher } from "react-router-dom"
+import { redirect, useFetcher, useNavigate } from "react-router-dom"
 import { FormEventHandler, useCallback, useEffect, useMemo, useState } from "react"
 
 import "./index.css"
@@ -9,6 +9,8 @@ import FormInput from "./FormInput"
 import TermsButton from "./TermsButton"
 import { t } from "i18next"
 import PasteButton from "./PasteButton"
+import { BE_URL } from "../../../../constants"
+import Loader from "../../../ui/Loader"
 
 const formInitialValues = {
     assetName: '',
@@ -27,7 +29,28 @@ const formInitialValues = {
 
 type InitialValuesType = typeof formInitialValues
 
-const resourcesInfo = 'You need to upload content for your’s app. Logos, screenshoots, jetton logo, website logo etd. Put in a archive, upload and submit the link.'
+export const ApplicationSubmitAction = async ({ request }) => {
+    try {
+        const formData = await request.formData()
+        const data = Object.fromEntries(formData)
+        const response = await fetch(`${BE_URL}/onboard`, {
+            method: "post",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({ ...data, agriment: data.agriment === "1" })
+        })
+
+        if (!response.ok) {
+            throw new Error("Something went wrong")
+        }
+
+        return  redirect("/dev/wallet")
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
 
 const SubmitForm = () => {
     const fetcher = useFetcher({ key: "application-submit" })
@@ -44,7 +67,6 @@ const SubmitForm = () => {
                 formNewValues[key] = !!element.value && element.value || ''
             }
         })
-        console.log(formNewValues)
         setFormValues(formNewValues)
     }
 
@@ -67,16 +89,12 @@ const SubmitForm = () => {
         return formIsValid
     }, [formValues])
 
-    const onSubmit: FormEventHandler = (e) => {
-        e.preventDefault()
-        if (isValid && fetcher.state === "idle" && !fetcher.data) {
-            fetcher.submit(fetcher.formData);
-        }
-        console.log("state", fetcher.state)
+    if (fetcher.state === 'submitting') {
+        return <Loader title="" />
     }
 
     return (
-        <fetcher.Form method="post" className="application-submit-form" onChange={onChangeHandler} onSubmit={onSubmit}>
+        <fetcher.Form method="post" className="application-submit-form" onChange={onChangeHandler}>
             <InputGroup label={t("application_submit_main_info_label")}>
                 <FormInputContainer name="assetName" label={t("asset_name_label")} value={formValues.assetName} required />
                 <FormInputContainer name="smallDescription" label={t("small_description_label")} value={formValues.smallDescription} required />
@@ -108,6 +126,7 @@ const SubmitForm = () => {
                     name="agriment" 
                     type="checkbox" 
                     checked={formValues.agriment} 
+                    value={formValues.agriment ? 1 : 0}
                     className="checkbox" 
                     label={t("application_submit_agriment_label")} 
                     containerClassName="checkbox-container"
