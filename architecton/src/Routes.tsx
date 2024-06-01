@@ -20,6 +20,7 @@ import Swap from './components/swap/Swap.tsx';
 import Stocks from './components/Stocks/Stocks.tsx';
 import ApplicationSubmit from './views/pages/ApplicationSubmit';
 import { BASE_URL } from './constants.ts';
+import Terms from './views/pages/Terms';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
     path: `${BASE_URL}/settings/application-submit`,
     element: <ApplicationSubmit />,
   },
+  {
+    path: '/settings/application-submit/terms',
+    element: <Terms />,
+  }
 ]);
 
 export default router;
