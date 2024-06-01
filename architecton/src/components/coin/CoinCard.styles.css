@@ -43,3 +43,13 @@
     justify-content: center;
     align-items: end;
 }
+
+.blurry-text {
+    text-shadow: 0 0 8px #232328;
+    color: transparent;
+}
+
+.blurry-text-2 {
+    text-shadow: 0 0 8px #6ABD79;
+    color: transparent;
+}

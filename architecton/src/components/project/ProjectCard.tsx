@@ -6,9 +6,10 @@ type Props = {
   title: string;
   icon: string;
   description: string;
+  url: string;
 };
 
-function ProjectCard({ title, icon, description }: Props) {
+function ProjectCard({ title, icon, description, url }: Props) {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +24,7 @@ function ProjectCard({ title, icon, description }: Props) {
       <div className="project-card-open">
         <button
           className={cn('btn', 'btn-primary')}
-          onClick={() => navigate(`/project/${title}`)}>
+          onClick={() => navigate(url)}>
           Open
         </button>
       </div>

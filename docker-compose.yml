@@ -2,9 +2,8 @@ services:
 
   pgdb:
     image: postgres:16
-    restart: always
     ports:
-      - "54381:5432"
+      - "54382:5432"
     volumes:
       - ./db:/var/lib/postgresql/data
     environment:
@@ -23,12 +22,11 @@ services:
     volumes:
       - ./public:/architecton/dist
   backend:
-    restart: always
     build:
       context: ./backend
       dockerfile: ./Dockerfile
     ports:
-      - "8000:8000"
+      - "8010:8000"
     command: python -m uvicorn architecton.app:app --host 0.0.0.0 --port 8000 --workers 4 --forwarded-allow-ips '*'
     environment:
       - DB_HOST=pgdb
@@ -43,29 +41,27 @@ services:
       - TON_MANAGER_MNEMONIC=${TON_MANAGER_MNEMONIC}
     depends_on:
       - pgdb
-      - sub_checker_bot
+      # - sub_checker_bot
 
-  bot:
-    restart: always
-    build:
-      context: ./bot
-      dockerfile: ./Dockerfile
-    command: python bot.py
-    environment:
-      - DB_HOST=pgdb
-      - DB_PORT=5432
-      - DB_NAME=${POSTGRES_DB}
-      - DB_USER=${POSTGRES_USER}
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
-      - BOT_TOKEN=${BOT_TOKEN}
-    depends_on:
-      - pgdb
+  # bot:
+  #   build:
+  #     context: ./bot
+  #     dockerfile: ./Dockerfile
+  #   command: python bot.py
+  #   environment:
+  #     - DB_HOST=pgdb
+  #     - DB_PORT=5432
+  #     - DB_NAME=${POSTGRES_DB}
+  #     - DB_USER=${POSTGRES_USER}
+  #     - DB_PASSWORD=${POSTGRES_PASSWORD}
+  #     - BOT_TOKEN=${BOT_TOKEN}
+  #   depends_on:
+  #     - pgdb
 
-  sub_checker_bot:
-    restart: always
-    build:
-      context: ./SubCheckerBot
-      dockerfile: ./Dockerfile
-    command: python -m uvicorn app:app --host 0.0.0.0 --port 8001 --workers 1 --forwarded-allow-ips '*'
-    environment:
-      - SUB_CHECKER_BOT_TOKEN=${SUB_CHECKER_BOT_TOKEN}
+  # sub_checker_bot:
+  #   build:
+  #     context: ./SubCheckerBot
+  #     dockerfile: ./Dockerfile
+  #   command: python -m uvicorn app:app --host 0.0.0.0 --port 8001 --workers 1 --forwarded-allow-ips '*'
+  #   environment:
+  #     - SUB_CHECKER_BOT_TOKEN=${SUB_CHECKER_BOT_TOKEN}

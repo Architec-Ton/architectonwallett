@@ -4,10 +4,12 @@ import assets from '../../assets';
 import ProjectGallery from '../../components/project/ProjectGallery';
 import ProjectDescription from '../../components/project/ProjectDescription';
 import ResourceList from '../../components/ui/ResourceList';
+import Layout2 from '../layout/Layout2';
+import BottomNavBar from '../../components/bottom-nav-bar/BottomNavBar';
 
 function Project() {
   return (
-    <Layout>
+    <Layout2>
       <ProjectDetail
         title="Punk City"
         icon={assets.imagePunk}
@@ -21,7 +23,8 @@ function Project() {
             an advanced inventory system and a competitive weekly League. Beyond combat, the app offers daily token giveaways through tasks.`}
       />
       <ResourceList />
-    </Layout>
+      <BottomNavBar />
+    </Layout2>
   );
 }
 

@@ -18,33 +18,26 @@ function ProjectList({ tokens }: Props) {
         flexDirection: 'column',
         rowGap: '1.5rem',
       }}>
-      {tokens.map((i) => (
+      {/* {tokens.map((i) => (
         <ProjectCard
           title={i.name}
           icon={i.image}
           description={i.description}
         />
-      ))}
+      ))} */}
 
       <ProjectCard
         title="Punk City"
         icon={assets.imagePunk}
         description="$PUNK Game"
+        url="/projects/punk"
       />
+
       <ProjectCard
-        title="Toncoin"
-        icon={assets.coinToncoin}
-        description={'3424324'}
-      />
-      <ProjectCard
-        title="Toncoin"
-        icon={assets.coinToncoin}
-        description={'3424324'}
-      />
-      <ProjectCard
-        title="Toncoin"
-        icon={assets.coinToncoin}
-        description={'3424324'}
+        title="Add own game"
+        icon={assets.iconExist}
+        description="You are founder the game"
+        url="/settings/application-submit"
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { useUtils } from '@tma.js/sdk-react';
+//import { useUtils } from '@tma.js/sdk-react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,11 +8,11 @@ type Props = {
 };
 
 function Footer({ children }: Props) {
-  const utils = useUtils();
+  //const utils = useUtils();
   const { t } = useTranslation();
 
   const clickSupport = () => {
-    utils.openTelegramLink('https://t.me/architecton_support');
+    //utils.openTelegramLink('https://t.me/architecton_support');
   };
   return (
     <div
