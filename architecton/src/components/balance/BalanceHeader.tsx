@@ -3,7 +3,6 @@ import './Balance.styles.css';
 import assets from '../../assets';
 import { useNavigate } from 'react-router-dom';
 import { useTonConnect } from '../../hooks/useTonConnect';
-import { BASE_URL } from '../../constants';
 
 //import { CHAIN } from '@tonconnect/ui-react';
 
@@ -26,9 +25,7 @@ function BalanceHeader({ name, title, chain }: Props) {
           ''
         )}
       </h2>
-      <div
-        className="balance-wallet"
-        onClick={() => navigate(`${BASE_URL}/wallet`)}>
+      <div className="balance-wallet" onClick={() => navigate('/wallet')}>
         {connected && <img src={assets.iconWallet} />}
       </div>
     </div>
