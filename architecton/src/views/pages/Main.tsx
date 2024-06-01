@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import assets from '../../assets';
 import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
-import { Address, JettonWallet, WalletContractV4 } from '@ton/ton';
+import { Address } from '@ton/ton';
 import { useTonClient } from '../../hooks/useTonClient';
 import { Buffer } from 'buffer/';
 import BottomNavBar from '../../components/bottom-nav-bar/BottomNavBar';
@@ -42,11 +42,11 @@ function Main() {
     const update = async () => {
       if (client && wallet) {
         const walletAddress = Address.parse(wallet.account.address);
-        const v4: WalletContractV4 = WalletContractV4.create({
-          workchain: 0,
-          publicKey: Buffer.from(wallet.account.publicKey, 'base64') as Buffer,
-        });
-        console.log('sdsdssds', v4);
+        // const v4: WalletContractV4 = WalletContractV4.create({
+        //   workchain: 0,
+        //   publicKey: Buffer.from(wallet.account.publicKey, 'base64') as Buffer,
+        // });
+        // console.log('sdsdssds', v4);
         client.getBalance(walletAddress).then((b) => {
           setUsdAmount(
             (Math.round(6.78 * Number(b / 1000_000_0n)) / 100).toString()

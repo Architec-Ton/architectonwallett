@@ -11,7 +11,7 @@ function CoinList({ tonAmount }: Props) {
       <CoinCard
         title="Toncoin"
         icon={assets.coinToncoin}
-        amount={Number(tonAmount)}
+        amount={tonAmount}
         amountUsd={232}
         changes={12.3}
       />

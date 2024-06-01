@@ -4,7 +4,7 @@ import './CoinCard.styles.css';
 type Props = {
   title: string;
   icon: string;
-  amount: number;
+  amount: string;
   amountUsd: number;
   changes: number;
 };

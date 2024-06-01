@@ -15,7 +15,7 @@ function Coin() {
         <CoinCard
           title={coinId ? coinId : 'Undefined'}
           icon={assets.coinToncoin}
-          amount={3424324}
+          amount={'--'}
           amountUsd={232}
           changes={12.3}
         />
