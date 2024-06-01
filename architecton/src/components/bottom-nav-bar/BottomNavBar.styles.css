@@ -11,11 +11,19 @@
 }
 
 .bottom-nav-bar .icon {
-    width: 24px;
-    height: 24px;
+    /*width: 24px;*/
+    /*height: 24px;*/
     fill: #888; /* Default color */
 }
 
 .bottom-nav-bar .active .icon {
-    fill: #000; /* Active color */
+    filter:
+            brightness(0)
+            saturate(100%)
+            invert(33%)
+            sepia(80%)
+            saturate(7495%)
+            hue-rotate(191deg)
+            brightness(97%)
+            contrast(107%);
 }

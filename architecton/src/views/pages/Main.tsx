@@ -2,10 +2,12 @@ import Layout from '../layout/Layout';
 import Balance from '../../components/balance/Balance';
 import MainMenu from '../../components/menu/MainMenu';
 import CoinList from '../../components/coin/CoinList';
+import BottomNavBar from "../../components/bottom-nav-bar/BottomNavBar";
 // import Projects from '../../components/project/Projects';
 // import useSWR from 'swr';
-// import BottomNavBar from "../../components/bottomNavBar/BottomNavBar.tsx";
+// import BottomNavBar from "../../components/bottom-nav-bar/BottomNavBar.tsx";
 import React from "react";
+
 
 function Main() {
   // created function to handle API request
@@ -32,6 +34,7 @@ function Main() {
       <MainMenu />
       <CoinList />
         {/*<Projects tokens={data ? data.games : []} />*/}
+      <BottomNavBar/>
     </Layout>
 
   );

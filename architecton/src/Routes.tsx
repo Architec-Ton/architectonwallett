@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 //import Main from './views/pages/Main';
 import Project from './views/pages/Project';
-import Projects from './components/project/Projects';
+
 import Coin from './views/pages/Coin';
 import Welcome from './views/pages/Welcome';
 import AddWallet from './views/pages/AddWallet';
@@ -15,22 +15,23 @@ import Referral from './views/pages/Referral';
 import Tasks from './views/pages/Tasks';
 import TasksFirst from './views/pages/TaskFirst';
 import React from "react";
-import useSWR from "swr";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-const { data, error, isLoading } = useSWR(
-    `http://127.0.0.1:8000/api/v1/info/test`,
-    fetcher
-);
+import Apps from "./components/project/Apps.tsx";
+import Swap from "./components/swap/Swap.tsx";
+import Stocks from "./components/Stocks/Stocks.tsx";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Main />,
   },
-  { path: '/projects',
-    element: <Projects tokens={data ? data.games : []}/>,
+  { path: '/apps',
+    element: <Apps/>,
+  },
+  { path: '/swap',
+    element: <Swap/>,
+  },
+  { path: '/stocks',
+    element: <Stocks/>,
   },
   {
     path: '/bank',
