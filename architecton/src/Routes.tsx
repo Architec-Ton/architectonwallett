@@ -14,25 +14,20 @@ import Wallet from './views/pages/Wallet';
 import Referral from './views/pages/Referral';
 import Tasks from './views/pages/Tasks';
 import TasksFirst from './views/pages/TaskFirst';
-import React from "react";
-import Apps from "./components/project/Apps.tsx";
-import Swap from "./components/swap/Swap.tsx";
-import Stocks from "./components/Stocks/Stocks.tsx";
+import React from 'react';
+import Apps from './components/project/Apps.tsx';
+import Swap from './components/swap/Swap.tsx';
+import Stocks from './components/Stocks/Stocks.tsx';
+import ApplicationSubmit from './views/pages/ApplicationSubmit';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Main />,
   },
-  { path: '/apps',
-    element: <Apps/>,
-  },
-  { path: '/swap',
-    element: <Swap/>,
-  },
-  { path: '/stocks',
-    element: <Stocks/>,
-  },
+  { path: '/apps', element: <Apps /> },
+  { path: '/swap', element: <Swap /> },
+  { path: '/stocks', element: <Stocks /> },
   {
     path: '/bank',
     element: <Bank />,
@@ -85,7 +80,10 @@ const router = createBrowserRouter([
     path: '/tasks/first',
     element: <TasksFirst />,
   },
-
+  {
+    path: '/settings/application-submit',
+    element: <ApplicationSubmit />,
+  },
 ]);
 
 export default router;

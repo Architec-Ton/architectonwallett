@@ -16,8 +16,8 @@ interface NavItem {
 const navItems: NavItem[] = [
   { to: '/', icon: walletIcon, label: 'Wallet' },
   { to: '/apps', icon: appsIcon, label: 'Apps' },
-  { to: '/#swap', icon: swapIcon, label: 'Swap' },
-  { to: '/#stock', icon: stocksIcon, label: 'Stocks' },
+  { to: '/swap', icon: swapIcon, label: 'Swap' },
+  { to: '/stocks', icon: stocksIcon, label: 'Stocks' },
 ];
 
 const BottomNavBar: React.FC = () => {

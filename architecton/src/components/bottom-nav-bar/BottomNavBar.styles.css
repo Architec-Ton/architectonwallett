@@ -16,7 +16,7 @@
     fill: #888; /* Default color */
 }
 
-.bottom-nav-bar .icon:hover{
+.bottom-nav-bar .icon:hover, .bottom-nav-bar .active .icon{
     filter:
             brightness(0)
             saturate(100%)

@@ -1,0 +1,17 @@
+.application-submit-form {
+    padding: 0;
+}
+
+.primary-input.submit-button {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: white;
+    height: 3rem;
+    border-radius: 1rem;
+}
+
+.input-container.checkbox-container {
+    background-color: transparent;
+    height: 2rem;
+    margin-top: 1rem;
+}

@@ -14,10 +14,8 @@ const Apps = () => {
 
   return (
     <Layout2>
-      <div>
-        <Projects tokens={data ? data.games : []} />
-        <BottomNavBar />
-      </div>
+      <Projects tokens={data ? data.games : []} />
+      <BottomNavBar />
     </Layout2>
   );
 };

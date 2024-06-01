@@ -46,6 +46,8 @@ import iconOk from './iconOk.svg';
 
 import iconFail from './iconFail.svg';
 
+import iconInfoCircle from './icon-info-circle.svg';
+
 import taskArchitecton from './task/taskAchiteton.svg';
 import taskArch from './task/taskArch.svg';
 import taskKunguru from './task/taskKunguru.svg';
@@ -55,6 +57,8 @@ import taskTimer from './task/taskTimer.svg';
 import taskMeta from './task/taskMeta.svg';
 import taskSquare from './task/task-square.svg';
 import taskArchEu from './task/taskArchEu.svg';
+
+import iconTerms from './terms.svg';
 
 export default {
   taskArchitecton,
@@ -98,6 +102,8 @@ export default {
   imagePunkGallery,
   imageLogo,
   iconHistEmpty,
+  iconInfoCircle,
+  iconTerms,
 };
 
 export class ReactComponent {
