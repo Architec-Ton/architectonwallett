@@ -22,7 +22,7 @@ from architecton.routes.test import get_client
 logging.basicConfig()
 logging.getLogger().setLevel(logging.INFO)
 
-ARCHITECTON_API_PREFIX = os.getenv("ARCHITECTON_API_PREFIX", "/api/v1")
+ARCHITECTON_API_PREFIX = os.getenv("ARCHITECTON_API_PREFIX", "/dev/wallet/api/v1")
 
 
 app = FastAPI(
