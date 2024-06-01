@@ -1,4 +1,5 @@
 import assets from '../../assets';
+import { BASE_URL } from '../../constants';
 import { IToken } from '../../types/token';
 import ProjectCard from './ProjectCard';
 
@@ -30,14 +31,14 @@ function ProjectList({ tokens }: Props) {
         title="Punk City"
         icon={assets.imagePunk}
         description="$PUNK Game"
-        url="/projects/punk"
+        url={`${BASE_URL}/project/punk`}
       />
 
       <ProjectCard
         title="Add own game"
         icon={assets.iconExist}
         description="You are founder the game"
-        url="/settings/application-submit"
+        url={`${BASE_URL}/settings/application-submit`}
       />
     </div>
   );

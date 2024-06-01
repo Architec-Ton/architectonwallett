@@ -19,33 +19,34 @@ import Apps from './components/project/Apps.tsx';
 import Swap from './components/swap/Swap.tsx';
 import Stocks from './components/Stocks/Stocks.tsx';
 import ApplicationSubmit from './views/pages/ApplicationSubmit';
+import { BASE_URL } from './constants.ts';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: `${BASE_URL}/`,
     element: <Main />,
   },
-  { path: '/apps', element: <Apps /> },
-  { path: '/swap', element: <Swap /> },
-  { path: '/stocks', element: <Stocks /> },
+  { path: `${BASE_URL}/apps`, element: <Apps /> },
+  { path: `${BASE_URL}/swap`, element: <Swap /> },
+  { path: `${BASE_URL}/stocks`, element: <Stocks /> },
   {
     path: '/bank',
     element: <Bank />,
   },
   {
-    path: '/project/:projectId',
+    path: `${BASE_URL}/project/:projectId`,
     element: <Project />,
   },
   {
-    path: '/coin/:coinId',
+    path: `${BASE_URL}/coin/:coinId`,
     element: <Coin />,
   },
   {
-    path: '/welcome',
+    path: `${BASE_URL}/welcome`,
     element: <Welcome />,
   },
   {
-    path: '/wallet/add',
+    path: `${BASE_URL}/wallet/add`,
     element: <AddWallet />,
   },
   {
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
     element: <Referral />,
   },
   {
-    path: '/wallet',
+    path: `${BASE_URL}/wallet`,
     element: <Wallet />,
   },
   {
@@ -81,7 +82,7 @@ const router = createBrowserRouter([
     element: <TasksFirst />,
   },
   {
-    path: '/settings/application-submit',
+    path: `${BASE_URL}/settings/application-submit`,
     element: <ApplicationSubmit />,
   },
 ]);
