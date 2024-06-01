@@ -12,14 +12,19 @@ import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 import { Address, JettonWallet, WalletContractV4 } from '@ton/ton';
 import { useTonClient } from '../../hooks/useTonClient';
 import { Buffer } from 'buffer/';
+import BottomNavBar from '../../components/bottom-nav-bar/BottomNavBar';
+// import Projects from '../../components/project/Projects';
+// import useSWR from 'swr';
+// import BottomNavBar from "../../components/bottom-nav-bar/BottomNavBar.tsx";
+import React from 'react';
 
 function Main() {
   // created function to handle API request
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
   //const navigate = useNavigate();
 
-  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // const { data, error, isLoading } = useSWR(
   //   `http://127.0.0.1:8000/api/v1/info/test`,
   //   fetcher
@@ -27,7 +32,6 @@ function Main() {
   const wallet = useTonWallet();
   const { client } = useTonClient();
   //const wallet = false;
-
   const [tonAmount, setTonAmount] = useState<string>('----');
   const [usdAmount, setUsdAmount] = useState<string>(' ----');
 
@@ -67,6 +71,7 @@ function Main() {
       <MainMenu />
       <CoinList tonAmount={tonAmount} />
       {/* <Projects tokens={data ? data.games : []} /> */}
+      <BottomNavBar />
     </Layout2>
   );
 

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 //import Main from './views/pages/Main';
 import Project from './views/pages/Project';
+
 import Coin from './views/pages/Coin';
 import Welcome from './views/pages/Welcome';
 import AddWallet from './views/pages/AddWallet';
@@ -13,11 +14,24 @@ import Wallet from './views/pages/Wallet';
 import Referral from './views/pages/Referral';
 import Tasks from './views/pages/Tasks';
 import TasksFirst from './views/pages/TaskFirst';
+import React from "react";
+import Apps from "./components/project/Apps.tsx";
+import Swap from "./components/swap/Swap.tsx";
+import Stocks from "./components/Stocks/Stocks.tsx";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Main />,
+  },
+  { path: '/apps',
+    element: <Apps/>,
+  },
+  { path: '/swap',
+    element: <Swap/>,
+  },
+  { path: '/stocks',
+    element: <Stocks/>,
   },
   {
     path: '/bank',
@@ -71,6 +85,7 @@ const router = createBrowserRouter([
     path: '/tasks/first',
     element: <TasksFirst />,
   },
+
 ]);
 
 export default router;
