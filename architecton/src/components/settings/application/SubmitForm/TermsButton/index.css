@@ -1,0 +1,10 @@
+.terms-button {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    color: var(--accent-color);
+}
+
+.terms-button__text {
+    margin-left: 1rem;
+}

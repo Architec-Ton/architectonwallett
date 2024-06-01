@@ -1,0 +1,7 @@
+.application-header {
+    width: 100%;
+    text-align: center;
+    padding: 2rem 0 0.75rem;
+    font-weight: var(--semibold);
+    font-size: 1.25rem;
+}

@@ -20,18 +20,18 @@ export default defineConfig({
     svgr(),
   ],
 
-  server: {
-    port: 443,
-    host: '0.0.0.0',
-    hmr: {
-      host: 'architecton.local',
-      port: 443,
-    },
-    https: {
-      key: fs.readFileSync('./.cert/cert.key'),
-      cert: fs.readFileSync('./.cert/cert.crt'),
-    },
-  },
+  // server: {
+  //   port: 443,
+  //   host: '0.0.0.0',
+  //   hmr: {
+  //     host: 'architecton.local',
+  //     port: 443,
+  //   },
+  //   https: {
+  //     key: fs.readFileSync('./.cert/cert.key'),
+  //     cert: fs.readFileSync('./.cert/cert.crt'),
+  //   },
+  // },
 
   optimizeDeps: {
     esbuildOptions: {

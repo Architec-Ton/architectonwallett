@@ -1,0 +1,6 @@
+.text-button {
+    flex-grow: 0;
+    padding-left: 1rem; 
+    margin-top: 0;
+    color: var(--accent-color);
+}

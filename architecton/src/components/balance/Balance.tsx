@@ -2,79 +2,53 @@
 import classNames from 'classnames';
 import './Balance.styles.css';
 import assets from '../../assets';
+import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
+import BalanceHeader from './BalanceHeader';
+import { Address, JettonWallet, WalletContractV4 } from '@ton/ton';
 // import BalanceHeader from './BalanceHeader';
 // import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 
-// import { Buffer } from 'buffer/';
+import { Buffer } from 'buffer/';
 type Props = {
   title: string;
+  amount: string;
 };
 
 // import { useTonClient } from '../../hooks/useTonClient';
 // import { WalletContractV4 } from 'ton';
 // import { useState } from 'react';
 
-function Balance({ title }: Props) {
-  // const wallet = useTonWallet();
-  // const client = useTonClient();
+function Balance({ title, amount }: Props) {
+  const wallet = useTonWallet();
   //const wallet = false;
 
-  // const initF = async () => {
-  //   console.log(wallet?.account.publicKey);
-
-  //   ArrayBuffer;
-
-  //   const walletContract = WalletContractV4.create({
-  //     workchain: 0,
-  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //     // @ts-ignore
-  //     publicKey: Buffer.from(
-  //       `${wallet?.account?.publicKey}`,
-  //       'base64'
-  //     ) as ArrayBuffer,
-  //   });
-
-  // console.log(walletContract);
-
-  // const contract = client?.open(walletContract);
-
-  // console.log(contract);
-
-  console.log(title);
-
-  // const balance = await contract?.getBalance();
-
-  // console.log(balance);
-
-  // setAmount(`${balance?.toString()}`);
-  // };
-
-  // if (wallet) {
-  //   initF();
-  // }
-
-  //console.log(walletInit);
-
-  if (false) {
+  if (true) {
     return (
-      <></>
-      // wallet && (
-      //   <div
-      //     className={classNames('balance')}
-      //     style={{ backgroundImage: `url(${assets.svgbalance})` }}>
-      //     <div className="balance-body">
-      //       <BalanceHeader
-      //         title={wallet.device.appName}
-      //         chain={wallet.account.chain}
-      //       />
-      //       <div className="balance-amount">{amount} TON</div>
-      //     </div>
-      //     <div className="balance-footer">
-      //       Wallet {wallet.account.address} <img src={assets.svgcopy} />
-      //     </div>
-      //     <TonConnectButton />
-      //   </div>
-      // )
+      <>
+        <div
+          className={classNames('balance')}
+          style={{ backgroundImage: `url('/icons/balance-bg.svg'})` }}>
+          <div className="balance-body">
+            <BalanceHeader
+              name="Wallet"
+              title="Architec.TON" //{wallet?.device.appName}
+              chain={wallet?.account.chain}
+            />
+            <div className="balance-body-container">
+              {wallet && <div className="balance-amount">${amount}</div>}
+              {!wallet && <TonConnectButton />}
+            </div>
+          </div>
+          <div className="balance-footer">
+            {wallet && (
+              <>
+                {Address.parse(wallet.account.address).toString()}{' '}
+                <img src={assets.svgcopy} />
+              </>
+            )}
+          </div>
+        </div>
+      </>
     );
   } else {
     return (

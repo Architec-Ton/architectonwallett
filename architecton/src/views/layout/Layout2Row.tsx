@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import './Layout.styles.css';
-import Layout from './Layout';
+import Layout2 from './Layout2';
 
 type Props = {
   children: ReactNode;
@@ -8,7 +8,7 @@ type Props = {
 
 function Layout2Row({ children }: Props) {
   return (
-    <Layout
+    <Layout2
       style={{
         maxWidth: '475px',
         justifyContent: 'start',
@@ -17,7 +17,7 @@ function Layout2Row({ children }: Props) {
         flexDirection: 'column',
       }}>
       {children}
-    </Layout>
+    </Layout2>
   );
 }
 

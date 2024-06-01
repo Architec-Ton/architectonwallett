@@ -25,7 +25,7 @@ function Layout({ children, style }: Props) {
   return (
     <>
       <div className={classNames('layout')} style={style}>
-        <Header />
+        {/* <Header /> */}
         {children}
       </div>
     </>

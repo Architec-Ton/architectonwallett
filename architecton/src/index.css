@@ -22,4 +22,12 @@ div{
     /* display: flex;
     align-items: center;
     flex-direction: column; */
+    --backgroud-secondary-color: #F7F9FB;
+    --primary-color: #232328;
+    --secondary-color: #65656A;
+    --accent-color: #07ACFF;
+
+    --bold: 700;
+    --semibold: 600;
+    --medium: 500;
 }
