@@ -9,6 +9,7 @@ import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/dev/wallet',
   plugins: [
     wyw({
       include: ['**/*.{ts,tsx}'],
