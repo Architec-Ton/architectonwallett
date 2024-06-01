@@ -1,4 +1,4 @@
-FROM node:20 as build
+FROM node:20.2 as build
 
 WORKDIR /architecton
 
