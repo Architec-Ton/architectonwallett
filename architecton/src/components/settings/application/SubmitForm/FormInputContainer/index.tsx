@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import { FocusEventHandler, InputHTMLAttributes, useMemo, useState } from "react"
+import { FocusEventHandler, InputHTMLAttributes, useEffect, useMemo, useState } from "react"
 import FormInput from "../FormInput"
 
 import "./index.css"
@@ -17,18 +17,22 @@ const FormInputContainer = ({ label, children, containerClassName, ...props }: O
 
     const onFocuseHandler: FocusEventHandler<HTMLInputElement> = (e) => {
         setIsFocused(true)
-        props?.onFocus(e)
+        props?.onFocus && props?.onFocus(e)
     }
 
     const onBlurHandler: FocusEventHandler<HTMLInputElement> = (e) => {
         const value = e.currentTarget.value
         setIsFocused(!!value)
-        props?.onBlur(e)
+        props?.onBlur && props?.onBlur(e)
     }
 
     const inputProps = useMemo(() => {
         return { ...props, onFocus: onFocuseHandler, onBlur: onBlurHandler }
     }, [props])
+
+    useEffect(() => {
+        setIsFocused(!!inputProps.value)
+    }, [inputProps.value])
 
     return (
         <div className={classNames("input-container", containerClassName)}>

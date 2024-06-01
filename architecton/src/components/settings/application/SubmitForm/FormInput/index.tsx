@@ -15,18 +15,18 @@ const FormInput = ({
     const [isFocused, setIsFocused] = useState(false)
 
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-        otherProps?.onChange(e)
+        otherProps?.onChange && otherProps?.onChange(e)
     }
 
     const onFocuseHandler: FocusEventHandler<HTMLInputElement> = (e) => {
         setIsFocused(true)
-        otherProps?.onFocus(e)
+        otherProps?.onFocus && otherProps?.onFocus(e)
     }
 
     const onBlurHandler: FocusEventHandler<HTMLInputElement> = (e) => {
         const value = e.currentTarget.value
         setIsFocused(!!value)
-        otherProps?.onBlur(e)
+        otherProps?.onBlur && otherProps?.onBlur(e)
     }
 
     return (

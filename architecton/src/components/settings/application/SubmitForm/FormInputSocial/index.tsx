@@ -16,7 +16,7 @@ const FormInputSocial = ({ name, label, pasteHandler, ...props }: OwnPropsType) 
     }
     return (
         <FormInputContainer name={name} label={label} {...props}>
-            <PasteButton value={t("past_button")} onClick={clickHandler} />
+            <PasteButton value={t("paste_button")} onClick={clickHandler} />
         </FormInputContainer>
     )
 }
