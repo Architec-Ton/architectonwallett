@@ -1,27 +1,31 @@
 import assets from '../../assets';
 import CoinCard from '../../components/coin/CoinCard';
 
-function CoinList() {
+type Props = {
+  tonAmount: string;
+};
+
+function CoinList({ tonAmount }: Props) {
   return (
     <div className="coins">
       <CoinCard
         title="Toncoin"
         icon={assets.coinToncoin}
-        amount={3424324}
+        amount={Number(tonAmount)}
         amountUsd={232}
         changes={12.3}
       />
       <CoinCard
         title="USDT"
         icon={assets.coinUSDT}
-        amount={32}
+        amount={'--'}
         amountUsd={232}
         changes={12.3}
       />
       <CoinCard
         title="My Assets"
         icon={assets.coinAssets}
-        amount={332}
+        amount={'--'}
         amountUsd={232}
         changes={12.3}
       />

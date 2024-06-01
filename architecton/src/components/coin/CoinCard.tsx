@@ -21,8 +21,10 @@ function CoinCard({ title, icon, amount }: Props) {
         </div>
       </div>
       <div className="coin-card-amount">
-        <div>1323,34$</div>
-        <div style={{ color: '#6ABD79', fontSize: '0.85rem' }}>+12.2%</div>
+        <div className="blurry-text">1323,34$</div>
+        <div className="blurry-text-2" style={{ fontSize: '0.85rem' }}>
+          +12.2%
+        </div>
       </div>
     </div>
   );

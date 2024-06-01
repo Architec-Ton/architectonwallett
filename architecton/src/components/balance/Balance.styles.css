@@ -9,14 +9,15 @@
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('/icons/balance-bg.svg');
-    min-height: 100px;
+    min-height: 150px;
     background-color: #f7f9fb;
     border-radius: 1rem;
     margin: 1rem 0;
 }
 
 .balance-amount{
-    color: var(--color-text-secondary);
+    text-align: left;
+    color: var(--color-text-primary);
     font-weight: 600;
     font-size: 1.875rem;
 }
