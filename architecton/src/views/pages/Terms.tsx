@@ -1,3 +1,4 @@
+import BottomNavBar from "../../components/bottom-nav-bar/BottomNavBar"
 import TermsContent from "../../components/settings/application/TermsContent"
 import Container from "../../components/ui/Container"
 import Layout2 from "../layout/Layout2"
@@ -8,6 +9,7 @@ const Terms = () => {
             <Container>
                 <TermsContent />
             </Container>
+            <BottomNavBar />
         </Layout2>
     )
 }

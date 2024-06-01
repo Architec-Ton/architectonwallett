@@ -21,6 +21,7 @@ import Stocks from './components/Stocks/Stocks.tsx';
 import ApplicationSubmit from './views/pages/ApplicationSubmit';
 import { BASE_URL } from './constants.ts';
 import Terms from './views/pages/Terms';
+import { ApplicationSubmitAction } from './components/settings/application/SubmitForm/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,7 @@ const router = createBrowserRouter([
   {
     path: `${BASE_URL}/settings/application-submit`,
     element: <ApplicationSubmit />,
+    action: ApplicationSubmitAction
   },
   {
     path: '/settings/application-submit/terms',
