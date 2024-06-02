@@ -14,7 +14,7 @@ interface IProjectItems {
   description: string;
 }
 
-const projectItems: Array[IProjectItems] = [
+const projectItems = [
   {
     url: `${BASE_URL}/project/punk`,
     icon: assets.imagePunk,
