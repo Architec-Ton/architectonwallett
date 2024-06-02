@@ -7,6 +7,40 @@ interface Props {
   tokens: IToken[];
 }
 
+interface IProjectItems {
+  url: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const projectItems: Array[IProjectItems] = [
+  {
+    url: `${BASE_URL}/project/punk`,
+    icon: assets.imagePunk,
+    title: 'PUNK',
+    description: 'Body PUMP',
+  },
+  {
+    url: `${BASE_URL}/apps`,
+    icon: `${BASE_URL}/images/bodypump.jpg`,
+    title: 'Body PUMP',
+    description: 'Body PUMP',
+  },
+  {
+    url: `${BASE_URL}/apps`,
+    icon: `${BASE_URL}/images/edchess.jpg`,
+    title: 'EdChess',
+    description: 'EdChess',
+  },
+  {
+    url: `${BASE_URL}/apps`,
+    icon: `${BASE_URL}/images/goldgoblin.jpg`,
+    title: 'Gold Goblins',
+    description: 'Gold Goblins',
+  },
+];
+
 function ProjectList({ tokens }: Props) {
   //   const onMenuChange = (menuName) => {
   //     console.log(`Menu changed: ${menuName}`);
@@ -26,13 +60,9 @@ function ProjectList({ tokens }: Props) {
           description={i.description}
         />
       ))} */}
-
-      <ProjectCard
-        title="Punk City"
-        icon={assets.imagePunk}
-        description="$PUNK Game"
-        url={`${BASE_URL}/project/punk`}
-      />
+      {projectItems.map((p) => (
+        <ProjectCard {...p} />
+      ))}
 
       <ProjectCard
         title="Add own game"

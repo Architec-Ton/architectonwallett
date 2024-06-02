@@ -4,13 +4,19 @@ import assets from '../../assets';
 
 import './MainMenu.styles.css';
 
+
 function MainMenu() {
   return (
     <div className="mainmenu">
       <MenuButton title="Receive" icon={assets.iconReceive}></MenuButton>
       <MenuButton title="Send" icon={assets.iconSend}></MenuButton>
       <MenuButton title="Swap" icon={assets.iconSwap}></MenuButton>
-      <MenuButton title="Bank" icon={assets.iconBank}></MenuButton>
+      <MenuButton
+        title="Bank"
+        icon={assets.iconBank}
+        onClick={() => {
+          'https://t.me/architec_ton_bot/wallet';
+        }}></MenuButton>
       <MenuButton title="Buy" icon={assets.iconBuy}></MenuButton>
     </div>
   );

@@ -19,6 +19,7 @@
    
     max-width: 4.75rem;
     width: 4.75rem;
+    border-radius: 1rem;
 }
 
 .project-card-title > div {
