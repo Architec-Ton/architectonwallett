@@ -1,0 +1,35 @@
+.terms-header {
+    font-size: 1.5rem;
+    font-weight: var(--bold);
+    margin-bottom: 1rem;
+}
+
+.terms-update-date {
+    font-size: 0.85rem;
+    font-weight: var(--semibold);
+}
+
+.terms-block-container {
+    list-style-type: decimal;
+    list-style-position: inside;
+    padding: 0;
+    font-size: 0.85rem;
+}
+
+.terms-block-container>li {
+    text-indent: 0;
+}
+
+.block-header {
+    font-size: 1rem;
+    font-weight: var(--bold);
+}
+
+ul.block-content {
+    padding: 0 1rem;
+    list-style-type: disc;
+}
+
+.block-content {
+    margin: 0.75rem 0;
+}
