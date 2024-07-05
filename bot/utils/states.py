@@ -5,4 +5,5 @@ class UserWallet(StatesGroup):
     addresss = State()
 
 class Form(StatesGroup):
+    password = State()
     message = State()
