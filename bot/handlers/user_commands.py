@@ -4,6 +4,7 @@ from aiogram.filters import Command, CommandObject, CommandStart
 from aiogram.fsm.context import FSMContext
 from utils.states import Form
 from keyboards import reply, inline
+from config_reader import config
 import requests
 import json
 
@@ -30,8 +31,17 @@ user_ids = read_user_ids_from_csv('account_2024-06-27_115450.csv')
 
 @router.message(Command('broadcast'))
 async def start_broadcast(message: Message, state: FSMContext):
-    await message.answer("Введите сообщение для рассылки:")
-    await state.set_state(Form.message)
+    await message.answer("Введите пароль")
+    await state.set_state(Form.password)
+
+@router.message(Form.password)
+async def check_password(msg: Message, state: FSMContext):
+    if msg.text == config.password.get_secret_value():
+        await msg.answer("Введите сообщение для рассылки")
+        await state.set_state(Form.message)
+    else:
+        await msg.answer("Пароль неправильный")
+        await state.clear()
 
 @router.message(Form.message)
 async def broadcast_message(message: Message, state: FSMContext):
