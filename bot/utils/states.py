@@ -7,3 +7,4 @@ class UserWallet(StatesGroup):
 class Form(StatesGroup):
     password = State()
     message = State()
+    photo = State()
