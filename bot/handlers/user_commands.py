@@ -33,25 +33,46 @@ user_ids = read_user_ids_from_csv('account_2024-06-27_115450.csv')
 async def start_broadcast(message: Message, state: FSMContext):
     await message.answer("Введите пароль")
     await state.set_state(Form.password)
-
+    
 @router.message(Form.password)
-async def check_password(msg: Message, state: FSMContext):
+async def handle_password(msg: Message, state: FSMContext):
     if msg.text == config.password.get_secret_value():
-        await msg.answer("Введите сообщение для рассылки")
+        await msg.answer('Введите текст для рассылки')
         await state.set_state(Form.message)
     else:
-        await msg.answer("Пароль неправильный")
+        await msg.answer("Неправильный пароль")
         await state.clear()
 
+# Обработчик введенного сообщения
 @router.message(Form.message)
 async def broadcast_message(message: Message, state: FSMContext):
-    await state.clear()  
-    text = message.text
-    for user_id in user_ids:
+    await state.update_data(text=message.text)
+    await message.answer("Если хотите отправить фото, отправьте его сейчас. Если нет, отправьте /skip")
+    await state.set_state(Form.photo)
+
+@router.message(Form.photo, F.photo)
+async def broadcast_photo(message: Message, state: FSMContext):
+    data = await state.get_data()
+    text = data['text']
+    photo = message.photo[-1]  # Берем наибольшее разрешение фотографии
+    for user in users:
         try:
-            await bot.send_message(chat_id=user_id, text=text)
+            await bot.send_photo(chat_id=user['id'], photo=photo.file_id, caption=text, parse_mode='Markdown')
         except Exception as e:
-            print(f"Не удалось отправить сообщение пользователю {user_id}: {e}")
+            print(f"Не удалось отправить сообщение пользователю {user['id']}: {e}")
+    await state.clear()
+    await message.answer("Сообщение с фото успешно разослано всем пользователям.")
+
+@router.message(Form.photo, Command('skip'))
+async def skip_photo(message: Message, state: FSMContext):
+    data = await state.get_data()
+    text = data['text']
+    for user in users:
+        try:
+            await bot.send_message(chat_id=user['id'], text=text, parse_mode='Markdown')
+        except Exception as e:
+            print(f"Не удалось отправить сообщение пользователю {user['id']}: {e}")
+    await state.clear()
     await message.answer("Сообщение успешно разослано всем пользователям.")
 
 
