@@ -8,6 +8,7 @@ pydantic-settings = "*"
 aiogram = "*"
 requests = "*"
 aiohttp = "*"
+i18n = "*"
 
 [dev-packages]
 
